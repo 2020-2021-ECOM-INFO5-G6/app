@@ -1,6 +1,51 @@
-<div class="row">
-    <div class="col-md-3">
+<div class="row" id="header">
+    <!-- <div class="col-md-3">
         <span class="hipster img-fluid rounded"></span>
-    </div>
+    </div> -->
     <p class="lead" id="homeInstructor-subtitle" jhiTranslate="homeInstructor.subtitle">Welcom Instructor!</p>
+</div>
+
+<div class="row" id="body">
+    <div class="column" id="personal-data">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead></thead>
+
+            <tbody>
+                <div *ngIf="account">
+                    <tr>Account defined</tr>
+                    <tr>
+                        <td><h4>First Name</h4></td>
+                        <td *ngIf="account.firstName">{{ account.firstName }}</td>
+                    </tr>
+                    <tr>
+                        <td><h4>Last Name</h4></td>
+                        <td *ngIf="account.lastName">{{ account.lastName }}</td>
+                    </tr>
+                    <tr>
+                        <td><h4>Email</h4></td>
+                        <td *ngIf="account.email">{{ account.email }}</td>
+                    </tr>
+                </div>
+                <div *ngIf="instructor">
+                    <tr>Instructor defined</tr>
+                    <tr>
+                        <td *ngFor="let editableActivity of instructor.editableActivities; let last = last">
+                            <a *ngIf="editableActivity">{{ editableActivity.id }}</a>{{ last ? '' : ', ' }}
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td *ngFor="let participateActivity of instructor.participateActivities; let last = last">
+                            <a *ngIf="participateActivity">{{ participateActivity.id }}</a>{{ last ? '' : ', ' }}
+                        </td>
+                    </tr>
+                </div>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="column" id="activities">
+        <tr *ngIf="user">User defined</tr>
+        <tr *ngIf="raw">{{ raw }}</tr>
+    </div>
 </div>

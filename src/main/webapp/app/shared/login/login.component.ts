@@ -78,7 +78,7 @@ export class LoginModalComponent implements AfterViewInit {
             if (this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
               this.userService
                 .find(this.loginForm.get('username')!.value)
-                .subscribe(user => localStorage.setItem('adminUser', JSON.stringify(user)));
+                .subscribe(user => localStorage.setItem('currentUser', JSON.stringify(user)));
               this.router.navigate(['/homeInstructor']);
             } else if (this.accountService.hasAnyAuthority('ROLE_INSTRUCTOR')) {
               this.userService.find(this.loginForm.get('username')!.value).subscribe(user => {
