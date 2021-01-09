@@ -1,6 +1,15 @@
 {
   "homeInstructor": {
     "title": "Home",
-    "subtitle": "Bienvenue Instructeur !"
+    "subtitle": "Bienvenue Instructeur !",
+    "account": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email"
+    },
+    "instructor": {
+      "editableActivities": "Activités modifiables",
+      "monitoredActivities": "Activités surveillées"
+    }
   }
 }

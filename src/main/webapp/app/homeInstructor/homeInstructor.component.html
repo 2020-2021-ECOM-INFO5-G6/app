@@ -7,37 +7,20 @@
 
 <div class="row" id="body">
     <div class="column" id="personal-data">
-        <table class="table table-striped" aria-describedby="page-heading">
-            <thead></thead>
-
+        <table class="table">
             <tbody>
                 <div *ngIf="account">
-                    <tr>Account defined</tr>
                     <tr>
-                        <td><h4>First Name</h4></td>
+                        <td><h4 jhiTranslate="homeInstructor.account.firstName">First Name</h4></td>
                         <td *ngIf="account.firstName">{{ account.firstName }}</td>
                     </tr>
                     <tr>
-                        <td><h4>Last Name</h4></td>
+                        <td><h4 jhiTranslate="homeInstructor.account.lastName">Last Name</h4></td>
                         <td *ngIf="account.lastName">{{ account.lastName }}</td>
                     </tr>
                     <tr>
-                        <td><h4>Email</h4></td>
+                        <td><h4 jhiTranslate="homeInstructor.account.email">Email</h4></td>
                         <td *ngIf="account.email">{{ account.email }}</td>
-                    </tr>
-                </div>
-                <div *ngIf="instructor">
-                    <tr>Instructor defined</tr>
-                    <tr>
-                        <td *ngFor="let editableActivity of instructor.editableActivities; let last = last">
-                            <a *ngIf="editableActivity">{{ editableActivity.id }}</a>{{ last ? '' : ', ' }}
-                        </td>
-                        
-                    </tr>
-                    <tr>
-                        <td *ngFor="let participateActivity of instructor.participateActivities; let last = last">
-                            <a *ngIf="participateActivity">{{ participateActivity.id }}</a>{{ last ? '' : ', ' }}
-                        </td>
                     </tr>
                 </div>
             </tbody>
@@ -45,7 +28,20 @@
     </div>
 
     <div class="column" id="activities">
-        <tr *ngIf="user">User defined</tr>
-        <tr *ngIf="raw">{{ raw }}</tr>
+        <table class="table"></table>
+            <tbody>
+                <div *ngIf="instructor">
+                    <tr><h4 jhiTranslate="homeInstructor.instructor.editableActivities">Editable activities</h4></tr>
+                    <tr *ngFor="let editableActivity of instructor.editableActivities; let last = last">
+                        <a *ngIf="editableActivity">{{ editableActivity.id }}</a>{{ last ? '' : ', ' }}
+                    </tr>
+
+                    <tr><h4 jhiTranslate="homeInstructor.instructor.monitoredActivities">Monitored activities</h4></tr>
+                    <tr *ngFor="let participateActivity of instructor.participateActivities; let last = last">
+                        <a *ngIf="participateActivity">{{ participateActivity.id }}</a>{{ last ? '' : ', ' }}
+                    </tr>
+                </div>
+            </tbody>
+        </table>
     </div>
 </div>

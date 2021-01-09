@@ -32,7 +32,7 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => this.getLinkedStudent(account));
+    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => this.getLinkedEntity(account));
   }
 
   isAuthenticated(): boolean {
@@ -45,9 +45,9 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
     }
   }
 
-  getLinkedStudent(account: Account | null): void {
+  getLinkedEntity(account: Account | null): void {
     this.account = account;
-    if (this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
+    if (this.isAuthenticated() && this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
       this.user = this.getCurrentUser();
       if (this.user == null) {
         this.getCurrentUserAsynchronously();
