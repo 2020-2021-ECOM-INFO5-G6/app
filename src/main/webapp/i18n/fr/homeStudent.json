@@ -1,6 +1,7 @@
 {
   "homeStudent": {
     "title": "Home",
-    "subtitle": "Bienvenue élève !"
+    "subtitle": "Bienvenue élève !",
+    "goToSemesterInscription": "Naviguer vers la page d'inscription aux semestres"
   }
 }
