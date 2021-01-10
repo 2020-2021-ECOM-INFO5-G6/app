@@ -38,9 +38,9 @@ describe('account', () => {
     expect(value1).to.eq(expect1);
     await signInPage.autoSignInUsing(username, password);
 
-    const expect2 = 'home.logged.message';
-    await browser.wait(ec.visibilityOf(element(by.id('home-logged-message'))));
-    const value2 = await element(by.id('home-logged-message')).getAttribute('jhiTranslate');
+    const expect2 = 'homeStudent.subtitle';
+    await browser.wait(ec.visibilityOf(element(by.id('homeStudent-subtitle'))));
+    const value2 = await element(by.id('homeStudent-subtitle')).getAttribute('jhiTranslate');
     expect(value2).to.eq(expect2);
   });
 

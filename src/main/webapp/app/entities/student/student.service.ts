@@ -35,4 +35,8 @@ export class StudentService {
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
+
+  findbyuser(userid: number): Observable<EntityResponseType> {
+    return this.http.get<IStudent>(`${this.resourceUrl}/nestedstudent/${userid}`, { observe: 'response' });
+  }
 }

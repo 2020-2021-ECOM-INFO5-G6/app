@@ -45,7 +45,7 @@ describe('Activity e2e test', () => {
       activityUpdatePage.setDateInput('2000-12-31'),
       activityUpdatePage.setPlaceInput('place'),
       activityUpdatePage.setCapacityInput('5'),
-      activityUpdatePage.setCoeffInput('5'),
+      activityUpdatePage.setCoeffInput('0.5'),
       activityUpdatePage.lakeSelectLastOption(),
     ]);
 
@@ -61,9 +61,10 @@ describe('Activity e2e test', () => {
       await activityUpdatePage.getInscriptionOpenInput().click();
       expect(await activityUpdatePage.getInscriptionOpenInput().isSelected(), 'Expected inscriptionOpen to be selected').to.be.true;
     }
-    expect(await activityUpdatePage.getCoeffInput()).to.eq('5', 'Expected coeff value to be equals to 5');
+    expect(await activityUpdatePage.getCoeffInput()).to.eq('0.5', 'Expected coeff value to be equals to 0.5');
 
     await activityUpdatePage.save();
+
     expect(await activityUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
     expect(await activityComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1, 'Expected one more entry in the table');

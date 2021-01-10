@@ -43,7 +43,7 @@ describe('Component Tests', () => {
     it('should update success to true after creating an account', inject(
       [RegisterService, JhiLanguageService],
       fakeAsync((service: RegisterService, mockTranslate: MockLanguageService) => {
-        spyOn(service, 'save').and.returnValue(of({}));
+        spyOn(service, 'saveExtra').and.returnValue(of({}));
         comp.registerForm.patchValue({
           password: 'password',
           confirmPassword: 'password',
@@ -52,11 +52,16 @@ describe('Component Tests', () => {
         comp.register();
         tick();
 
-        expect(service.save).toHaveBeenCalledWith({
+        expect(service.saveExtra).toHaveBeenCalledWith({
           email: '',
           password: 'password',
           login: '',
           langKey: 'fr',
+          cursusComposant: null,
+          cursusLevel: null,
+          drivingLicence: null,
+          meetingPlace: null,
+          sportLevel: null,
         });
         expect(comp.success).toBe(true);
         expect(mockTranslate.getCurrentLanguageSpy).toHaveBeenCalled();
@@ -69,7 +74,7 @@ describe('Component Tests', () => {
     it('should notify of user existence upon 400/login already in use', inject(
       [RegisterService],
       fakeAsync((service: RegisterService) => {
-        spyOn(service, 'save').and.returnValue(
+        spyOn(service, 'saveExtra').and.returnValue(
           throwError({
             status: 400,
             error: { type: LOGIN_ALREADY_USED_TYPE },
@@ -92,7 +97,7 @@ describe('Component Tests', () => {
     it('should notify of email existence upon 400/email address already in use', inject(
       [RegisterService],
       fakeAsync((service: RegisterService) => {
-        spyOn(service, 'save').and.returnValue(
+        spyOn(service, 'saveExtra').and.returnValue(
           throwError({
             status: 400,
             error: { type: EMAIL_ALREADY_USED_TYPE },
@@ -115,7 +120,7 @@ describe('Component Tests', () => {
     it('should notify of generic error', inject(
       [RegisterService],
       fakeAsync((service: RegisterService) => {
-        spyOn(service, 'save').and.returnValue(
+        spyOn(service, 'saveExtra').and.returnValue(
           throwError({
             status: 503,
           })

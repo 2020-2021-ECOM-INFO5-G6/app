@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -115,5 +116,23 @@ public class StudentResource {
         log.debug("REST request to delete Student : {}", id);
         studentRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+    
+    //NOT OUT-OF-THE-BOX
+    
+    /**
+     * {@code GET  /students/nestedstudent/:userid} : get the student having the corresponding internalUser.
+     *
+     * @param userid the id of the internalUser nested to the student to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the student, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/students/nestedstudent/{userid}")
+    public ResponseEntity<Student> getNestedStudent(@PathVariable Long userid) {
+        log.debug("REST request to get Student with corresponding internalUser : {}", userid);
+        Optional<Student> student = studentRepository.findAll().stream()
+        		.filter(s -> Objects.nonNull(s.getInternalUser()))
+        		.filter(sbis -> sbis.getInternalUser().getId().equals(userid))
+        		.findAny();
+        return ResponseUtil.wrapOrNotFound(student);
     }
 }

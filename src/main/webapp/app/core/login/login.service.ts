@@ -6,16 +6,19 @@ import { Account } from 'app/core/user/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { AuthServerProvider } from 'app/core/auth/auth-jwt.service';
 import { Login } from './login.model';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
-  constructor(private accountService: AccountService, private authServerProvider: AuthServerProvider) {}
+  constructor(private accountService: AccountService, private authServerProvider: AuthServerProvider, localStorage: LocalStorageService) {}
 
   login(credentials: Login): Observable<Account | null> {
     return this.authServerProvider.login(credentials).pipe(flatMap(() => this.accountService.identity(true)));
   }
 
   logout(): void {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('adminUser');
     this.authServerProvider.logout().subscribe(null, null, () => this.accountService.authenticate(null));
   }
 }

@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 import { LocalStorageService } from 'ngx-webstorage';
 
 import { LoginService } from 'app/core/login/login.service';
+import { AccountService } from 'app/core/auth/account.service';
+import { UserService } from 'app/core/user/user.service';
+import { StudentService } from 'app/entities/student/student.service';
+import { InstructorService } from 'app/entities/instructor/instructor.service';
 // import { Console } from 'console';
 
 @Component({
@@ -21,7 +25,6 @@ export class LoginModalComponent implements AfterViewInit {
     username: [''],
     password: [''],
     rememberMe: [false],
-    isInstructor: [false],
   });
 
   constructor(
@@ -29,7 +32,11 @@ export class LoginModalComponent implements AfterViewInit {
     private router: Router,
     public activeModal: NgbActiveModal,
     private fb: FormBuilder,
-    private localStorage: LocalStorageService
+    private localStorage: LocalStorageService,
+    private accountService: AccountService,
+    private userService: UserService,
+    private studentService: StudentService,
+    private instructorService: InstructorService
   ) {}
 
   ngAfterViewInit(): void {
@@ -53,7 +60,6 @@ export class LoginModalComponent implements AfterViewInit {
         username: this.loginForm.get('username')!.value,
         password: this.loginForm.get('password')!.value,
         rememberMe: this.loginForm.get('rememberMe')!.value,
-        isInstructor: this.loginForm.get('isInstructor')!.value,
       })
       .subscribe(
         () => {
@@ -66,12 +72,29 @@ export class LoginModalComponent implements AfterViewInit {
           ) {
             this.router.navigate(['']);
           } else {
-            // TODO : Saving current user in the local storage
-            // localStorage.store('currentUser', user);
-
             // Navigate from login to home page
-            if (this.loginForm.get('isInstructor')!.value === false) this.router.navigate(['/homeStudent']);
-            else this.router.navigate(['/homeInstructor']);
+            // /!\ ADMIN account has both admin and user authorities, so don't invert these conditions (@baptboleat)
+
+            if (this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
+              this.userService
+                .find(this.loginForm.get('username')!.value)
+                .subscribe(user => localStorage.setItem('adminUser', JSON.stringify(user)));
+              this.router.navigate(['/homeInstructor']);
+            } else if (this.accountService.hasAnyAuthority('ROLE_INSTRUCTOR')) {
+              this.userService.find(this.loginForm.get('username')!.value).subscribe(user => {
+                this.instructorService
+                  .findbyuser(user.id)
+                  .subscribe(instructor => localStorage.setItem('currentUser', JSON.stringify(instructor.body)));
+              });
+              this.router.navigate(['/homeInstructor']);
+            } else {
+              this.userService.find(this.loginForm.get('username')!.value).subscribe(user => {
+                this.studentService
+                  .findbyuser(user.id)
+                  .subscribe(student => localStorage.setItem('currentUser', JSON.stringify(student.body)));
+              });
+              this.router.navigate(['/homeStudent']);
+            }
           }
         },
         () => (this.authenticationError = true)

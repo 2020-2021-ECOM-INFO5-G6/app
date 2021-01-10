@@ -1,3 +1,3 @@
 export class Login {
-  constructor(public username: string, public password: string, public rememberMe: boolean, public isInstructor: boolean) {}
+  constructor(public username: string, public password: string, public rememberMe: boolean) {}
 }

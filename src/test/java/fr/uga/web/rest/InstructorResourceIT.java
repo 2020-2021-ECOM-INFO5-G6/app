@@ -2,8 +2,11 @@ package fr.uga.web.rest;
 
 import fr.uga.EcomApp;
 import fr.uga.domain.Instructor;
+import fr.uga.domain.User;
 import fr.uga.repository.InstructorRepository;
+import fr.uga.repository.UserRepository;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -13,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -42,7 +44,10 @@ public class InstructorResourceIT {
 
     @Mock
     private InstructorRepository instructorRepositoryMock;
-
+    
+    @Autowired
+    private UserRepository userRepository;
+    
     @Autowired
     private EntityManager em;
 
@@ -61,6 +66,7 @@ public class InstructorResourceIT {
         Instructor instructor = new Instructor();
         return instructor;
     }
+    
     /**
      * Create an updated entity for this test.
      *
@@ -117,7 +123,7 @@ public class InstructorResourceIT {
     @Transactional
     public void getAllInstructors() throws Exception {
         // Initialize the database
-        instructorRepository.saveAndFlush(instructor);
+    	instructorRepository.saveAndFlush(instructor);
 
         // Get all the instructorList
         restInstructorMockMvc.perform(get("/api/instructors?sort=id,desc"))
@@ -150,7 +156,7 @@ public class InstructorResourceIT {
     @Transactional
     public void getInstructor() throws Exception {
         // Initialize the database
-        instructorRepository.saveAndFlush(instructor);
+    	instructorRepository.saveAndFlush(instructor);
 
         // Get the instructor
         restInstructorMockMvc.perform(get("/api/instructors/{id}", instructor.getId()))
@@ -170,7 +176,7 @@ public class InstructorResourceIT {
     @Transactional
     public void updateInstructor() throws Exception {
         // Initialize the database
-        instructorRepository.saveAndFlush(instructor);
+    	instructorRepository.saveAndFlush(instructor);
 
         int databaseSizeBeforeUpdate = instructorRepository.findAll().size();
 
@@ -210,7 +216,7 @@ public class InstructorResourceIT {
     @Transactional
     public void deleteInstructor() throws Exception {
         // Initialize the database
-        instructorRepository.saveAndFlush(instructor);
+    	instructorRepository.saveAndFlush(instructor);
 
         int databaseSizeBeforeDelete = instructorRepository.findAll().size();
 
@@ -223,4 +229,34 @@ public class InstructorResourceIT {
         List<Instructor> instructorList = instructorRepository.findAll();
         assertThat(instructorList).hasSize(databaseSizeBeforeDelete - 1);
     }
+    
+    //NOT OUT-OF-THE-BOX TESTS
+    
+    @Test
+    @Transactional
+    public void getNestedInstructor() throws Exception {
+    	User user = new User();
+    	user.setLogin("testlogin");
+    	user.setPassword(RandomStringUtils.random(60));
+    	
+        // Initialize the database
+    	userRepository.saveAndFlush(user);
+    	instructor.setInternalUser(user);
+    	instructorRepository.saveAndFlush(instructor);
+
+        // Get the instructor
+        restInstructorMockMvc.perform(get("/api/instructors/nestedinstructor/{userid}", user.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.internalUser.id").value(user.getId().intValue()));
+    }
+    @Test
+    @Transactional
+    public void getNonExistingNestedInstructor() throws Exception {
+        // Get the instructor
+        restInstructorMockMvc.perform(get("/api/instructors/nestedinstructor/{userid}", Long.MAX_VALUE))
+            .andExpect(status().isNotFound());
+    }
+
+    
 }

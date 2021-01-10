@@ -66,8 +66,7 @@ export class RegisterComponent implements AfterViewInit {
     } else {
       const login = this.registerForm.get(['login'])!.value;
       const email = this.registerForm.get(['email'])!.value;
-
-      //Get extra information for registration
+      // Get extra information for registration
       const cursusComposant = this.registerForm.get(['cursusComposant'])!.value;
       const cursusLevel = this.registerForm.get(['cursusLevel'])!.value;
       const sportLevel = this.registerForm.get(['sportLevel'])!.value;
