@@ -1,0 +1,36 @@
+/* ==========================================================================
+Main page styles
+========================================================================== */
+
+.hipster {
+  display: inline-block;
+  width: 347px;
+  height: 497px;
+  background: url('../../content/images/jhipster_family_member_0.svg') no-repeat center top;
+  background-size: contain;
+}
+
+.shadowbox {
+  width: 15em;
+  border: 1px solid #333;
+  box-shadow: 8px 8px 5px #444;
+  padding: 8px 12px;
+  background-image: linear-gradient(180deg, #fff, #ddd 40%, #ccc);
+}
+
+.alerte {
+  color: red;
+  font-size: small;
+}
+
+/* wait autoprefixer update to allow simple generation of high pixel density media query */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (-moz-min-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 2/1),
+  only screen and (min-resolution: 192dpi),
+  only screen and (min-resolution: 2dppx) {
+  .hipster {
+    background: url('../../content/images/jhipster_family_member_0.svg') no-repeat center top;
+    background-size: contain;
+  }
+}

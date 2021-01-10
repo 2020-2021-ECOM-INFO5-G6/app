@@ -8,6 +8,8 @@ import { EcomAppRoutingModule } from './app-routing.module';
 // Homes
 import { EcomHomeStudentModule } from './homeStudent/homeStudent.module';
 import { EcomHomeInstructorModule } from './homeInstructor/homeInstructor.module';
+// Student
+import { EcomStudentSemesterInscriptionModule } from './studentSemesterInscription/studentSemesterInscription.module';
 // Entities
 import { EcomEntityModule } from './entities/entity.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
@@ -26,6 +28,8 @@ import { ErrorComponent } from './layouts/error/error.component';
     // Homes
     EcomHomeStudentModule,
     EcomHomeInstructorModule,
+    // Student
+    EcomStudentSemesterInscriptionModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     EcomEntityModule,
     EcomAppRoutingModule,

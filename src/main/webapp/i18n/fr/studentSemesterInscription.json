@@ -1,0 +1,19 @@
+{
+  "studentSemesterInscription": {
+    "title": "Student semester inscription",
+    "subtitle": "Bienvenue !",
+    "semesters": "Ici vous pouvez choisire de vous inscrire à un ou plusieurs semestres",
+    "semester1": "Premier semestre",
+    "semester2": "Deuxième semestre",
+    "yes": "Oui",
+    "no": "Non",
+    "later": "Plus tard",
+    "now": "Maintenant",
+    "alerte": "ALERTE! cette inscription existe déjà",
+    "submit": "Valider",
+    "noted": "Sport noté ?",
+    "pay": "Je voudrais payer ...",
+    "finish": "Terminer",
+    "reset": "Recommencer"
+  }
+}
