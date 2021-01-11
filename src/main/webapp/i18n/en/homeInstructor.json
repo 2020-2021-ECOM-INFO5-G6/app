@@ -10,6 +10,9 @@
     "instructor": {
       "editableActivities": "Editable activities",
       "monitoredActivities": "Monitored activities"
+    },
+    "button": {
+      "editData": "Edit you data"
     }
   }
 }

@@ -10,6 +10,9 @@
     "instructor": {
       "editableActivities": "Activités modifiables",
       "monitoredActivities": "Activités surveillées"
+    },
+    "button": {
+      "editData": "Modifier vos données"
     }
   }
 }
