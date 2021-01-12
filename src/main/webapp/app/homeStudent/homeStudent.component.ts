@@ -63,8 +63,6 @@ export class HomeStudentComponent implements OnInit, OnDestroy {
     if (this.account != null) {
       this.userService.find(this.account.login).subscribe(user => {
         this.studentService.findbyuser(user.id).subscribe(student => {
-          // eslint-disable-next-line no-console
-          console.log(student);
           this.student = student.body;
         });
       });
