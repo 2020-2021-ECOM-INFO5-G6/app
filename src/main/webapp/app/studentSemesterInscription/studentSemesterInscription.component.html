@@ -4,7 +4,7 @@
 <br><br>
 
 <!-- First Semester Inscription -->
- <input type="checkbox" [disabled]= "submited" [checked]= "isFirstSemester" (change)="changeValueOfFirstSemester()">
+ <input type="checkbox" [disabled]= "submited || isAlreadySubscribed1()" [checked]= "isFirstSemester" (change)="changeValueOfFirstSemester()">
  <span jhiTranslate="studentSemesterInscription.semester1">First semester</span>
 
  <br>
@@ -45,7 +45,7 @@
  <!-- Second Semester Inscription -->
 
 
- <input type="checkbox" [disabled]= "submited2" [checked]= "isSecondSemester" (change)="changeValueOfSecondSemester()">
+ <input type="checkbox" [disabled]= "submited2 || isAlreadySubscribed1()" [checked]= "isSecondSemester" (change)="changeValueOfSecondSemester()">
  <span jhiTranslate="studentSemesterInscription.semester2">Second semester</span>
 
  <br>

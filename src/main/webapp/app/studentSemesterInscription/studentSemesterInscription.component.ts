@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/core/login/login.service';
 import { IStudent } from 'app/shared/model/student.model';
+import { SemesterInscriptionService } from 'app/entities/semester-inscription/semester-inscription.service';
+import { semesterInscriptionRoute } from 'app/entities/semester-inscription/semester-inscription.route';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'jhi-home',
@@ -40,9 +43,20 @@ export class StudentSemesterInscriptionComponent implements OnInit {
   userjs: any;
   user: IStudent | null = null;
 
+  START_DATE1: Date = new Date('2021-09-03');
+  END_DATE1: Date = new Date('2021-12-18');
+
+  START_DATE2: Date = new Date('2022-01-06');
+  END_DATE2: Date = new Date('2021-06-13');
+
   // Student
 
-  constructor(private router: Router, private accountService: AccountService, private loginService: LoginService) {}
+  constructor(
+    private router: Router,
+    private accountService: AccountService,
+    private loginService: LoginService,
+    private semesterInscriptionService: SemesterInscriptionService
+  ) {}
 
   ngOnInit(): void {
     // Authentification control
@@ -121,6 +135,38 @@ export class StudentSemesterInscriptionComponent implements OnInit {
     // if it already exists then : this.alerte = true;
 
     // else then save the semester inscription
+  }
+
+  isAlreadySubscribed1(): boolean {
+    let res = false;
+    this.semesterInscriptionService.query().subscribe(array => {
+      array.body?.forEach(insc => {
+        if (
+          insc.student === this.user &&
+          insc.semester?.startDate?.toDate() === this.START_DATE1 &&
+          insc.semester?.endDate?.toDate() === this.END_DATE1
+        ) {
+          res = true;
+        }
+      });
+    });
+    return res;
+  }
+
+  isAlreadySubscribed2(): boolean {
+    let res = false;
+    this.semesterInscriptionService.query().subscribe(array => {
+      array.body?.forEach(insc => {
+        if (
+          insc.student === this.user &&
+          insc.semester?.startDate?.toDate() === this.START_DATE2 &&
+          insc.semester?.endDate?.toDate() === this.END_DATE2
+        ) {
+          res = true;
+        }
+      });
+    });
+    return res;
   }
 
   changeSubmited2(): void {
