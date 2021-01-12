@@ -2,6 +2,7 @@
   "homeStudent": {
     "title": "Home",
     "subtitle": "Bienvenue élève !",
+    "goToSemesterInscription": "Naviguer vers la page d'inscription aux semestres",
     "account": {
       "firstName": "Prénom",
       "lastName": "Nom",

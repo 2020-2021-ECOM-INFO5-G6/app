@@ -2,6 +2,7 @@
   "homeStudent": {
     "title": "Home",
     "subtitle": "Welcome Student!",
+    "goToSemesterInscription": "Go to student semester inscription page",
     "account": {
       "firstName": "First name",
       "lastName": "Last name",
