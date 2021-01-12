@@ -71,4 +71,14 @@ export class NavbarComponent implements OnInit {
   getImageUrl(): string {
     return this.isAuthenticated() ? this.accountService.getImageUrl() : '';
   }
+
+  goHome(): void {
+    if (!this.accountService.isAuthenticated()) this.router.navigate(['/']);
+    else {
+      if (this.accountService.hasAnyAuthority('ROLE_INSTRUCTOR')) this.router.navigate(['/homeInstructor']);
+      else this.router.navigate(['/homeStudent']);
+    }
+
+    this.collapseNavbar();
+  }
 }
