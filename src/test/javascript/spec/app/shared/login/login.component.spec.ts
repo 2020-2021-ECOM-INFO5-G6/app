@@ -3,6 +3,8 @@ import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { AccountService } from 'app/core/auth/account.service';
+
 import { LoginService } from 'app/core/login/login.service';
 import { LoginModalComponent } from 'app/shared/login/login.component';
 import { EcomTestModule } from '../../../test.module';
@@ -28,6 +30,7 @@ describe('Component Tests', () => {
             provide: LoginService,
             useClass: MockLoginService,
           },
+          AccountService,
         ],
       })
         .overrideTemplate(LoginModalComponent, '')

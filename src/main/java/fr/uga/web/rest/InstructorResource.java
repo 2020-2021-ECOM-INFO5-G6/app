@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -115,5 +116,23 @@ public class InstructorResource {
         log.debug("REST request to delete Instructor : {}", id);
         instructorRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+    
+    //NOT OUT-OF-THE-BOX
+    
+    /**
+     * {@code GET  /instructors/nestedinstructor/:userid} : get the "id" instructor.
+     *
+     * @param userid the id of the internalUser nested to the instructor to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the instructor, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/instructors/nestedinstructor/{userid}")
+    public ResponseEntity<Instructor> getNestedInstructor(@PathVariable Long userid) {
+        log.debug("REST request to get Instructor : {}", userid);
+        Optional<Instructor> instructor = instructorRepository.findAll().stream()
+        		.filter(s -> Objects.nonNull(s.getInternalUser()))
+        		.filter(sbis -> sbis.getInternalUser().getId().equals(userid))
+        		.findAny();
+        return ResponseUtil.wrapOrNotFound(instructor);
     }
 }

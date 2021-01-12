@@ -2,8 +2,11 @@ package fr.uga.web.rest;
 
 import fr.uga.EcomApp;
 import fr.uga.domain.Student;
+import fr.uga.domain.User;
 import fr.uga.repository.StudentRepository;
+import fr.uga.repository.UserRepository;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +45,9 @@ public class StudentResourceIT {
 
     @Autowired
     private StudentRepository studentRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private EntityManager em;
@@ -244,4 +250,34 @@ public class StudentResourceIT {
         List<Student> studentList = studentRepository.findAll();
         assertThat(studentList).hasSize(databaseSizeBeforeDelete - 1);
     }
+    
+//NOT OUT-OF-THE-BOX TESTS
+    
+    @Test
+    @Transactional
+    public void getNestedStudent() throws Exception {
+    	User user = new User();
+    	user.setLogin("testlogin");
+    	user.setPassword(RandomStringUtils.random(60));
+    	
+        // Initialize the database
+    	userRepository.saveAndFlush(user);
+    	student.setInternalUser(user);
+    	studentRepository.saveAndFlush(student);
+
+        // Get the instructor
+        restStudentMockMvc.perform(get("/api/students/nestedstudent/{userid}", user.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.internalUser.id").value(user.getId().intValue()));
+    }
+    
+    @Test
+    @Transactional
+    public void getNonExistingNestedStudent() throws Exception {
+        // Get the instructor
+        restStudentMockMvc.perform(get("/api/students/nestedstudent/{userid}", Long.MAX_VALUE))
+            .andExpect(status().isNotFound());
+    }
+    
 }

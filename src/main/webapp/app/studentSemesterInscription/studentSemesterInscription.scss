@@ -10,20 +10,17 @@ Main page styles
   background-size: contain;
 }
 
-.row {
-  background-color: rgba(0, 0, 0, 0);
+.shadowbox {
+  width: 15em;
+  border: 1px solid #333;
+  box-shadow: 8px 8px 5px #444;
+  padding: 8px 12px;
+  background-image: linear-gradient(180deg, #fff, #ddd 40%, #ccc);
 }
 
-.column {
-  float: left;
-  width: 50%;
-  padding: 10px;
-}
-
-.row:after {
-  content: '';
-  display: table;
-  clear: both;
+.alerte {
+  color: red;
+  font-size: small;
 }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
