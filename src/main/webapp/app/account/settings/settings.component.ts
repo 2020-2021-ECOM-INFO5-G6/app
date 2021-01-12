@@ -6,26 +6,59 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { LANGUAGES } from 'app/core/language/language.constants';
 
+import { LocalStorageService } from 'ngx-webstorage';
+import { StudentService } from 'app/entities/student/student.service';
+import { InstructorService } from 'app/entities/instructor/instructor.service';
+import { UserService } from 'app/core/user/user.service';
+
+import { Student } from 'app/shared/model/student.model';
+import { Instructor } from 'app/shared/model/instructor.model';
+import { User } from 'app/core/user/user.model';
+
 @Component({
   selector: 'jhi-settings',
   templateUrl: './settings.component.html',
 })
 export class SettingsComponent implements OnInit {
-  account!: Account;
+  account: Account | null = null;
   success = false;
   languages = LANGUAGES;
+
+  student: Student | null = null;
+  instructor: Instructor | null = null;
+  user: User | null = null;
+
+  raw: string | null = null;
+
   settingsForm = this.fb.group({
     firstName: [undefined, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
     lastName: [undefined, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
     email: [undefined, [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     langKey: [undefined],
+    cursusComposant: [],
+    cursusLevel: [null, [Validators.min(0)]],
+    sportLevel: [],
+    drivingLicence: [],
+    meetingPlace: [],
   });
 
-  constructor(private accountService: AccountService, private fb: FormBuilder, private languageService: JhiLanguageService) {}
+  constructor(
+    private accountService: AccountService,
+    private fb: FormBuilder,
+    private languageService: JhiLanguageService,
+    private localStorage: LocalStorageService,
+    private userService: UserService,
+    private instructorService: InstructorService,
+    private studentService: StudentService
+  ) {}
 
   ngOnInit(): void {
+    this.student = null;
+    this.instructor = null;
+    this.user = null;
+
     this.accountService.identity().subscribe(account => {
-      if (account) {
+      if (account != null) {
         this.settingsForm.patchValue({
           firstName: account.firstName,
           lastName: account.lastName,
@@ -35,25 +68,106 @@ export class SettingsComponent implements OnInit {
 
         this.account = account;
       }
+      this.getLinkedEntity(account);
+      if (this.student != null) {
+        this.settingsForm.patchValue({
+          cursusComposant: this.student.cursus?.composant,
+          cursusLevel: this.student.cursus?.academicLevel,
+          sportLevel: this.student.sportLevel,
+          drivingLicence: this.student.drivingLicence,
+          meetingPlace: this.student.meetingPlace,
+        });
+      }
     });
   }
 
   save(): void {
     this.success = false;
 
-    this.account.firstName = this.settingsForm.get('firstName')!.value;
-    this.account.lastName = this.settingsForm.get('lastName')!.value;
-    this.account.email = this.settingsForm.get('email')!.value;
-    this.account.langKey = this.settingsForm.get('langKey')!.value;
+    if (this.account != null) {
+      this.account.firstName = this.settingsForm.get('firstName')!.value;
+      this.account.lastName = this.settingsForm.get('lastName')!.value;
+      this.account.email = this.settingsForm.get('email')!.value;
+      this.account.langKey = this.settingsForm.get('langKey')!.value;
 
-    this.accountService.save(this.account).subscribe(() => {
-      this.success = true;
+      this.accountService.save(this.account).subscribe(() => {
+        this.success = true;
 
-      this.accountService.authenticate(this.account);
+        this.accountService.authenticate(this.account);
 
-      if (this.account.langKey !== this.languageService.getCurrentLanguage()) {
-        this.languageService.changeLanguage(this.account.langKey);
+        if (this.account != null && this.account.langKey !== this.languageService.getCurrentLanguage()) {
+          this.languageService.changeLanguage(this.account.langKey);
+        }
+      });
+    }
+
+    if (this.student != null) {
+      if (this.student.cursus != null) {
+        this.student.cursus.composant = this.settingsForm.get(['cursusComposant'])!.value;
+        this.student.cursus.academicLevel = this.settingsForm.get(['cursusLevel'])!.value;
       }
-    });
+      this.student.sportLevel = this.settingsForm.get(['sportLevel'])!.value;
+      this.student.drivingLicence = this.settingsForm.get(['drivingLicence'])!.value;
+      this.student.meetingPlace = this.settingsForm.get(['meetingPlace'])!.value;
+
+      localStorage.setItem('currentUser', JSON.stringify(this.student));
+      this.studentService.update(this.student);
+    }
+  }
+
+  getLinkedEntity(account: Account | null): void {
+    this.account = account;
+    if (this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
+      this.user = this.getCurrentUser();
+      if (this.user == null) {
+        this.getCurrentUserAsynchronously();
+      }
+    } else if (this.accountService.hasAnyAuthority('ROLE_INSTRUCTOR')) {
+      this.instructor = this.getCurrentUser();
+      if (this.instructor == null) {
+        this.getCurrentInstructorAsynchronously();
+      }
+    } else {
+      this.student = this.getCurrentUser();
+      if (this.student == null) {
+        this.getCurrentStudentAsynchronously();
+      }
+    }
+  }
+
+  getCurrentUser(): Student | Instructor | User | null {
+    this.raw = localStorage.getItem('currentUser');
+    if (this.raw != null) {
+      return JSON.parse(this.raw);
+    }
+    return null;
+  }
+
+  getCurrentUserAsynchronously(): void {
+    if (this.account != null) {
+      this.userService.find(this.account.login).subscribe(user => {
+        this.user = user;
+      });
+    }
+  }
+
+  getCurrentInstructorAsynchronously(): void {
+    if (this.account != null) {
+      this.userService.find(this.account.login).subscribe(user => {
+        this.instructorService.findbyuser(user.id).subscribe(instructor => {
+          this.instructor = instructor.body;
+        });
+      });
+    }
+  }
+
+  getCurrentStudentAsynchronously(): void {
+    if (this.account != null) {
+      this.userService.find(this.account.login).subscribe(user => {
+        this.studentService.findbyuser(user.id).subscribe(student => {
+          this.student = student.body;
+        });
+      });
+    }
   }
 }
