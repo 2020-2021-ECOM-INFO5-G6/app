@@ -80,8 +80,6 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
     if (this.account != null) {
       this.userService.find(this.account.login).subscribe(user => {
         this.instructorService.findbyuser(user.id).subscribe(instructor => {
-          // eslint-disable-next-line no-console
-          console.log(instructor);
           this.instructor = instructor.body;
         });
       });
