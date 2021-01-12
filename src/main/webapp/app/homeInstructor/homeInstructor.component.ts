@@ -62,8 +62,6 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
 
   getCurrentUser(): Instructor | User | null {
     this.raw = localStorage.getItem('currentUser');
-    // eslint-disable-next-line no-console
-    console.log(this.raw);
     if (this.raw != null) {
       return JSON.parse(this.raw);
     }
