@@ -41,7 +41,6 @@ export class HomeStudentComponent implements OnInit, OnDestroy {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }
-    this.student?.cursus?.composant;
   }
 
   getLinkedEntity(account: Account | null): void {
