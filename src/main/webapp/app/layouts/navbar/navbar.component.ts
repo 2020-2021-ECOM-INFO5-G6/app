@@ -75,8 +75,9 @@ export class NavbarComponent implements OnInit {
   goHome(): void {
     if (!this.accountService.isAuthenticated()) this.router.navigate(['/']);
     else {
-      if (this.accountService.hasAnyAuthority('ROLE_USER')) this.router.navigate(['/homeStudent']);
-      else this.router.navigate(['/homeInstructor']);
+      if (this.accountService.hasAnyAuthority('ROLE_INSTRUCTOR') || this.accountService.hasAnyAuthority('ROLE_ADMIN'))
+        this.router.navigate(['homeInstructor']);
+      else this.router.navigate(['/homeStudent']);
     }
 
     this.collapseNavbar();
