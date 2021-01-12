@@ -49,6 +49,9 @@ export class StudentSemesterInscriptionComponent implements OnInit {
   START_DATE2: Date = new Date('2022-01-06');
   END_DATE2: Date = new Date('2021-06-13');
 
+  isSubscribed1: boolean = false;
+  isSubscribed2: boolean = false;
+
   // Student
 
   constructor(
@@ -71,6 +74,9 @@ export class StudentSemesterInscriptionComponent implements OnInit {
     this.user = this.userjs !== null ? JSON.parse(this.userjs) : null;
     console.log('User :');
     console.log(this.user);
+
+    this.isSubscribed1 = this.isAlreadySubscribed1();
+    this.isSubscribed2 = this.isAlreadySubscribed2();
   }
 
   reset(): void {
