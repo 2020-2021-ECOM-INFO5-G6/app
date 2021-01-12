@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/core/login/login.service';
 import { IStudent } from 'app/shared/model/student.model';
-import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-home',
@@ -43,12 +42,7 @@ export class StudentSemesterInscriptionComponent implements OnInit {
 
   // Student
 
-  constructor(
-    private router: Router,
-    private accountService: AccountService,
-    private loginService: LoginService,
-    private localStorage: LocalStorageService
-  ) {}
+  constructor(private router: Router, private accountService: AccountService, private loginService: LoginService) {}
 
   ngOnInit(): void {
     // Authentification control
