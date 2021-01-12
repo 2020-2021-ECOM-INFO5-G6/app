@@ -1,6 +1,22 @@
 {
   "homeStudent": {
     "title": "Home",
-    "subtitle": "Bienvenue élève !"
+    "subtitle": "Bienvenue élève !",
+    "account": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email"
+    },
+    "student": {
+      "sportLevel": "Niveau sportif",
+      "drivingLicence": "Permis de conduire",
+      "meetingPlace": "Lieu de rendez-vous",
+      "cursus": "Cursus",
+      "semesterInscriptions": "Inscriptions au semestre",
+      "studentActivities": "Activités"
+    },
+    "button": {
+      "editData": "Modifier vos données"
+    }
   }
 }
