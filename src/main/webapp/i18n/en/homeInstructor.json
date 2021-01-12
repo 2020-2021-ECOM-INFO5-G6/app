@@ -1,6 +1,18 @@
 {
   "homeInstructor": {
     "title": "Home",
-    "subtitle": "Welcome Instructor!"
+    "subtitle": "Welcome Instructor!",
+    "account": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email"
+    },
+    "instructor": {
+      "editableActivities": "Editable activities",
+      "monitoredActivities": "Monitored activities"
+    },
+    "button": {
+      "editData": "Edit you data"
+    }
   }
 }
