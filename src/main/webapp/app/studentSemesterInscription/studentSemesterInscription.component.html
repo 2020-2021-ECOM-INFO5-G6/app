@@ -1,4 +1,4 @@
-<h1 jhiTranslate="studentSemesterInscription.subtitle">Welcom! {{userName}} </h1>
+<h1> <span jhiTranslate="studentSemesterInscription.subtitle"> Welcom </span> {{getUserame()}} ! </h1>
 
 <h4 jhiTranslate="studentSemesterInscription.semesters"> Here you can subscribe to a semester inscription </h4>
 <br><br>
@@ -84,13 +84,13 @@
 
 <br><br>
 
-<div *ngIf = "(submited && now) || (submited2 && now2); else elseBlock">
-   <button style="background-color:black; color: white;" > Total : {{total}} €</button>
+<div *ngIf = "(submited && now) || (submited2 && now2)">
+   <p> If you suscribe now you will have {{total}}€ to pay with PBox </p>
 </div>
 
-<ng-template #elseBlock>
+<div>
    <button jhiTranslate="studentSemesterInscription.finish" (click) = "onFinish()" style="background-color:black; color: white;"> Suscribe  </button> <br>
-</ng-template>
+</div>
 
 <div *ngIf = "submited || submited2">
    <br>

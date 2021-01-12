@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
+import { LoginService } from 'app/core/login/login.service';
+import { IStudent } from 'app/shared/model/student.model';
 import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
@@ -34,24 +36,33 @@ export class StudentSemesterInscriptionComponent implements OnInit {
 
   total = 0;
 
-  userName = '';
   semesterPrice = 35;
+
+  userjs: any;
+  user: IStudent | null = null;
 
   // Student
 
-  constructor(private router: Router, private accountService: AccountService) {}
+  constructor(
+    private router: Router,
+    private accountService: AccountService,
+    private loginService: LoginService,
+    private localStorage: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
-    if (!this.isAuthenticated) {
-      this.total = 9999;
+    // Authentification control
+    if (!this.accountService.isAuthenticated()) {
+      // this.navbarComponent.logout();
+      this.loginService.logout();
+      this.router.navigate(['']);
     }
 
-    //localStorage.getItem('currentUser');
-    this.userName = '';
-  }
-
-  isAuthenticated(): boolean {
-    return this.accountService.isAuthenticated();
+    // JSON.parse(localStorage.getItem('currentUser'))
+    this.userjs = localStorage.getItem('currentUser');
+    this.user = this.userjs !== null ? JSON.parse(this.userjs) : null;
+    console.log('User :');
+    console.log(this.user);
   }
 
   reset(): void {
@@ -127,5 +138,11 @@ export class StudentSemesterInscriptionComponent implements OnInit {
 
   onFinish(): void {
     this.finish = true;
+  }
+
+  getUserame(): string {
+    if (this.user != null)
+      if (this.user.internalUser !== undefined) if (this.user.internalUser.login !== undefined) return this.user.internalUser.login;
+    return 'jpp';
   }
 }
