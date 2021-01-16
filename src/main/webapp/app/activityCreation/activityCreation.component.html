@@ -1,32 +1,101 @@
-<div class="modal-header">
-    <h4 class="modal-title" jhiTranslate="login.title">Sign in</h4>
+<h1 jhiTranslate="activityCreation.subtitle"> Create a new activity </h1> 
 
-    <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="activeModal.dismiss('closed')">
-        <span aria-hidden="true">x</span>
-    </button>
+User Id : {{getUserId()}}
+
+<h4 jhiTranslate="studentSemesterInscription.semesters"> Here you can subscribe to a semester inscription </h4>
+<br><br>
+
+<!-- First Semester Inscription -->
+ <input type="checkbox" [disabled]= "submited" [checked]= "isFirstSemester" (change)="changeValueOfFirstSemester()">
+ <span jhiTranslate="studentSemesterInscription.semester1">First semester</span>
+
+ <br>
+ <!-- Display inscription-->
+ <div class="shadowbox" *ngIf = "isFirstSemester"> 
+
+     <span jhiTranslate="studentSemesterInscription.noted"> Is noted?</span>
+
+     <br>
+
+     <input type="checkbox" [checked]= "yes" [disabled]= "submited"  (change)="changeNoted()" > 
+     <span jhiTranslate="studentSemesterInscription.yes"> Yes </span>
+
+     <input type="checkbox" [checked]= "no" [disabled]= "submited"  (change)="changeNoted()" > 
+     <span jhiTranslate="studentSemesterInscription.no"> No </span>
+
+     <br><br>
+
+     <span jhiTranslate="studentSemesterInscription.pay"> I would like to pay </span>
+
+     <br>
+        
+     <input type="checkbox" [checked]= "later" [disabled]= "submited"  (change)="changePayement()" > 
+     <span jhiTranslate="studentSemesterInscription.later"> Later </span>
+
+     <input type="checkbox" [checked]= "now" [disabled]= "submited"  (change)="changePayement()" > 
+     <span jhiTranslate="studentSemesterInscription.now"> Now </span>
+
+     <br><br>
+
+     <button jhiTranslate="studentSemesterInscription.submit" (click)= "changeSubmited()"> Submit </button>
+     
+     
 </div>
 
-<div class="modal-body">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="alert alert-danger" *ngIf="authenticationError" >
-                <strong>Failed to sign in!</strong> Please check your credentials and try again.
-            </div>
-        </div>
+<br><br>
 
-        <div class="col-md-8">
-            <form class="form" role="form" (ngSubmit)="cancel()" [formGroup]="createActivityForm">
-                <div class="form-group">
-                    <label class="username-label" for="username" >Login</label>
-                    <input type="text" class="form-control" name="name" id="name" 
-                           formControlName="name" #username>
-                </div>
+ <!-- Second Semester Inscription -->
 
-                <button type="submit" class="btn btn-primary">Sign in</button>
-            </form>
 
-        </div>
-    </div>
-    
+ <input type="checkbox" [disabled]= "submited2" [checked]= "isSecondSemester" (change)="changeValueOfSecondSemester()">
+ <span jhiTranslate="studentSemesterInscription.semester2">Second semester</span>
+
+ <br>
+
+  <!-- Display inscription-->
+  <div class="shadowbox" *ngIf = "isSecondSemester"> 
+
+    <span jhiTranslate="studentSemesterInscription.noted"> Is noted?</span>
+
+    <br>
+
+    <input type="checkbox" [checked]= "yes2" [disabled]= "submited2" (change)="changeNoted2()" > 
+    <span jhiTranslate="studentSemesterInscription.yes"> Yes </span>
+
+    <input type="checkbox" [checked]= "no2" [disabled]= "submited2" (change)="changeNoted2()" > 
+    <span jhiTranslate="studentSemesterInscription.no" > No </span>
+
+    <br><br>
+
+    <span jhiTranslate="studentSemesterInscription.pay"> I would like to pay </span>
+
+    <br>
+       
+    <input type="checkbox" [checked]= "later2" [disabled]= "submited2" (change)="changePayement2()" > 
+    <span jhiTranslate="studentSemesterInscription.later"> Later </span>
+
+    <input type="checkbox" [checked]= "now2" [disabled]= "submited2" (change)="changePayement2()" > 
+    <span jhiTranslate="studentSemesterInscription.now"> Now </span>
+
+    <br><br>
+
+    <button jhiTranslate="studentSemesterInscription.submit" (click)= "changeSubmited2()"> Submit </button>
+
+</div>
+
+
+<br><br>
+
+<div *ngIf = "(submited && now) || (submited2 && now2)">
+   <p> If you suscribe now you will have {{total}}€ to pay with PBox </p>
+</div>
+
+<div>
+   <button jhiTranslate="studentSemesterInscription.finish" (click) = "onFinish()" style="background-color:black; color: white;"> Suscribe  </button> <br>
+</div>
+
+<div *ngIf = "submited || submited2">
+   <br>
+   <button jhiTranslate="studentSemesterInscription.reset" style="background-color:black; color: white;" (click) = "reset()"> Reset </button>
 </div>
 

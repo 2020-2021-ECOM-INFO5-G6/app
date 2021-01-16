@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
+import { ActivityCreationModalService } from 'app/activityCreation/activityCreation-modal.service';
 import { LocalStorageService } from 'ngx-webstorage';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
@@ -18,7 +19,11 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
 
   instructor: Instructor | null = null;
 
-  constructor(private accountService: AccountService, private localStorage: LocalStorageService) {}
+  constructor(
+    private accountService: AccountService,
+    private localStorage: LocalStorageService,
+    private activityCreationModalService: ActivityCreationModalService
+  ) {}
 
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
@@ -32,6 +37,10 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }
+  }
+
+  createActivity(): void {
+    this.activityCreationModalService.open();
   }
 
   // TODO : return current Instructor from local strorage
