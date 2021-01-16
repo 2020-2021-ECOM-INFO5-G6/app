@@ -56,7 +56,7 @@
     -->
     <changeSet id="20201110101715-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/tracksuit.csv"
+                  file="config/liquibase/data/tracksuit.csv"
                   separator=";"
                   tableName="tracksuit">
             <column name="id" type="numeric"/>

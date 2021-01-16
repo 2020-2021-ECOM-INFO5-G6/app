@@ -1,0 +1,74 @@
+id;sail_id;name;area;level;usable;comment
+1;1;Loft Purelip;4;BEGINNER;true;../data/blob/empty.txt
+2;3;Gun Blow;4,2;BEGINNER;true;../data/blob/empty.txt
+3;8;Gun Blow;4,2;BEGINNER;true;../data/blob/3-GunBlow.txt
+4;10;Gun Beat;6,9;FUN;true;../data/blob/empty.txt
+5;15;Gun Beaf;6,9;FUN;true;../data/blob/empty.txt
+6;16;Loft Oxygen;6,8;FUN;false;../data/blob/empty.txt
+7;17;Loft Oxygen;6,8;FUN;false;../data/blob/empty.txt
+8;48;Duotone E-Pace;6,8;FUN;true;../data/blob/empty.txt
+9;49;Duotone E-Pace;6,8;FUN;true;../data/blob/empty.txt
+10;71;Beat;6,3;PERF;true;../data/blob/empty.txt
+11;72;Beat;6,3;PERF;true;../data/blob/empty.txt
+12;73;Allstar;4,2;BEGINNER;true;../data/blob/empty.txt
+13;74;Allstar;4,2;BEGINNER;true;../data/blob/empty.txt
+14;75;Allstar;4,2;BEGINNER;true;../data/blob/empty.txt
+15;76;Allstar;4,2;BEGINNER;false;../data/blob/empty.txt
+16;77;Allstar;4,2;BEGINNER;false;../data/blob/empty.txt
+17;78;Allstar;4,2;BEGINNER;true;../data/blob/empty.txt
+18;79;Allstar;4,2;BEGINNER;true;../data/blob/empty.txt
+19;8;Loft;4,3;BEGINNER;true;../data/blob/empty.txt
+20;80;Allstar;4,2;BEGINNER;true;../data/blob/empty.txt
+21;81;Rebel;4,2;BEGINNER;true;../data/blob/empty.txt
+22;82;Rebel;4,2;BEGINNER;true;../data/blob/empty.txt
+23;83;Rebel;4,2;BEGINNER;true;../data/blob/empty.txt
+24;84;Rebel;4,2;BEGINNER;false;../data/blob/empty.txt
+25;85;Rebel;4,2;BEGINNER;true;../data/blob/empty.txt
+26;86;Rebel;4,7;BEGINNER;true;../data/blob/empty.txt
+27;87;Rebel;4,7;BEGINNER;true;../data/blob/empty.txt
+28;88;Rebel;4,7;BEGINNER;true;../data/blob/empty.txt
+29;89;Rebel;4,7;BEGINNER;true;../data/blob/empty.txt
+30;90;Rebel;4,7;BEGINNER;false;../data/blob/empty.txt
+31;91;Rebel;4,7;BEGINNER;false;../data/blob/empty.txt
+32;92;Rebel;4,7;BEGINNER;true;../data/blob/empty.txt
+33;93;Rebel;4,7;BEGINNER;true;../data/blob/empty.txt
+34;Blade;Loft Blade;7;FUN;true;../data/blob/34-LoftBlade.txt
+35;F1;Blow;4;BEGINNER;true;../data/blob/empty.txt
+36;F10;Blow;4,6;BEGINNER;true;../data/blob/empty.txt
+37;F11;Blow;4,6;BEGINNER;true;../data/blob/empty.txt
+38;F12;Blow;4,6;BEGINNER;true;../data/blob/empty.txt
+39;F2;Blow;4;BEGINNER;false;../data/blob/empty.txt
+40;F20;Blow;5,2;BEGINNER;false;../data/blob/empty.txt
+41;F21;Blow;5,2;BEGINNER;true;../data/blob/empty.txt
+42;F3;Blow;4;BEGINNER;true;../data/blob/empty.txt
+43;F38;Blow;4,6;BEGINNER;true;../data/blob/empty.txt
+44;F38b;Blow;4;BEGINNER;true;../data/blob/empty.txt
+45;F39;Steel;4,5;BEGINNER;true;../data/blob/empty.txt
+46;F39b;Blow;4;BEGINNER;true;../data/blob/empty.txt
+47;F4;Blow;4,3;BEGINNER;true;../data/blob/empty.txt
+48;F40;Steel;5;BEGINNER;true;../data/blob/empty.txt
+49;F41;Blow;4,6;BEGINNER;true;../data/blob/empty.txt
+50;F42;Loft;5;BEGINNER;true;../data/blob/empty.txt
+51;F42b;Blow;4;BEGINNER;true;../data/blob/empty.txt
+52;F43;Loft;5;BEGINNER;true;../data/blob/empty.txt
+53;F43b;Steel;4;BEGINNER;false;../data/blob/empty.txt
+54;F45;Loft;5;BEGINNER;false;../data/blob/empty.txt
+55;F46;Loft;5;BEGINNER;true;../data/blob/empty.txt
+56;F46b;Steel;4;BEGINNER;true;../data/blob/empty.txt
+57;F47;Loft;5,2;BEGINNER;true;../data/blob/empty.txt
+58;F47b;Steel;4;BEGINNER;true;../data/blob/empty.txt
+59;F48;Steel;5;BEGINNER;true;../data/blob/empty.txt
+60;F48b;Steel;4,2;BEGINNER;true;../data/blob/empty.txt
+61;F49;Steel;5;BEGINNER;true;../data/blob/empty.txt
+62;F49b;Steel;4,2;BEGINNER;false;../data/blob/empty.txt
+63;F5;Steel;4,2;BEGINNER;false;../data/blob/empty.txt
+64;F50;Steel;4,5;BEGINNER;true;../data/blob/empty.txt
+65;F50b;Topwave;4;BEGINNER;true;../data/blob/empty.txt
+66;F6;Blow;4,3;BEGINNER;true;../data/blob/empty.txt
+67;F7;Blow;4,6;BEGINNER;true;../data/blob/empty.txt
+68;F8;Blow;4,6;BEGINNER;true;../data/blob/empty.txt
+69;F8b;Blow;4;BEGINNER;true;../data/blob/empty.txt
+70;GUN;Cannonball;9,6;FUN;true;../data/blob/70-Cannonball.txt
+71;O21;Loft O2;8,4;FUN;false;../data/blob/empty.txt
+72;O22;Loft O2;8,4;FUN;true;../data/blob/empty.txt
+73;O23;Loft O2;8,4;FUN;true;../data/blob/empty.txt

@@ -53,7 +53,7 @@
     -->
     <changeSet id="20201110101915-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/sail.csv"
+                  file="config/liquibase/data/sail.csv"
                   separator=";"
                   tableName="sail">
             <column name="id" type="numeric"/>
