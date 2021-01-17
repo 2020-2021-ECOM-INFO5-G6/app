@@ -6,9 +6,12 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { InstructorService } from 'app/entities/instructor/instructor.service';
 import { UserService } from 'app/core/user/user.service';
+import { ActivityService } from 'app/entities/activity/activity.service';
 
 import { Instructor } from 'app/shared/model/instructor.model';
 import { User } from 'app/core/user/user.model';
+import { Activity } from 'app/shared/model/activity.model';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'jhi-home',
@@ -28,7 +31,8 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private userService: UserService,
     private localStorage: LocalStorageService,
-    private instructorService: InstructorService
+    private instructorService: InstructorService,
+    private activityService: ActivityService
   ) {}
 
   ngOnInit(): void {
@@ -84,5 +88,12 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
         });
       });
     }
+  }
+
+  downloadContent(id: number): void {
+    this.activityService.download(id).subscribe(string => {
+      const blob = new Blob([string], { type: 'text/plain;charset=utf-8' });
+      saveAs(blob);
+    });
   }
 }
