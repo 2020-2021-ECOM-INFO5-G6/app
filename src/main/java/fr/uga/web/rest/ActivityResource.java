@@ -1,7 +1,9 @@
 package fr.uga.web.rest;
 
 import fr.uga.domain.Activity;
+import fr.uga.domain.Instructor;
 import fr.uga.repository.ActivityRepository;
+import fr.uga.repository.InstructorRepository;
 import fr.uga.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -13,11 +15,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing {@link fr.uga.domain.Activity}.
@@ -35,9 +40,12 @@ public class ActivityResource {
     private String applicationName;
 
     private final ActivityRepository activityRepository;
+    
+    private final InstructorRepository instructorRepository;
 
-    public ActivityResource(ActivityRepository activityRepository) {
+    public ActivityResource(ActivityRepository activityRepository, InstructorRepository instructorRepository) {
         this.activityRepository = activityRepository;
+        this.instructorRepository = instructorRepository;
     }
 
     /**
@@ -116,4 +124,84 @@ public class ActivityResource {
         activityRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+    
+    
+    // NOT OUT-OF-THE-BOX
+    public static class RequestWrapper {
+    	
+    	public RequestWrapper () {
+    		
+    	}
+    	
+    	Activity activity;
+    	Set<Instructor> managers;
+    	Set<Instructor> monitors;
+    	
+    	public Activity getActivity() {
+    		return activity;
+    	};
+    	
+    	public Set<Instructor> getManagers(){
+    		return managers;
+    	}
+    	
+    	public Set<Instructor> getMonitors(){
+    		return monitors;
+    	}
+    	
+    }
+    
+    /**
+     * {@code POST  /activities/:monitors/:managers} : Create a new activity with corresponding editing and participating instructors.
+     *
+     * @param activity the activity to create.
+     * @param monitors the list of instructors who participate to the activity
+     * @param managers the list of instructors who can edit the activity
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new activity, or with status {@code 400 (Bad Request)} if the activity has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @RequestMapping(path = "/activities/withedi", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<RequestWrapper> createActivityWithCorrespondingInstructors( 
+    		@RequestBody RequestWrapper requestWrapper) throws URISyntaxException {
+    	
+    	Activity activity = requestWrapper.getActivity();
+    	
+        log.debug("REST request to save Activity : {}", activity);
+        if (activity.getId() != null) {
+            throw new BadRequestAlertException("A new activity cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        
+        activityRepository.save(activity);
+        
+        Set<Instructor> monitors = requestWrapper.getMonitors();
+        Set<Instructor> managers = requestWrapper.getManagers();
+        Set<Instructor> merged = new HashSet<Instructor>();
+        
+        //Workaround to avoid duplicates
+        merged.addAll(monitors);
+        merged.removeAll(managers);
+        merged.addAll(managers);
+        
+        merged.stream().forEach(instructor -> {
+        	boolean changed = false;
+        	if (managers.contains(instructor)) {
+        		activity.addManagers(instructor);
+        		changed = true;
+        	}
+        	if (monitors.contains(instructor)) {
+        		activity.addMonitors(instructor);
+        		changed = true;
+        	}
+        	if (changed) {
+        		instructorRepository.save(instructor);
+        	}
+       	});
+        
+        Activity result = activityRepository.save(activity);
+        
+        return ResponseEntity.created(new URI("/api/activities/withedi" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(requestWrapper);
+    }
+    
 }
