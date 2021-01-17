@@ -1,24 +1,35 @@
 package fr.uga.service;
 
 import fr.uga.domain.User;
+import fr.uga.domain.Student;
+import fr.uga.repository.StudentRepository;
 
 import io.github.jhipster.config.JHipsterProperties;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+
+import javax.inject.Inject;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import java.util.Optional;
+import java.util.Objects;
+
+
 
 /**
  * Service for sending emails.
@@ -32,6 +43,8 @@ public class MailService {
 
     private static final String USER = "user";
 
+    private static final String STUDENT = "student";
+
     private static final String BASE_URL = "baseUrl";
 
     private final JHipsterProperties jHipsterProperties;
@@ -41,14 +54,19 @@ public class MailService {
     private final MessageSource messageSource;
 
     private final SpringTemplateEngine templateEngine;
+    
+    @Inject
+    private final StudentRepository studentRepository;
+
 
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
-            MessageSource messageSource, SpringTemplateEngine templateEngine) {
+            MessageSource messageSource, SpringTemplateEngine templateEngine, StudentRepository studentRepository) {
 
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
         this.templateEngine = templateEngine;
+        this.studentRepository= studentRepository;
     }
 
     @Async
@@ -81,8 +99,13 @@ public class MailService {
         Context context = new Context(locale);
         context.setVariable(USER, user);
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        
+        Student student = getStudentMail(user.getId());
+        context.setVariable(STUDENT,student);
+
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
+
         sendEmail(user.getEmail(), subject, content, false, true);
     }
 
@@ -102,5 +125,18 @@ public class MailService {
     public void sendPasswordResetMail(User user) {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
+    }
+
+    public Student getStudentMail(Long userid)throws IllegalArgumentException{
+            Optional<Student> student = studentRepository.findAll().stream()
+        		.filter(s -> Objects.nonNull(s.getInternalUser()))
+        		.filter(sbis -> sbis.getInternalUser().getId().equals(userid))
+                .findAny();
+        try{
+            return student.get();
+        } catch(IllegalArgumentException e) { 
+            System.out.println("Student null");
+            return null;
+        }
     }
 }

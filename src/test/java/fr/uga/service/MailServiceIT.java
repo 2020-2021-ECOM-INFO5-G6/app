@@ -4,6 +4,7 @@ import fr.uga.config.Constants;
 
 import fr.uga.EcomApp;
 import fr.uga.domain.User;
+import fr.uga.repository.StudentRepository;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,6 +60,9 @@ public class MailServiceIT {
 
     @Autowired
     private SpringTemplateEngine templateEngine;
+    
+    @Autowired
+    private StudentRepository studentRepository;
 
     @Spy
     private JavaMailSenderImpl javaMailSender;
@@ -72,7 +76,7 @@ public class MailServiceIT {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(javaMailSender).send(any(MimeMessage.class));
-        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine);
+        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, studentRepository);
     }
 
     @Test
