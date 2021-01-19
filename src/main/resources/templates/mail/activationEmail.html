@@ -9,6 +9,29 @@
         <p th:text="#{email.activation.greeting(${user.login})}">
             Dear
         </p>
+        <br/><br/>
+        <p th:text="#{email.activation.textIntro}">
+            This is your data of your account on U-WIND platform :
+        </p>
+        <p th:text="#{email.activation.email(${user.email})}">
+            Email :
+        </p>
+        <p th:text="#{email.activation.cursus(${student.cursus.composant})}">
+            Class :
+        </p>
+        <p th:text="#{email.activation.academicLevel(${student.cursus.academicLevel})}">
+            Academic Level :
+        </p>
+        <p th:text="#{email.activation.sportLevel(${student.sportLevel})}">
+            Sport Level :
+        </p>
+        <p th:text="#{email.activation.drivingLicence(${student.drivingLicence})}">
+            Driving Licence :
+        </p>
+        <p th:text="#{email.activation.meetingPlace(${student.meetingPlace})}">
+            Meeting Place :
+        </p>
+        <br/>
         <p th:text="#{email.activation.text1}">
             Your JHipster account has been created, please click on the URL below to activate it:
         </p>
@@ -19,7 +42,7 @@
         <p>
             <span th:text="#{email.activation.text2}">Regards, </span>
             <br/>
-            <em th:text="#{email.signature}">JHipster.</em>
+            <em th:text="#{email.signature}">U-WIND Team.</em>
         </p>
     </body>
 </html>
