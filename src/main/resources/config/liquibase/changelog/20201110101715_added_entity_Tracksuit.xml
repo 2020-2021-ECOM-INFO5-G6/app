@@ -54,9 +54,9 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20201110101715-1-data" author="jhipster" context="faker">
+    <changeSet id="20201110101715-1-data" author="jhipster" context="dataset">
         <loadData
-                  file="config/liquibase/fake-data/tracksuit.csv"
+                  file="config/liquibase/data/tracksuit.csv"
                   separator=";"
                   tableName="tracksuit">
             <column name="id" type="numeric"/>
