@@ -3,9 +3,15 @@ package fr.uga.service;
 import fr.uga.config.Constants;
 
 import fr.uga.EcomApp;
+import fr.uga.domain.Cursus;
+import fr.uga.domain.Student;
 import fr.uga.domain.User;
 import fr.uga.repository.StudentRepository;
+import fr.uga.repository.UserRepository;
 import io.github.jhipster.config.JHipsterProperties;
+import liquibase.pro.packaged.S;
+
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -51,6 +57,18 @@ public class MailServiceIT {
     };
     private static final Pattern PATTERN_LOCALE_3 = Pattern.compile("([a-z]{2})-([a-zA-Z]{4})-([a-z]{2})");
     private static final Pattern PATTERN_LOCALE_2 = Pattern.compile("([a-z]{2})-([a-z]{2})");
+    
+    private static final String DEFAULT_LOGIN = "johndoe";
+
+    private static final String DEFAULT_EMAIL = "johndoe@localhost";
+
+    private static final String DEFAULT_FIRSTNAME = "john";
+
+    private static final String DEFAULT_LASTNAME = "doe";
+
+    private static final String DEFAULT_IMAGEURL = "http://placehold.it/50x50";
+
+    private static final String DEFAULT_LANGKEY = "dummy";
 
     @Autowired
     private JHipsterProperties jHipsterProperties;
@@ -63,6 +81,9 @@ public class MailServiceIT {
     
     @Autowired
     private StudentRepository studentRepository;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     @Spy
     private JavaMailSenderImpl javaMailSender;
@@ -71,6 +92,8 @@ public class MailServiceIT {
     private ArgumentCaptor<MimeMessage> messageCaptor;
 
     private MailService mailService;
+    
+    
 
     @BeforeEach
     public void setup() {
@@ -141,11 +164,21 @@ public class MailServiceIT {
 
     @Test
     public void testSendEmailFromTemplate() throws Exception {
-        User user = new User();
+    	User user = new User();
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
         user.setLangKey("en");
+        user.setId((long)1);
+        
+        Student student=new Student();
+        student.internalUser(user);
+        student.setDrivingLicence(false);
+        student.setId((long)2);
+        
+        studentRepository.saveAndFlush(student);
         mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
+        studentRepository.deleteAll();;
+        
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         assertThat(message.getSubject()).isEqualTo("test title");
@@ -153,15 +186,25 @@ public class MailServiceIT {
         assertThat(message.getFrom()[0].toString()).isEqualTo(jHipsterProperties.getMail().getFrom());
         assertThat(message.getContent().toString()).isEqualToNormalizingNewlines("<html>test title, http://127.0.0.1:8080, john</html>\n");
         assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
+        
     }
 
     @Test
     public void testSendActivationEmail() throws Exception {
-        User user = new User();
-        user.setLangKey(Constants.DEFAULT_LANGUAGE);
+    	User user = new User();
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
-        mailService.sendActivationEmail(user);
+        user.setLangKey(Constants.DEFAULT_LANGUAGE);
+        user.setId((long)2);
+        
+        Student student=new Student();
+        student.setInternalUser(user);
+        student.setDrivingLicence(false);
+        student.setId((long)2);
+        
+        studentRepository.save(student);
+        mailService.sendActivationEmailTest(user);
+        studentRepository.deleteAll();
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         assertThat(message.getAllRecipients()[0].toString()).isEqualTo(user.getEmail());
@@ -172,11 +215,19 @@ public class MailServiceIT {
 
     @Test
     public void testCreationEmail() throws Exception {
-        User user = new User();
-        user.setLangKey(Constants.DEFAULT_LANGUAGE);
+    	User user = new User();
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
+        user.setLangKey(Constants.DEFAULT_LANGUAGE);
+        user.setId((long)3);
+        
+        Student student=new Student();
+        student.setInternalUser(user);
+        student.setDrivingLicence(false);
+        student.setId((long)3);
+        studentRepository.save(student);
         mailService.sendCreationEmail(user);
+        studentRepository.deleteAll();
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         assertThat(message.getAllRecipients()[0].toString()).isEqualTo(user.getEmail());
@@ -187,11 +238,19 @@ public class MailServiceIT {
 
     @Test
     public void testSendPasswordResetMail() throws Exception {
-        User user = new User();
-        user.setLangKey(Constants.DEFAULT_LANGUAGE);
+    	User user = new User();
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
+        user.setLangKey(Constants.DEFAULT_LANGUAGE);
+        user.setId((long)4);
+        
+        Student student=new Student();
+        student.setInternalUser(user);
+        student.setDrivingLicence(false);
+        student.setId((long)4);
+        studentRepository.save(student);
         mailService.sendPasswordResetMail(user);
+        studentRepository.deleteAll();
         verify(javaMailSender).send(messageCaptor.capture());
         MimeMessage message = messageCaptor.getValue();
         assertThat(message.getAllRecipients()[0].toString()).isEqualTo(user.getEmail());
@@ -212,12 +271,20 @@ public class MailServiceIT {
 
     @Test
     public void testSendLocalizedEmailForAllSupportedLanguages() throws Exception {
-        User user = new User();
+    	User user = new User();
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
+        user.setId((long)1);
+        
+        Student student=new Student();
+        student.setInternalUser(user);
+        student.setDrivingLicence(false);
+        student.setId((long)2);
         for (String langKey : languages) {
             user.setLangKey(langKey);
+            studentRepository.save(student);
             mailService.sendEmailFromTemplate(user, "mail/testEmail", "email.test.title");
+            studentRepository.deleteAll();
             verify(javaMailSender, atLeastOnce()).send(messageCaptor.capture());
             MimeMessage message = messageCaptor.getValue();
 
