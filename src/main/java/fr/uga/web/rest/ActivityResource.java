@@ -1,4 +1,4 @@
-ackage fr.uga.web.rest;
+package fr.uga.web.rest;
 
 import fr.uga.domain.Activity;
 import fr.uga.domain.Instructor;
