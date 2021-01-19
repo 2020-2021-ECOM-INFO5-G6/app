@@ -2,7 +2,6 @@
   "homeStudent": {
     "title": "Home",
     "subtitle": "Welcome Student!",
-    "goToSemesterInscription": "Go to student semester inscription page",
     "account": {
       "firstName": "First name",
       "lastName": "Last name",
@@ -11,13 +10,21 @@
     "student": {
       "sportLevel": "Sport level",
       "drivingLicence": "Driving licence",
+      "drivingLicenceYes": "Yes",
+      "drivingLicenceNo": "No",
       "meetingPlace": "Meeintg place",
       "cursus": "Cursus",
       "semesterInscriptions": "Semester inscriptions",
       "studentActivities": "Activities"
     },
     "button": {
-      "editData": "Edit you data"
+      "editData": "Edit you data",
+      "goToSemesterInscription": "Go to student semester inscription page",
+      "manageActivities": "Gérer vos activités"
+    },
+    "alert": {
+      "noActivities": "No activities",
+      "noSemesterInscriptions": "No semester inscription"
     }
   }
 }

@@ -8,39 +8,62 @@
 <div class="row" id="body">
     <div class="column" id="personal-data">
         <table class="table">
+            <thead></thead>
             <tbody>
-                <div *ngIf="account">
-                    <tr>
-                        <td><h4 jhiTranslate="homeInstructor.account.firstName">First Name</h4></td>
+                <div>
+                    <tr *ngIf="account">
+                        <td><span style="font-weight:bold" jhiTranslate="homeInstructor.account.firstName">First Name</span></td>
                         <td *ngIf="account.firstName">{{ account.firstName }}</td>
                     </tr>
-                    <tr>
-                        <td><h4 jhiTranslate="homeInstructor.account.lastName">Last Name</h4></td>
+                    <tr *ngIf="account">
+                        <td><span style="font-weight:bold" jhiTranslate="homeInstructor.account.lastName">Last Name</span></td>
                         <td *ngIf="account.lastName">{{ account.lastName }}</td>
                     </tr>
-                    <tr>
-                        <td><h4 jhiTranslate="homeInstructor.account.email">Email</h4></td>
+                    <tr *ngIf="account">
+                        <td><span style="font-weight:bold" jhiTranslate="homeInstructor.account.email">Email</span></td>
                         <td *ngIf="account.email">{{ account.email }}</td>
                     </tr>
+                    <tr>
+                        <td colspan="2"><button [routerLink]="['/account/settings']" class="btn btn-primary" jhiTranslate="homeInstructor.button.editData">Edit your data</button></td>
+                    </tr>
                 </div>
-
-                <button [routerLink]="['/account/settings']" class="btn btn-primary" jhiTranslate="homeInstructor.button.editData">Edit your data</button>
             </tbody>
         </table>
     </div>
 
     <div class="column" id="activities">
-        <table class="table"></table>
+        <table class="table">
+            <thead></thead>
             <tbody>
+                <div *ngIf="user">
+                    <tr><h4 jhiTranslate="homeInstructor.admin.activities">Activities</h4></tr>
+                    <tr *ngFor="let activity of activities">
+                        <td><a *ngIf="activity" [routerLink]="['/activity', activity.id, 'view']">{{ activity.name }}</a></td>
+                        <td>
+                            <button type="submit" class="btn btn-info btn-sm" onclick="download(activity.id)">
+                                <span class="d-none d-md-inline" jhiTranslate="homeInstructor.button.export">Export registrants</span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <p *ngIf="activities && activities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noActivities">No editable activities</p>
+                    </tr>
+                </div>
                 <div *ngIf="instructor">
                     <tr><h4 jhiTranslate="homeInstructor.instructor.editableActivities">Editable activities</h4></tr>
-                    <tr *ngFor="let editableActivity of instructor.editableActivities; let last = last">
-                        <a *ngIf="editableActivity">{{ editableActivity.id }}</a>{{ last ? '' : ', ' }}
+                    <tr *ngFor="let editableActivity of instructor.editableActivities">
+                        <td><a *ngIf="editableActivity">{{ editableActivity.name }}</a></td>
+                    </tr>
+                    <tr>
+                        <p *ngIf="instructor.editableActivities && instructor.editableActivities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noEditableActivities">No editable activities</p>
                     </tr>
 
                     <tr><h4 jhiTranslate="homeInstructor.instructor.monitoredActivities">Monitored activities</h4></tr>
-                    <tr *ngFor="let participateActivity of instructor.participateActivities; let last = last">
-                        <a *ngIf="participateActivity">{{ participateActivity.id }}</a>{{ last ? '' : ', ' }}
+                    <tr *ngFor="let participateActivity of instructor.participateActivities">
+                        <td><a *ngIf="participateActivity">{{ participateActivity.name }}</a></td>
+                    </tr>
+                    <tr>
+                        <p *ngIf="instructor.editableActivities && instructor.editableActivities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noMonitoredActivities">No monitored activities</p>
                     </tr>
                 </div>
             </tbody>

@@ -6,9 +6,11 @@ import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { InstructorService } from 'app/entities/instructor/instructor.service';
 import { UserService } from 'app/core/user/user.service';
+import { ActivityService } from 'app/entities/activity/activity.service';
 
 import { Instructor } from 'app/shared/model/instructor.model';
 import { User } from 'app/core/user/user.model';
+import { Activity } from 'app/shared/model/activity.model';
 
 @Component({
   selector: 'jhi-home',
@@ -22,17 +24,21 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
   user: User | null = null;
   instructor: Instructor | null = null;
 
+  activities: Activity[] = [];
+
   raw: string | null = null;
 
   constructor(
     private accountService: AccountService,
     private userService: UserService,
     private localStorage: LocalStorageService,
-    private instructorService: InstructorService
+    private instructorService: InstructorService,
+    private activityService: ActivityService
   ) {}
 
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => this.getLinkedEntity(account));
+    this.getActivitiesAsynchronously();
   }
 
   isAuthenticated(): boolean {
@@ -84,5 +90,19 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
         });
       });
     }
+  }
+
+  getActivitiesAsynchronously(): void {
+    this.activityService.query().subscribe(activities => {
+      if (activities != null) {
+        if (activities.body != null) {
+          this.activities = activities.body;
+        } else {
+          this.activities = [];
+        }
+      } else {
+        this.activities = [];
+      }
+    });
   }
 }
