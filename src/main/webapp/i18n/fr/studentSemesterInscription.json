@@ -14,6 +14,8 @@
     "noted": "Sport noté ?",
     "pay": "Je voudrais payer ...",
     "finish": "Terminer",
-    "reset": "Recommencer"
+    "reset": "Recommencer",
+    "total1": "Si vous enregistrez maintenant, vous devrez payer",
+    "total2": "€ via l'application PBox"
   }
 }

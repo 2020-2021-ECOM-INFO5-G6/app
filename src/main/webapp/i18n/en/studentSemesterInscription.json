@@ -14,6 +14,8 @@
     "noted": "Is noted?",
     "pay": "I would like to pay",
     "finish": "Subscribe",
-    "reset": "Reset"
+    "reset": "Reset",
+    "total1": "If you suscribe now you will have €",
+    "total2": "to pay via PBox app"
   }
 }
