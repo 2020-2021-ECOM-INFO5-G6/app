@@ -1,6 +1,8 @@
 package fr.uga.web.rest;
 
+import fr.uga.domain.Activity;
 import fr.uga.domain.Instructor;
+import fr.uga.repository.ActivityRepository;
 import fr.uga.repository.InstructorRepository;
 import fr.uga.web.rest.errors.BadRequestAlertException;
 
@@ -15,9 +17,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing {@link fr.uga.domain.Instructor}.
@@ -35,9 +40,12 @@ public class InstructorResource {
     private String applicationName;
 
     private final InstructorRepository instructorRepository;
+    
+    private final ActivityRepository activityRepository;
 
-    public InstructorResource(InstructorRepository instructorRepository) {
+    public InstructorResource(InstructorRepository instructorRepository, ActivityRepository activityRepository) {
         this.instructorRepository = instructorRepository;
+        this.activityRepository = activityRepository;
     }
 
     /**
@@ -133,6 +141,26 @@ public class InstructorResource {
         		.filter(s -> Objects.nonNull(s.getInternalUser()))
         		.filter(sbis -> sbis.getInternalUser().getId().equals(userid))
         		.findAny();
+        if (instructor.isPresent()) {
+        	Instructor currInst = instructor.get();
+
+            Set<Activity> editable = new HashSet<Activity>();
+            Set<Activity> participate = new HashSet<Activity>();
+            
+        	List<Activity> activities = activityRepository.findAll();
+        	
+        	activities.stream().forEach(activity -> {
+        		if(activity.getManagers().contains(currInst)) {
+        			editable.add(activity);
+        		}
+        		if(activity.getMonitors().contains(currInst)) {
+        			participate.add(activity);
+        		}
+        	});
+        	
+        	currInst.setEditableActivities(editable);
+        	currInst.setParticipateActivities(participate);
+        }
         return ResponseUtil.wrapOrNotFound(instructor);
     }
 }
