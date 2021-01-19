@@ -15,13 +15,11 @@ import javax.mail.internet.MimeMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
@@ -46,6 +44,8 @@ public class MailService {
     private static final String STUDENT = "student";
 
     private static final String BASE_URL = "baseUrl";
+    
+    private static final String EMAILKEY = "email.activation.title";
 
     private final JHipsterProperties jHipsterProperties;
 
@@ -112,19 +112,19 @@ public class MailService {
     @Async
     public void sendActivationEmail(User user) {
         log.debug("Sending activation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "mail/activationEmail", "email.activation.title");
+        sendEmailFromTemplate(user, "mail/activationEmail", EMAILKEY);
     }
     
     @Async
     public void sendActivationEmailTest(User user) {
         log.debug("Sending activation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "mail/testEmail", "email.activation.title");
+        sendEmailFromTemplate(user, "mail/testEmail", EMAILKEY);
     }
 
     @Async
     public void sendCreationEmail(User user) {
         log.debug("Sending creation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "mail/creationEmail", "email.activation.title");
+        sendEmailFromTemplate(user, "mail/creationEmail", EMAILKEY);
     }
 
     @Async
@@ -133,16 +133,16 @@ public class MailService {
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
     }
 
-    public Student getStudentMail(Long userid)throws IllegalArgumentException{
+    public Student getStudentMail(Long userid){
             Optional<Student> student = studentRepository.findAll().stream()
         		.filter(s -> Objects.nonNull(s.getInternalUser()))
         		.filter(sbis -> sbis.getInternalUser().getId().equals(userid))
                 .findAny();
-        try{
+        if(student.isPresent()) {
             return student.get();
-        } catch(IllegalArgumentException e) { 
-            System.out.println("Student null");
-            return null;
+        } else{
+        	log.error("Student null");
+        	return null;
         }
     }
 }
