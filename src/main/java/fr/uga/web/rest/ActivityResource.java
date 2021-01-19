@@ -2,6 +2,10 @@ package fr.uga.web.rest;
 
 import fr.uga.domain.Activity;
 import fr.uga.domain.Instructor;
+import fr.uga.domain.Student;
+import fr.uga.domain.StudentActivity;
+import fr.uga.domain.User;
+import fr.uga.domain.Material;
 import fr.uga.repository.ActivityRepository;
 import fr.uga.repository.InstructorRepository;
 import fr.uga.web.rest.errors.BadRequestAlertException;
@@ -19,9 +23,11 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Blob;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -52,7 +58,9 @@ public class ActivityResource {
      * {@code POST  /activities} : Create a new activity.
      *
      * @param activity the activity to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new activity, or with status {@code 400 (Bad Request)} if the activity has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with
+     *         body the new activity, or with status {@code 400 (Bad Request)} if
+     *         the activity has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/activities")
@@ -62,18 +70,21 @@ public class ActivityResource {
             throw new BadRequestAlertException("A new activity cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Activity result = activityRepository.save(activity);
-        return ResponseEntity.created(new URI("/api/activities/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        return ResponseEntity
+                .created(new URI("/api/activities/" + result.getId())).headers(HeaderUtil
+                        .createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
     }
 
     /**
      * {@code PUT  /activities} : Updates an existing activity.
      *
      * @param activity the activity to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated activity,
-     * or with status {@code 400 (Bad Request)} if the activity is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the activity couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated activity, or with status {@code 400 (Bad Request)} if the
+     *         activity is not valid, or with status
+     *         {@code 500 (Internal Server Error)} if the activity couldn't be
+     *         updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/activities")
@@ -83,15 +94,16 @@ public class ActivityResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         Activity result = activityRepository.save(activity);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, activity.getId().toString()))
-            .body(result);
+        return ResponseEntity.ok().headers(
+                HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, activity.getId().toString()))
+                .body(result);
     }
 
     /**
      * {@code GET  /activities} : get all the activities.
      *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of activities in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
+     *         of activities in body.
      */
     @GetMapping("/activities")
     public List<Activity> getAllActivities() {
@@ -103,7 +115,8 @@ public class ActivityResource {
      * {@code GET  /activities/:id} : get the "id" activity.
      *
      * @param id the id of the activity to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the activity, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the activity, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/activities/{id}")
     public ResponseEntity<Activity> getActivity(@PathVariable Long id) {
@@ -122,7 +135,45 @@ public class ActivityResource {
     public ResponseEntity<Void> deleteActivity(@PathVariable Long id) {
         log.debug("REST request to delete Activity : {}", id);
         activityRepository.deleteById(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent()
+                .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
+                .build();
+    }
+
+    @GetMapping("/activities/{id}/$content")
+    public ResponseEntity<String> getActivityContent(@PathVariable Long id) {
+        log.debug("REST request to get Activity content : {}", id);
+        Optional<Activity> activity = activityRepository.findById(id);
+        Optional<String> data;
+
+        if (activity.isPresent()) {
+            String content = "";
+
+            Iterator<StudentActivity> iter = activity.get().getStudentActivities().iterator();
+            while (iter.hasNext()) {
+                Student student = iter.next().getStudent();
+                User user = student.getInternalUser();
+                Set<Material> materials = student.getMaterials();
+                content += user.getFirstName() 
+                    + "," + user.getLastName()
+                    + "," + student.getSportLevel()
+                    + "," + student.getMeetingPlace();
+                Iterator<Material> iterMat = materials.iterator();
+                while (iterMat.hasNext()) {
+                    Material material = iterMat.next();
+                    content += "," + material.getBoard().getName()
+                        + "," + material.getSail().getName()
+                        + "," + material.getTracksuit().getName();
+                }
+                content += "\n";
+            }
+
+            data = Optional.of(content);
+        } else {
+            data = Optional.empty();
+        }
+
+        return ResponseUtil.wrapOrNotFound(data);
     }
     
     

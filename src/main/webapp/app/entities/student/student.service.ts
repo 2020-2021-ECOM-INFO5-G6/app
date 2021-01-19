@@ -39,4 +39,8 @@ export class StudentService {
   findbyuser(userid: number): Observable<EntityResponseType> {
     return this.http.get<IStudent>(`${this.resourceUrl}/nestedstudent/${userid}`, { observe: 'response' });
   }
+
+  download(): Observable<string> {
+    return this.http.get<string>(`${this.resourceUrl}/$content`);
+  }
 }
