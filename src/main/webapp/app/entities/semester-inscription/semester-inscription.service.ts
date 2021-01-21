@@ -35,4 +35,9 @@ export class SemesterInscriptionService {
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
+
+  createwithsemester(semester: number, semesterInscription: ISemesterInscription): Observable<EntityResponseType> {
+    const myPostBody = { semester, semesterInscription };
+    return this.http.post(`${this.resourceUrl}/withsemester`, myPostBody, { observe: 'response' });
+  }
 }

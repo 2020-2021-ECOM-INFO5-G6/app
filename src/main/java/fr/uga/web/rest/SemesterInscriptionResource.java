@@ -1,7 +1,12 @@
 package fr.uga.web.rest;
 
+import fr.uga.domain.Activity;
+import fr.uga.domain.Instructor;
+import fr.uga.domain.Semester;
 import fr.uga.domain.SemesterInscription;
+import fr.uga.domain.Student;
 import fr.uga.repository.SemesterInscriptionRepository;
+import fr.uga.repository.SemesterRepository;
 import fr.uga.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -16,8 +21,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing {@link fr.uga.domain.SemesterInscription}.
@@ -35,9 +43,12 @@ public class SemesterInscriptionResource {
     private String applicationName;
 
     private final SemesterInscriptionRepository semesterInscriptionRepository;
+    
+    private final SemesterRepository semesterRepository;
 
-    public SemesterInscriptionResource(SemesterInscriptionRepository semesterInscriptionRepository) {
+    public SemesterInscriptionResource(SemesterInscriptionRepository semesterInscriptionRepository, SemesterRepository semesterRepository) {
         this.semesterInscriptionRepository = semesterInscriptionRepository;
+        this.semesterRepository = semesterRepository;
     }
 
     /**
@@ -116,4 +127,86 @@ public class SemesterInscriptionResource {
         semesterInscriptionRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+    
+    //NOT OUT-OF-THE-BOX
+    
+    public static class RequestWrapper {
+    	
+    	public RequestWrapper () {
+    		
+    	}
+    	
+    	SemesterInscription semesterInscription;
+    	int semester;
+    	
+    	public int getSemester(){
+    		return semester;
+    	}
+    	
+    	public SemesterInscription getSemesterInscription() {
+    		return semesterInscription;
+    	}
+    }
+    
+    /**
+     * {@code POST  /semester-inscriptions} : Create a new semesterInscription.
+     *
+     * @param semesterInscription the semesterInscription to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new semesterInscription, or with status {@code 400 (Bad Request)} if the semesterInscription has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @RequestMapping(path = "/semester-inscriptions/withsemester", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<SemesterInscription> createSemesterInscriptionAndSemester( @RequestBody RequestWrapper requestWrapper) throws URISyntaxException {
+    	
+    	SemesterInscription semesterInscription = requestWrapper.getSemesterInscription();
+    	
+    	log.debug("REST request to save SemesterInscription : {}", requestWrapper);
+        if (semesterInscription.getId() != null) {
+            throw new BadRequestAlertException("A new semesterInscription cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        
+        if (Objects.isNull(semesterInscription.getSemester())) {
+        	int semesternb = requestWrapper.getSemester();       	
+    		LocalDate startDate;
+    		LocalDate endDate;
+    		
+    		switch(semesternb) {
+    		case 1: 
+    			startDate = LocalDate.of(2021, 9, 3);
+    			endDate = LocalDate.of(2021, 12, 18);
+    			break;
+    		case 2:
+    			startDate = LocalDate.of(2022, 1, 6);
+    			endDate = LocalDate.of(2022, 6, 13);
+    			break;
+    		default:
+    			log.error("This new SemesterInscription hasn't any nested Semester: {}", semesterInscription);
+        		throw new BadRequestAlertException("This new SemesterInscription hasn't any nested Semester: {}", ENTITY_NAME, "nonested");
+    		}
+    		
+    		Optional<Semester> semester = semesterRepository.findAll().stream()
+    				.filter(sem -> sem.getStartDate().equals(startDate) && sem.getEndDate().equals(endDate))
+    				.findAny();
+    		
+    		
+    		Semester semesterToAssign;
+    		if(semester.isEmpty()) {
+    			semesterToAssign = new Semester();
+    			semesterToAssign.setStartDate(startDate);
+    			semesterToAssign.setEndDate(endDate);
+    			semesterRepository.save(semesterToAssign);
+    		} else { 
+    			semesterToAssign = semester.get();
+    		}
+    		semesterInscription.setSemester(semesterToAssign);
+        }
+        
+        SemesterInscription result = semesterInscriptionRepository.save(semesterInscription);
+        
+        
+        return ResponseEntity.created(new URI("/api/semester-inscriptions/withsemester/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+    
 }
