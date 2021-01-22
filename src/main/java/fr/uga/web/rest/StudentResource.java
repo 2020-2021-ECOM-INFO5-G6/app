@@ -2,6 +2,7 @@ package fr.uga.web.rest;
 
 import fr.uga.domain.Student;
 import fr.uga.domain.Cursus;
+import fr.uga.domain.User;
 import fr.uga.repository.StudentRepository;
 import fr.uga.web.rest.errors.BadRequestAlertException;
 
@@ -20,6 +21,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Iterator;
 
 /**
  * REST controller for managing {@link fr.uga.domain.Student}.
@@ -148,27 +150,37 @@ public class StudentResource {
     }
 
     @GetMapping("/students/$content")
-    public ResponseEntity<String> getStudentsContent(@PathVariable Long id) {
-        log.debug("REST request to get Students content : {}", id);
+    public ResponseEntity<String> getStudentsContent() {
+        log.debug("REST request to get Students content");
         List<Student> students = studentRepository.findAll();
         Optional<String> data;
 
         if (!students.isEmpty()) {
-            content = "";
+            String content = "";
+
             Iterator<Student> iter = students.iterator();
             while (iter.hasNext()) {
-                Student student = iter.next().getStudent();
+                Student student = iter.next();
                 User user = student.getInternalUser();
-                content += user.getFirstName() 
-                    + "," + user.getLastName() 
-                    + "," + student.getSportLevel() 
+                if (user != null) {
+                    content += user.getFirstName() 
+                    + "," + user.getLastName();
+                } else {
+                    content += ",";
+                }
+                content += "," + student.getSportLevel() 
                     + "," + student.getMeetingPlace()
                     + "," + student.isDrivingLicence();
                 Cursus cursus = student.getCursus();
-                content += cursus.getComposant()
-                    + "," + cursus.getAcademicLevel()
-                    + "\n";
+                if (cursus != null) {
+                    content += "," + cursus.getComposant()
+                    + "," + cursus.getAcademicLevel();
+                } else {
+                    content += ",";
+                }
+                content += "\n";
             }
+
             data = Optional.of(content);
         } else {
             data = Optional.empty();

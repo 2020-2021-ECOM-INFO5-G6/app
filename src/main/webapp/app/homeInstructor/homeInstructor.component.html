@@ -36,11 +36,18 @@
             <thead></thead>
             <tbody>
                 <div *ngIf="user">
-                    <tr><h4 jhiTranslate="homeInstructor.admin.activities">Activities</h4></tr>
+                    <tr>
+                        <td><h4 jhiTranslate="homeInstructor.admin.activities">Activities</h4></td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" (click)="downloadAllContent()">
+                                <span class="d-none d-md-inline" jhiTranslate="homeInstructor.button.exportAll">Export all registrants</span>
+                            </button>
+                        </td>
+                    </tr>
                     <tr *ngFor="let activity of activities">
                         <td><a *ngIf="activity" [routerLink]="['/activity', activity.id, 'view']">{{ activity.name }}</a></td>
-                        <td>
-                            <button type="submit" class="btn btn-info btn-sm" onclick="download(activity.id)">
+                        <td *ngIf="activity.id && activity.name">
+                            <button type="submit" class="btn btn-info btn-sm" (click)="downloadContent(activity.id, activity.name)">
                                 <span class="d-none d-md-inline" jhiTranslate="homeInstructor.button.export">Export registrants</span>
                             </button>
                         </td>

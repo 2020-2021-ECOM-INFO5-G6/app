@@ -8,6 +8,7 @@ import { IStudent } from 'app/shared/model/student.model';
 
 type EntityResponseType = HttpResponse<IStudent>;
 type EntityArrayResponseType = HttpResponse<IStudent[]>;
+type EntityContentResponseType = HttpResponse<string>;
 
 @Injectable({ providedIn: 'root' })
 export class StudentService {
@@ -40,7 +41,7 @@ export class StudentService {
     return this.http.get<IStudent>(`${this.resourceUrl}/nestedstudent/${userid}`, { observe: 'response' });
   }
 
-  download(): Observable<string> {
-    return this.http.get<string>(`${this.resourceUrl}/$content`);
+  download(): Observable<EntityContentResponseType> {
+    return this.http.get(`${this.resourceUrl}/$content`, { observe: 'response', responseType: 'text' });
   }
 }

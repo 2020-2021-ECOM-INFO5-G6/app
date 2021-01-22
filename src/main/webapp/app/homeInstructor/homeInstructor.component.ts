@@ -109,17 +109,19 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
     });
   }
 
-  downloadContent(id: number): void {
-    this.activityService.download(id).subscribe(string => {
-      const blob = new Blob([string], { type: 'text/plain;charset=utf-8' });
-      saveAs(blob);
+  downloadContent(id: number, name: string): void {
+    this.activityService.download(id).subscribe(content => {
+      if (content != null && content.body != null) {
+        saveAs(new Blob([content.body.replace(/\n/g, '\r\n')]), name + '-inscrits.csv');
+      }
     });
   }
 
   downloadAllContent(): void {
-    this.studentService.download().subscribe(string => {
-      const blob = new Blob([string], { type: 'text/plain;charset=utf-8' });
-      saveAs(blob);
+    this.studentService.download().subscribe(content => {
+      if (content != null && content.body != null) {
+        saveAs(new File([content.body.replace(/\n/g, '\r\n')], 'tous-les-inscrits.csv'));
+      }
     });
   }
 }

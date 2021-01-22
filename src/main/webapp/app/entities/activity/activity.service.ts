@@ -11,7 +11,7 @@ import { IActivity } from 'app/shared/model/activity.model';
 
 type EntityResponseType = HttpResponse<IActivity>;
 type EntityArrayResponseType = HttpResponse<IActivity[]>;
-type EntityContentResponseType = HttpResponse<String>;
+type EntityContentResponseType = HttpResponse<string>;
 
 @Injectable({ providedIn: 'root' })
 export class ActivityService {
@@ -50,8 +50,8 @@ export class ActivityService {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  download(id: number): Observable<string> {
-    return this.http.get<string>(`${this.resourceUrl}/${id}/$content`);
+  download(id: number): Observable<EntityContentResponseType> {
+    return this.http.get(`${this.resourceUrl}/${id}/$content`, { observe: 'response', responseType: 'text' });
   }
 
   protected convertDateFromClient(activity: IActivity): IActivity {

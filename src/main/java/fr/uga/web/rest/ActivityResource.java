@@ -152,11 +152,15 @@ public class ActivityResource {
             Iterator<StudentActivity> iter = activity.get().getStudentActivities().iterator();
             while (iter.hasNext()) {
                 Student student = iter.next().getStudent();
-                User user = student.getInternalUser();
                 Set<Material> materials = student.getMaterials();
-                content += user.getFirstName() 
-                    + "," + user.getLastName()
-                    + "," + student.getSportLevel()
+                User user = student.getInternalUser();
+                if (user != null) {
+                    content += user.getFirstName() 
+                    + "," + user.getLastName();
+                } else {
+                    content += ",";
+                }
+                content += "," + student.getSportLevel()
                     + "," + student.getMeetingPlace();
                 Iterator<Material> iterMat = materials.iterator();
                 while (iterMat.hasNext()) {
