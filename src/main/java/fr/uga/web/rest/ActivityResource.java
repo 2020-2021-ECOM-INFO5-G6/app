@@ -161,7 +161,7 @@ public class ActivityResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @RequestMapping(path = "/activities/withedi", method = RequestMethod.POST, consumes = "application/json")
-    public ResponseEntity<RequestWrapper> createActivityWithCorrespondingInstructors( 
+    public ResponseEntity<Activity> createActivityWithCorrespondingInstructors( 
     		@RequestBody RequestWrapper requestWrapper) throws URISyntaxException {
     	
     	Activity activity = requestWrapper.getActivity();
@@ -201,7 +201,7 @@ public class ActivityResource {
         
         return ResponseEntity.created(new URI("/api/activities/withedi" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(requestWrapper);
+            .body(result);
     }
     
 }
