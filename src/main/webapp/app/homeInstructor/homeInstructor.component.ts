@@ -41,7 +41,6 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => this.getLinkedEntity(account));
-    this.getActivitiesAsynchronously();
   }
 
   isAuthenticated(): boolean {
@@ -61,6 +60,7 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
       if (this.user == null) {
         this.getCurrentUserAsynchronously();
       }
+      this.getActivitiesAsynchronously();
     } else {
       this.instructor = this.getCurrentUser();
       if (this.instructor == null) {
