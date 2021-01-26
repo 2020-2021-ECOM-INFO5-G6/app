@@ -20,7 +20,7 @@
     "button": {
       "editData": "Edit you data",
       "goToSemesterInscription": "Go to student semester inscription page",
-      "manageActivities": "Gérer vos activités"
+      "manageActivities": "Manage your activities"
     },
     "alert": {
       "noActivities": "No activities",
