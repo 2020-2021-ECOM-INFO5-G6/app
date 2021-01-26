@@ -1,6 +1,7 @@
 package fr.uga.web.rest;
 
 import fr.uga.domain.Student;
+import fr.uga.repository.SemesterInscriptionRepository;
 import fr.uga.repository.StudentRepository;
 import fr.uga.web.rest.errors.BadRequestAlertException;
 
@@ -36,9 +37,12 @@ public class StudentResource {
     private String applicationName;
 
     private final StudentRepository studentRepository;
+    
+    private final SemesterInscriptionRepository semesterInscriptionRepository;
 
-    public StudentResource(StudentRepository studentRepository) {
+    public StudentResource(StudentRepository studentRepository, SemesterInscriptionRepository semesterInscriptionRepository) {
         this.studentRepository = studentRepository;
+        this.semesterInscriptionRepository = semesterInscriptionRepository;
     }
 
     /**
@@ -133,6 +137,14 @@ public class StudentResource {
         		.filter(s -> Objects.nonNull(s.getInternalUser()))
         		.filter(sbis -> sbis.getInternalUser().getId().equals(userid))
         		.findAny();
+        
+        if(student.isPresent()) {
+        	Student st = student.get();
+        	semesterInscriptionRepository.findAll().stream()
+        			.filter(si -> Objects.nonNull(si.getStudent()))
+        			.filter(si -> si.getStudent().getId() == st.getId())
+        			.forEach(si -> st.addSemesterInscription(si));
+        }  
         return ResponseUtil.wrapOrNotFound(student);
     }
 }
