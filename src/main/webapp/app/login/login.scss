@@ -10,6 +10,52 @@ Main page styles
   background-size: contain;
 }
 
+header {
+  margin: auto;
+  text-align: center;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+h3#contact {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.present {
+  border-collapse: collapse;
+  margin: auto;
+  text-align: center;
+  width: 100%;
+}
+
+#gras {
+  font-weight: bold;
+  font-size: x-large;
+}
+
+table.area {
+  border-collapse: collapse;
+  margin: auto;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+}
+
+table.contact {
+  border-collapse: collapse;
+  margin: auto;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+}
+
+footer {
+  text-align: center;
+}
+
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
   only screen and (-moz-min-device-pixel-ratio: 2),

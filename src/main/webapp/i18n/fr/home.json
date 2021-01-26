@@ -1,15 +1,21 @@
 {
   "home": {
-    "title": "Bonjour !",
+    "title": "Bienvenue sur la plateforme U-Wind !",
     "subtitle": "Ceci est votre page de connection",
-    "question": "Si vous avez des questions à propos de JHipster :",
+    "present": "U-Wind en quelques mots",
+    "area": "Deux lieux de pratiques",
+    "contact": "Contacte nous",
     "link": {
+      "U-Wind": "Local U-Wind",
       "homepage": "Page d'accueil de JHipster",
       "stackoverflow": "JHipster sur Stack Overflow",
       "bugtracker": "JHipster bug tracker",
       "chat": "JHipster public chat room",
-      "follow": "Suivez @jhipster sur Twitter"
+      "follow": "Suivez @jhipster sur Twitter",
+      "facebook": "Groupe Facebook",
+      "instagram": "Page Instagram"
     },
+    "email": "info@u-wind.fr",
     "like": "Si vous aimez JHipster, donnez nous une étoile sur",
     "github": "GitHub "
   }
