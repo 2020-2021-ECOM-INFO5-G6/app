@@ -11,8 +11,18 @@
       "editableActivities": "Activités modifiables",
       "monitoredActivities": "Activités surveillées"
     },
+    "admin": {
+      "activities": "Activités"
+    },
     "button": {
-      "editData": "Modifier vos données"
+      "editData": "Modifier vos données",
+      "export": "Exporter les inscrits",
+      "exportAll": "Exporter tous les inscrits"
+    },
+    "alert": {
+      "noEditableActivities": "Pas d'activités modifiables",
+      "noMonitoredActivities": "Pas d'activités surveillées",
+      "noActivities": "Pas d'activités"
     }
   }
 }

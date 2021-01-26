@@ -11,8 +11,18 @@
       "editableActivities": "Editable activities",
       "monitoredActivities": "Monitored activities"
     },
+    "admin": {
+      "activities": "Activités"
+    },
     "button": {
-      "editData": "Edit you data"
+      "editData": "Edit you data",
+      "export": "Export registrants",
+      "exportAll": "Export all registrants"
+    },
+    "alert": {
+      "noEditableActivities": "No editable activities",
+      "noMonitoredActivities": "No monitored activities",
+      "noActivities": "No activities"
     }
   }
 }

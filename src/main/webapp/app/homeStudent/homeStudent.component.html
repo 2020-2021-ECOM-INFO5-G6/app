@@ -2,71 +2,83 @@
     <!-- <div class="col-md-3">
         <span class="hipster img-fluid rounded"></span>
     </div> -->
-    <h1 class="lead" id="homeStudent-subtitle" jhiTranslate="homeStudent.subtitle">Welcom Student!</h1>
+    <h1 class="lead" id="homeStudent-subtitle" jhiTranslate="homeStudent.subtitle">Welcome Student!</h1>
 </div>
 <br>  
 
 <div class="row" id="body">
     <div class="column" id="personal-data">
         <table class="table">
+            <thead></thead>
             <tbody>
-                <div *ngIf="account">
-                    <tr>
-                        <td><h4 jhiTranslate="homeStudent.account.firstName">First Name</h4></td>
+                <div>
+                    <tr *ngIf="account">
+                        <td><span style="font-weight:bold" jhiTranslate="homeStudent.account.firstName">First Name</span></td>
                         <td *ngIf="account.firstName">{{ account.firstName }}</td>
                     </tr>
-                    <tr>
-                        <td><h4 jhiTranslate="homeStudent.account.lastName">Last Name</h4></td>
+                    <tr *ngIf="account">
+                        <td><span style="font-weight:bold" jhiTranslate="homeStudent.account.lastName">Last Name</span></td>
                         <td *ngIf="account.lastName">{{ account.lastName }}</td>
                     </tr>
-                    <tr>
-                        <td><h4 jhiTranslate="homeStudent.account.email">Email</h4></td>
+                    <tr *ngIf="account">
+                        <td><span style="font-weight:bold" jhiTranslate="homeStudent.account.email">Email</span></td>
                         <td *ngIf="account.email">{{ account.email }}</td>
                     </tr>
-                </div>
-
-                <div *ngIf="student">
-                    <tr>
-                        <td><h4 jhiTranslate="homeStudent.student.sportLevel">Sport level</h4></td>
+                    <tr *ngIf="student">
+                        <td><span style="font-weight:bold" jhiTranslate="homeStudent.student.sportLevel">Sport level</span></td>
                         <td *ngIf="student.sportLevel">{{ student.sportLevel }}</td>
                     </tr>
-                    <tr>
-                        <td><h4 jhiTranslate="homeStudent.student.drivingLicence">Driving licence</h4></td>
-                        <td *ngIf="student.drivingLicence">{{ student.drivingLicence }}</td>
+                    <tr *ngIf="student">
+                        <td><span style="font-weight:bold" jhiTranslate="homeStudent.student.drivingLicence">Driving licence</span></td>
+                        <td *ngIf="student.drivingLicence" jhiTranslate="homeStudent.student.drivingLicenceYes">Yes</td>
+                        <td *ngIf="!student.drivingLicence" jhiTranslate="homeStudent.student.drivingLicenceNo">No</td>
                     </tr>
-                    <tr>
-                        <td><h4 jhiTranslate="homeStudent.student.meetingPlace">Meeting place</h4></td>
+                    <tr *ngIf="student">
+                        <td><span style="font-weight:bold" jhiTranslate="homeStudent.student.meetingPlace">Meeting place</span></td>
                         <td *ngIf="student.meetingPlace">{{ student.meetingPlace }}</td>
                     </tr>
-                    <tr>
-                        <td><h4 jhiTranslate="homeStudent.student.cursus">Cursus</h4></td>
+                    <tr *ngIf="student">
+                        <td><span style="font-weight:bold" jhiTranslate="homeStudent.student.cursus">Cursus</span></td>
                         <td *ngIf="student.cursus">{{ student.cursus.composant }} {{ student.cursus.academicLevel }}</td>
                     </tr>
+                    <tr>
+                        <td colspan="2"><button [routerLink]="['/account/settings']" class="btn btn-primary" jhiTranslate="homeStudent.button.editData">Edit your data</button></td>
+                    </tr>
                 </div>
-
-                <button [routerLink]="['/account/settings']" class="btn btn-primary" jhiTranslate="homeStudent.button.editData">Edit your data</button>
             </tbody>
         </table>
     </div>
 
     <div class="column" id="activities">
         <table class="table">
+            <thead></thead>
             <tbody>
                 <div *ngIf="student">
                     <tr><h4 jhiTranslate="homeStudent.student.semesterInscriptions">Semester inscriptions</h4></tr>
-                    <tr *ngFor="let semesterInscription of student.semesterInscriptions; let last = last">
-                        <a *ngIf="semesterInscription">{{ semesterInscription.id }}</a>{{ last ? '' : ', ' }}
+                    <tr *ngFor="let semesterInscription of student.semesterInscriptions">
+                        <a *ngIf="semesterInscription.semester">{{ semesterInscription.semester.startDate }} - {{ semesterInscription.semester.endDate }}</a>
+                    </tr>
+                    <tr>
+                        <p *ngIf="student.semesterInscriptions && student.semesterInscriptions.length == 0 || !student.semesterInscriptions" style="color:#bfbfbf" jhiTranslate="homeStudent.alert.noSemesterInscriptions">No semester inscriptions</p>
+                    </tr>
+                    <tr>
+                        <button class="btn btn-primary" jhiTranslate="homeStudent.button.goToSemesterInscription"  routerLink="/studentSemesterInscription">Go to semester inscription page</button>
                     </tr>
 
+                    <tr><hr style="height:20px; visibility:hidden;"></tr>
+
                     <tr><h4 jhiTranslate="homeStudent.student.studentActivities">Activities</h4></tr>
-                    <tr *ngFor="let studentActivity of student.studentActivities; let last = last">
-                        <a *ngIf="studentActivity">{{ studentActivity.id }}</a>{{ last ? '' : ', ' }}
+                    <tr *ngFor="let studentActivity of student.studentActivities">
+                        <a *ngIf="studentActivity.activity">{{ studentActivity.activity.name }}</a>
+                    </tr>
+                    <tr>
+                        <p *ngIf="student.studentActivities && student.studentActivities.length == 0 || !student.studentActivities" style="color:#bfbfbf" jhiTranslate="homeStudent.alert.noActivities">No activities</p>
+                    </tr>
+                    <tr>
+                        <button class="btn btn-primary" jhiTranslate="homeStudent.button.manageActivities">Manage your activities</button>
                     </tr>
                 </div>
             </tbody>
         </table>
     </div>
 </div>
-
-
-<button style="display: block; margin-left: auto; margin-right: auto;" jhiTranslate="homeStudent.goToSemesterInscription"  routerLink="/studentSemesterInscription"> Go to semester inscription page </button>

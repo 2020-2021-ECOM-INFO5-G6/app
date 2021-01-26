@@ -10,20 +10,22 @@ Main page styles
   background-size: contain;
 }
 
-.row {
-  background-color: rgba(0, 0, 0, 0);
+table,
+td,
+th {
+  text-align: center;
+  border: 0;
 }
 
 .column {
   float: left;
+  text-align: center;
   width: 50%;
   padding: 10px;
 }
 
-.row:after {
-  content: '';
-  display: table;
-  clear: both;
+.row {
+  text-align: center;
 }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
