@@ -2,6 +2,8 @@
   "homeStudent": {
     "title": "Home",
     "subtitle": "Bienvenue élève !",
+    "yes": "Oui",
+    "no": "Non",
     "account": {
       "firstName": "Prénom",
       "lastName": "Nom",
@@ -10,21 +12,25 @@
     "student": {
       "sportLevel": "Niveau sportif",
       "drivingLicence": "Permis de conduire",
-      "drivingLicenceYes": "Oui",
-      "drivingLicenceNo": "Non",
       "meetingPlace": "Lieu de rendez-vous",
       "cursus": "Cursus",
-      "semesterInscriptions": "Inscriptions à un semestre",
-      "studentActivities": "Activités"
+      "semesterInscriptions": "Mes inscriptions à un semestre",
+      "studentActivities": "Mes activités"
     },
     "button": {
       "editData": "Modifier vos données",
       "goToSemesterInscription": "Naviguer vers la page d'inscription aux semestres",
-      "manageActivities": "Gérer vos activités"
+      "goToActivities": "Naviguer vers la page des activités"
     },
     "alert": {
       "noActivities": "Pas d'activités",
       "noSemesterInscriptions": "Pas d'inscriptions à un semestre"
+    },
+    "semesterInscription": {
+      "dates": "Dates",
+      "paid": "Payé",
+      "noted": "Noté",
+      "finalNote": "Note finale"
     }
   }
 }
