@@ -4,6 +4,7 @@ import fr.uga.domain.Student;
 import fr.uga.domain.Cursus;
 import fr.uga.domain.User;
 import fr.uga.repository.SemesterInscriptionRepository;
+import fr.uga.repository.StudentActivityRepository;
 import fr.uga.repository.StudentRepository;
 import fr.uga.web.rest.errors.BadRequestAlertException;
 
@@ -42,10 +43,13 @@ public class StudentResource {
     private final StudentRepository studentRepository;
     
     private final SemesterInscriptionRepository semesterInscriptionRepository;
+    
+    private final StudentActivityRepository studentActivityRepository;
 
-    public StudentResource(StudentRepository studentRepository, SemesterInscriptionRepository semesterInscriptionRepository) {
+    public StudentResource(StudentRepository studentRepository, SemesterInscriptionRepository semesterInscriptionRepository, StudentActivityRepository studentActivityRepository) {
         this.studentRepository = studentRepository;
         this.semesterInscriptionRepository = semesterInscriptionRepository;
+        this.studentActivityRepository = studentActivityRepository;
     }
 
     /**
@@ -158,6 +162,11 @@ public class StudentResource {
         			.filter(si -> Objects.nonNull(si.getStudent()))
         			.filter(si -> si.getStudent().getId() == st.getId())
         			.forEach(si -> st.addSemesterInscription(si));
+        	studentActivityRepository.findAll().stream()
+		        	.filter(sact -> Objects.nonNull(sact.getStudent()))
+					.filter(sact -> sact.getStudent().getId() == st.getId())
+					.forEach(sact -> st.addStudentActivity(sact));
+
         }  
         return ResponseUtil.wrapOrNotFound(student);
     }

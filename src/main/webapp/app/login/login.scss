@@ -10,6 +10,117 @@ Main page styles
   background-size: contain;
 }
 
+.row {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+caption {
+  display: none;
+}
+
+header {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
+.titlemessage {
+  font-style: oblique;
+  font-size: xx-large;
+  color: #1f618d;
+  margin-left: 10px;
+}
+
+h1 {
+  font-weight: bold;
+  color: #e67e22;
+  text-align: center;
+  font-family: 'OCR A Std', monospace;
+}
+
+h2 {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-weight: bold;
+  font-size: 40px;
+  color: #1f618d;
+  transition-duration: 0.3s;
+}
+
+#foot {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-weight: bold;
+  font-size: 40px;
+  color: white;
+}
+
+h2:hover {
+  color: #e67e22;
+  transition-duration: 0.3s;
+}
+
+table.present {
+  border-collapse: collapse;
+  margin: auto;
+  text-align: center;
+  width: 100%;
+}
+
+#gras {
+  font-weight: bold;
+  font-size: x-large;
+}
+
+table.area {
+  border-collapse: collapse;
+  margin: auto;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+}
+
+img#arrondi {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  box-shadow: 10px 5px 5px orange;
+}
+
+table.contact {
+  border-collapse: collapse;
+  margin: auto;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+  transition-duration: 0.3s;
+}
+
+.link:hover {
+  color: #e67e22;
+  transition-duration: 0.3s;
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+  background-color: #1f618d;
+  color: white;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
   only screen and (-moz-min-device-pixel-ratio: 2),
