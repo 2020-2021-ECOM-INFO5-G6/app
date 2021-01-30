@@ -16,6 +16,10 @@ Main page styles
   border-radius: 10px;
 }
 
+caption {
+  display: none;
+}
+
 header {
   width: 100%;
   margin: auto;
@@ -43,6 +47,7 @@ h2 {
   font-weight: bold;
   font-size: 40px;
   color: #1f618d;
+  transition-duration: 0.3s;
 }
 
 #foot {
@@ -56,6 +61,7 @@ h2 {
 
 h2:hover {
   color: #e67e22;
+  transition-duration: 0.3s;
 }
 
 table.present {
@@ -96,10 +102,12 @@ table.contact {
 .link {
   color: white;
   text-decoration: none;
+  transition-duration: 0.3s;
 }
 
 .link:hover {
   color: #e67e22;
+  transition-duration: 0.3s;
 }
 
 footer {
