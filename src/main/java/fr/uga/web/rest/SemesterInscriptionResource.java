@@ -169,8 +169,9 @@ public class SemesterInscriptionResource {
             throw new BadRequestAlertException("A new semesterInscription cannot already have an ID", ENTITY_NAME, "idexists");
         }
         
+        int semesternb = requestWrapper.getSemester();      
+        
         if (Objects.isNull(semesterInscription.getSemester())) {
-        	int semesternb = requestWrapper.getSemester();       	
     		LocalDate startDate;
     		LocalDate endDate;
     		
@@ -207,7 +208,8 @@ public class SemesterInscriptionResource {
         
         SemesterInscription result = semesterInscriptionRepository.save(semesterInscription);
 
-        mailService.sendSemesterInscriptionEmail(result.getStudent().getInternalUser());
+        log.debug("student : {}", result.getStudent());
+        mailService.sendSemesterInscriptionEmail(result.getStudent().getInternalUser(), semesternb);
         
         return ResponseEntity.created(new URI("/api/semester-inscriptions/withsemester/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

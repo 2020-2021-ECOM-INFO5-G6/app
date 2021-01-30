@@ -52,10 +52,10 @@ public class MailService {
     
     private static final String EMAILKEY = "email.activation.title";
     
-    private static final String S1 = "semester.one";
+    private static final String S = "semester";
     
-    private static final String S2 = "semester.two";
-
+    private static final String SEMESTER_NUMBER = "sem.number";
+    
     private final JHipsterProperties jHipsterProperties;
 
     private final JavaMailSender javaMailSender;
@@ -115,26 +115,44 @@ public class MailService {
         
         Student student = getStudentMail(user.getId());
         context.setVariable(STUDENT,student);
-        if(templateName.equals("mail/semesterInscriptionEmail") && Objects.nonNull(student)) {
-        	Optional<SemesterInscription> s1 = student.getSemesterInscriptions().stream()
-        			.filter(sem -> sem.getSemester().getStartDate().equals(LocalDate.of(2021, 9, 3)) && sem.getSemester().getEndDate().equals(LocalDate.of(2021, 12, 18)))
-        			.findAny();
-        	
-        	Optional<SemesterInscription> s2 = student.getSemesterInscriptions().stream()
-        			.filter(sem -> sem.getSemester().getStartDate().equals(LocalDate.of(2022, 1, 6)) && sem.getSemester().getEndDate().equals(LocalDate.of(2022, 6, 13)))
-        			.findAny();
-        	if(s1.isPresent()) {
-        		context.setVariable(S1, s1.get());
-        	}
-        	if(s2.isPresent()) {
-        		context.setVariable(S2, s2.get());
-        	}
-        }
-
-        String content = templateEngine.process(templateName, context);
-        String subject = messageSource.getMessage(titleKey, null, locale);
-
-        sendEmail(user.getEmail(), subject, content, false, true);
+    }   
+     
+    @Async
+    public void sendSemesterEmailFromTemplate(User user, String templateName, String titleKey, int semester) {
+	    if (user.getEmail() == null) {
+	        log.debug("Email doesn't exist for user '{}'", user.getLogin());
+	        return;
+	    }
+	    Locale locale = Locale.forLanguageTag(user.getLangKey());
+	    Context context = new Context(locale);
+	    context.setVariable(USER, user);
+	    context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+	    context.setVariable(SEMESTER_NUMBER, String.valueOf(semester));
+	    
+	    Student student = getStudentMail(user.getId());
+	    context.setVariable(STUDENT,student);
+	    if(templateName.equals("mail/semesterInscriptionEmail") && Objects.nonNull(student)) {
+	    	if (semester == 1) {
+	    		Optional<SemesterInscription> s1 = student.getSemesterInscriptions().stream()
+	    				.filter(sem -> sem.getSemester().getStartDate().equals(LocalDate.of(2021, 9, 3)) && sem.getSemester().getEndDate().equals(LocalDate.of(2021, 12, 18)))
+	    				.findAny();
+	    		if(s1.isPresent()) {
+	    			context.setVariable(S, s1.get());
+	    		}
+	    	} else if (semester == 2) {
+	        	Optional<SemesterInscription> s2 = student.getSemesterInscriptions().stream()
+	        			.filter(sem -> sem.getSemester().getStartDate().equals(LocalDate.of(2022, 1, 6)) && sem.getSemester().getEndDate().equals(LocalDate.of(2022, 6, 13)))
+	        			.findAny();
+	        	if(s2.isPresent()) {
+	        		context.setVariable(S, s2.get());
+	        	}
+	    	}
+	    }
+	
+	    String content = templateEngine.process(templateName, context);
+	    String subject = messageSource.getMessage(titleKey, null, locale);
+	
+	    sendEmail(user.getEmail(), subject, content, false, true);
     }
 
     @Async
@@ -162,9 +180,9 @@ public class MailService {
     }
     
     @Async
-    public void sendSemesterInscriptionEmail(User user) {
+    public void sendSemesterInscriptionEmail(User user, int semester) {
     	log.debug("Sending semester inscription email to '{}'", user.getEmail());
-    	sendEmailFromTemplate(user, "mail/semesterInscriptionEmail", "email.semester.title");
+    	sendSemesterEmailFromTemplate(user, "mail/semesterInscriptionEmail", "email.semester.title", semester);
     	
     }
 
