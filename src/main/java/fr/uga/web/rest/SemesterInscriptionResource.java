@@ -7,6 +7,7 @@ import fr.uga.domain.SemesterInscription;
 import fr.uga.domain.Student;
 import fr.uga.repository.SemesterInscriptionRepository;
 import fr.uga.repository.SemesterRepository;
+import fr.uga.service.MailService;
 import fr.uga.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -45,10 +46,13 @@ public class SemesterInscriptionResource {
     private final SemesterInscriptionRepository semesterInscriptionRepository;
     
     private final SemesterRepository semesterRepository;
+    
+    private final MailService mailService;
 
-    public SemesterInscriptionResource(SemesterInscriptionRepository semesterInscriptionRepository, SemesterRepository semesterRepository) {
+    public SemesterInscriptionResource(SemesterInscriptionRepository semesterInscriptionRepository, SemesterRepository semesterRepository, MailService mailService) {
         this.semesterInscriptionRepository = semesterInscriptionRepository;
         this.semesterRepository = semesterRepository;
+        this.mailService = mailService;
     }
 
     /**
@@ -202,7 +206,8 @@ public class SemesterInscriptionResource {
         }
         
         SemesterInscription result = semesterInscriptionRepository.save(semesterInscription);
-        
+
+        mailService.sendSemesterInscriptionEmail(result.getStudent().getInternalUser());
         
         return ResponseEntity.created(new URI("/api/semester-inscriptions/withsemester/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
