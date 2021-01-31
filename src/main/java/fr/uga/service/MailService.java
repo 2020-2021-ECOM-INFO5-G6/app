@@ -54,7 +54,7 @@ public class MailService {
     
     private static final String S = "semester";
     
-    private static final String SEMESTER_NUMBER = "sem.number";
+    private static final String SEMESTER_NUMBER = "number";
     
     private final JHipsterProperties jHipsterProperties;
 
@@ -115,6 +115,11 @@ public class MailService {
         
         Student student = getStudentMail(user.getId());
         context.setVariable(STUDENT,student);
+        
+        String content = templateEngine.process(templateName, context);
+	    String subject = messageSource.getMessage(titleKey, null, locale);
+	
+	    sendEmail(user.getEmail(), subject, content, false, true);
     }   
      
     @Async
@@ -127,7 +132,7 @@ public class MailService {
 	    Context context = new Context(locale);
 	    context.setVariable(USER, user);
 	    context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
-	    context.setVariable(SEMESTER_NUMBER, String.valueOf(semester));
+	    context.setVariable(SEMESTER_NUMBER, Integer.toString(semester));
 	    
 	    Student student = getStudentMail(user.getId());
 	    context.setVariable(STUDENT,student);
