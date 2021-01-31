@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing {@link fr.uga.domain.StudentActivity}.
@@ -114,5 +116,29 @@ public class StudentActivityResource {
         log.debug("REST request to delete StudentActivity : {}", id);
         studentActivityRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+    
+    //NOT OUT-OF-THE-BOX
+    
+    /**
+     * {@code GET  /student-activities} : get the studentActivities for a defined student .
+     *
+     * @param id the id of the Student .
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of studentActivities in body.
+     */
+    @GetMapping("/student-activities/fordefinedstudent/{id}")
+    public List<StudentActivity> getStudentActivitiesForThisStudent(@PathVariable Long id) {
+    	 	
+        log.debug("REST request to get StudentActivities of a specific student");
+        
+        List<StudentActivity> activities = studentActivityRepository.findAll();
+        
+        List<StudentActivity> studentActivities = activities.stream()
+        		.filter(act -> Objects.nonNull(act.getStudent()))
+        		.filter(act -> act.getStudent().getId().equals(id))
+        		.collect(Collectors.toList());
+        
+        
+        return studentActivities;
     }
 }
