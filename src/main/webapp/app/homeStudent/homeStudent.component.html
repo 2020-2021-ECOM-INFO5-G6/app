@@ -57,7 +57,7 @@
 
                         <hr>
 
-                        <div class="table-responsive" id="entities" *ngIf="student.semesterInscriptions && student.semesterInscriptions.length > 0">
+                        <div class="table-responsive" id="semesterInscriptionTable" *ngIf="student.semesterInscriptions && student.semesterInscriptions.length > 0">
                             <table class="table table-striped" aria-describedby="page-heading">
                                 <thead>
                                     <tr>
@@ -98,12 +98,30 @@
 
                         <hr>
 
-                        <tr *ngFor="let studentActivity of student.studentActivities">
-                            <a *ngIf="studentActivity.activity">{{ studentActivity.activity.name }}</a>
-                        </tr>
-                        <tr>
-                            <p *ngIf="student.studentActivities && student.studentActivities.length == 0 || !student.studentActivities" style="color:#bfbfbf" jhiTranslate="homeStudent.alert.noActivities">No activities</p>
-                        </tr>
+                        <div class="table-responsive" id="studentActivitiesTable" *ngIf="studentActivities && studentActivities.length > 0">
+                            <table class="table table-striped" aria-describedby="page-heading">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" ><span jhiTranslate="homeStudent.studentActivities.name">Name</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeStudent.studentActivities.date">Date</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeStudent.studentActivities.place">Place</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeStudent.studentActivities.coeff">Coeff</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeStudent.studentActivities.lake">Lake</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeStudent.studentActivities.commentFromInstructor">Comment from the instructor</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let studentActivity of studentActivities">
+                                        <td *ngIf="studentActivity.activity">{{ studentActivity.activity.name }}</td>
+                                        <td *ngIf="studentActivity.activity">{{ studentActivity.activity.date }}</td>
+                                        <td *ngIf="studentActivity.activity">{{ studentActivity.activity.place }}</td>
+                                        <td *ngIf="studentActivity.activity">{{ studentActivity.activity.coeff }}</td>
+                                        <td *ngIf="studentActivity.activity">{{ studentActivity.activity.lake }}</td>
+                                        <td>{{ studentActivity.commentByInstructor }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
                         <hr>
 

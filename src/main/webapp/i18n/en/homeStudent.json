@@ -31,6 +31,14 @@
       "paid": "Paid",
       "noted": "Noted",
       "finalNote": "Final note"
+    },
+    "studentActivities": {
+      "name": "Name",
+      "date": "Date",
+      "place": "Place",
+      "coeff": "Coefficient",
+      "lake": "Lake",
+      "commentFromInstructor": "Comment from the instructor"
     }
   }
 }

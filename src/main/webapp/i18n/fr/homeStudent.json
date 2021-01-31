@@ -31,6 +31,14 @@
       "paid": "Payé",
       "noted": "Noté",
       "finalNote": "Note finale"
+    },
+    "studentActivities": {
+      "name": "Nom",
+      "date": "Date",
+      "place": "Lieu",
+      "coeff": "Coefficient",
+      "lake": "Lac",
+      "commentFromInstructor": "Commentaire du moniteur"
     }
   }
 }
