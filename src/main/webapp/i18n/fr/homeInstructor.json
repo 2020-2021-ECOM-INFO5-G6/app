@@ -2,6 +2,7 @@
   "homeInstructor": {
     "title": "Home",
     "subtitle": "Bienvenue Instructeur !",
+    "contact": "Contactez nous",
     "account": {
       "firstName": "Prénom",
       "lastName": "Nom",
@@ -23,6 +24,12 @@
       "noEditableActivities": "Pas d'activités modifiables",
       "noMonitoredActivities": "Pas d'activités surveillées",
       "noActivities": "Pas d'activités"
+    },
+    "link": {
+      "U-Wind": "Local U-Wind",
+      "follow": "Suivez @jhipster sur Twitter",
+      "facebook": "Groupe Facebook",
+      "instagram": "Page Instagram"
     }
   }
 }

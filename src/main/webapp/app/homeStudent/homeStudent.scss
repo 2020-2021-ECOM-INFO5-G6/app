@@ -28,6 +28,49 @@ th {
   text-align: center;
 }
 
+caption {
+  display: none;
+}
+
+table.contact {
+  border-collapse: collapse;
+  margin: auto;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+}
+
+#foot {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-weight: bold;
+  font-size: 40px;
+  color: white;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+  transition-duration: 0.3s;
+}
+
+.link:hover {
+  color: #e67e22;
+  transition-duration: 0.3s;
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+  background-color: #1f618d;
+  color: white;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
   only screen and (-moz-min-device-pixel-ratio: 2),

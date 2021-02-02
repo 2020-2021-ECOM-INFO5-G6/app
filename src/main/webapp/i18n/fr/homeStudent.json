@@ -2,6 +2,7 @@
   "homeStudent": {
     "title": "Home",
     "subtitle": "Bienvenue élève !",
+    "contact": "Contactez nous",
     "account": {
       "firstName": "Prénom",
       "lastName": "Nom",
@@ -25,6 +26,12 @@
     "alert": {
       "noActivities": "Pas d'activités",
       "noSemesterInscriptions": "Pas d'inscriptions à un semestre"
+    },
+    "link": {
+      "U-Wind": "Local U-Wind",
+      "follow": "Suivez @jhipster sur Twitter",
+      "facebook": "Groupe Facebook",
+      "instagram": "Page Instagram"
     }
   }
 }

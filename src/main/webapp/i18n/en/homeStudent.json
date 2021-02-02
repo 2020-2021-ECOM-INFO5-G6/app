@@ -25,6 +25,13 @@
     "alert": {
       "noActivities": "No activities",
       "noSemesterInscriptions": "No semester inscription"
-    }
+    },
+    "contact": "Contact us",
+    "link": {
+      "U-Wind": "Space of U-Wind",
+      "facebook": "Facebook group",
+      "instagram": "Instagram page"
+    },
+    "translate": "© All rights reserved by u-wind.fr"
   }
 }
