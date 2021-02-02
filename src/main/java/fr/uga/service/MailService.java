@@ -200,7 +200,7 @@ public class MailService {
         	Student st = student.get();
         	Set<SemesterInscription> siSet = semesterInscriptionRepository.findAll().stream()
         			.filter(si -> Objects.nonNull(si.getStudent()))
-        			.filter(si -> si.getStudent().getId() == st.getId())
+        			.filter(si -> si.getStudent().getId().equals(st.getId()))
         			.collect(Collectors.toSet());
         	st.semesterInscriptions(siSet);
             return st;
