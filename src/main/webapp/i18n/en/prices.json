@@ -1,0 +1,23 @@
+{
+  "ecomApp": {
+    "prices": {
+      "home": {
+        "title": "Prices",
+        "createLabel": "Create a new Prices",
+        "createOrEditLabel": "Create or edit a Prices",
+        "notFound": "No Prices found"
+      },
+      "created": "A new Prices is created with identifier {{ param }}",
+      "updated": "A Prices is updated with identifier {{ param }}",
+      "deleted": "A Prices is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Prices {{ id }}?"
+      },
+      "detail": {
+        "title": "Prices"
+      },
+      "noted": "Noted",
+      "nonNoted": "Non Noted"
+    }
+  }
+}
