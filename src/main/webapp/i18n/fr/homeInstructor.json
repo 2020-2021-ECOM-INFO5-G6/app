@@ -1,7 +1,9 @@
 {
   "homeInstructor": {
     "title": "Home",
-    "subtitle": "Bienvenue Instructeur !",
+    "subtitle": "Bienvenue instructeur",
+    "yes": "Oui",
+    "no": "Non",
     "account": {
       "firstName": "Prénom",
       "lastName": "Nom",
@@ -23,6 +25,15 @@
       "noEditableActivities": "Pas d'activités modifiables",
       "noMonitoredActivities": "Pas d'activités surveillées",
       "noActivities": "Pas d'activités"
+    },
+    "activities": {
+      "name": "Nom",
+      "date": "Date",
+      "place": "Place",
+      "coeff": "Coefficient",
+      "lake": "Lac",
+      "inscriptionOpen": "Est ouvert",
+      "edit": "Modifier l'activité"
     }
   }
 }
