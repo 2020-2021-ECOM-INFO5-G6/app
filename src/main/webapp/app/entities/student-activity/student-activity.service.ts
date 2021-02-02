@@ -35,4 +35,8 @@ export class StudentActivityService {
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
+
+  getfordefinedstudent(id: number): Observable<EntityArrayResponseType> {
+    return this.http.get<IStudentActivity[]>(`${this.resourceUrl}/fordefinedstudent/${id}`, { observe: 'response' });
+  }
 }
