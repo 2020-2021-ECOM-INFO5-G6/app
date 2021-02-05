@@ -55,7 +55,6 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
 
   getLinkedEntity(account: Account | null): void {
     this.account = account;
-    this;
     if (this.isAuthenticated() && this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
       this.getCurrentUserAsynchronously();
       this.getActivitiesAsynchronously();
