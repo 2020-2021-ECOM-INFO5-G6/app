@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/core/login/login.service';
 import { IStudent } from 'app/shared/model/student.model';
+import { SemesterInscription } from 'app/shared/model/semester-inscription.model';
 import { SemesterInscriptionService } from 'app/entities/semester-inscription/semester-inscription.service';
-import { semesterInscriptionRoute } from 'app/entities/semester-inscription/semester-inscription.route';
-import { Moment } from 'moment';
+import { PricesService } from 'app/entities/prices/prices.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'jhi-home',
@@ -38,16 +39,17 @@ export class StudentSemesterInscriptionComponent implements OnInit {
 
   total = 0;
 
-  semesterPrice = 35;
+  semesterPriceNoted = 0;
+  semesterPriceNonNoted = 0;
 
   userjs: any;
   user: IStudent | null = null;
 
-  START_DATE1: Date = new Date('2021-09-03');
-  END_DATE1: Date = new Date('2021-12-18');
+  START_DATE1 = '2021-09-03';
+  END_DATE1 = '2021-12-18';
 
-  START_DATE2: Date = new Date('2022-01-06');
-  END_DATE2: Date = new Date('2021-06-13');
+  START_DATE2 = '2022-01-06';
+  END_DATE2 = '2022-06-13';
 
   isSubscribed1 = false;
   isSubscribed2 = false;
@@ -58,7 +60,8 @@ export class StudentSemesterInscriptionComponent implements OnInit {
     private router: Router,
     private accountService: AccountService,
     private loginService: LoginService,
-    private semesterInscriptionService: SemesterInscriptionService
+    private semesterInscriptionService: SemesterInscriptionService,
+    private pricesService: PricesService
   ) {}
 
   ngOnInit(): void {
@@ -72,11 +75,13 @@ export class StudentSemesterInscriptionComponent implements OnInit {
     // JSON.parse(localStorage.getItem('currentUser'))
     this.userjs = localStorage.getItem('currentUser');
     this.user = this.userjs !== null ? JSON.parse(this.userjs) : null;
-    console.log('User :');
-    console.log(this.user);
+    /* console.log('User :');
+    console.log(this.user);*/
 
-    this.isSubscribed1 = this.isAlreadySubscribed1();
-    this.isSubscribed2 = this.isAlreadySubscribed2();
+    this.isAlreadySubscribed1();
+    this.isAlreadySubscribed2();
+
+    this.getSemesterPrices();
   }
 
   reset(): void {
@@ -134,56 +139,86 @@ export class StudentSemesterInscriptionComponent implements OnInit {
   changeSubmited(): void {
     this.submited = true;
     if (this.now) {
-      this.total += this.semesterPrice;
+      const price = this.yes ? this.semesterPriceNoted : this.semesterPriceNonNoted;
+      this.total += price;
     }
 
-    //TODO: check if the semester inscription already exists
+    // TODO: check if the semester inscription already exists
     // if it already exists then : this.alerte = true;
 
     // else then save the semester inscription
   }
 
-  isAlreadySubscribed1(): boolean {
-    let res = false;
+  isAlreadySubscribed1(): void {
     this.semesterInscriptionService.query().subscribe(array => {
       array.body?.forEach(insc => {
         if (
-          insc.student === this.user &&
-          insc.semester?.startDate?.toDate() === this.START_DATE1 &&
-          insc.semester?.endDate?.toDate() === this.END_DATE1
+          insc.student?.id === this.user?.id &&
+          moment(insc.semester?.startDate).format('YYYY-MM-DD') === this.START_DATE1 &&
+          moment(insc.semester?.endDate).format('YYYY-MM-DD') === this.END_DATE1
         ) {
-          res = true;
+          this.isSubscribed1 = true;
         }
       });
     });
-    return res;
   }
 
-  isAlreadySubscribed2(): boolean {
-    let res = false;
+  isAlreadySubscribed2(): void {
     this.semesterInscriptionService.query().subscribe(array => {
       array.body?.forEach(insc => {
         if (
-          insc.student === this.user &&
-          insc.semester?.startDate?.toDate() === this.START_DATE2 &&
-          insc.semester?.endDate?.toDate() === this.END_DATE2
+          insc.student?.id === this.user?.id &&
+          moment(insc.semester?.startDate).format('YYYY-MM-DD') === this.START_DATE2 &&
+          moment(insc.semester?.endDate).format('YYYY-MM-DD') === this.END_DATE2
         ) {
-          res = true;
+          console.log('here');
+          this.isSubscribed2 = true;
         }
       });
     });
-    return res;
   }
 
   changeSubmited2(): void {
     this.submited2 = true;
     if (this.now2) {
-      this.total += this.semesterPrice;
+      const price = this.yes2 ? this.semesterPriceNoted : this.semesterPriceNonNoted;
+      this.total += price;
     }
   }
 
   onFinish(): void {
+    if (this.submited) {
+      this.subscribeS1();
+    }
+    if (this.submited2) {
+      this.subscribeS2();
+    }
     this.finish = true;
+  }
+
+  subscribeS1(): void {
+    this.semesterInscriptionService
+      .createwithsemester(1, new SemesterInscription(undefined, this.yes, 20, undefined, true, this.user!, undefined))
+      .subscribe(si => {
+        this.user?.semesterInscriptions ? this.user.semesterInscriptions.push(si.body!) : (this.user!.semesterInscriptions = [si.body!]);
+        localStorage.setItem('currentUser', JSON.stringify(this.user));
+      });
+  }
+
+  subscribeS2(): void {
+    this.semesterInscriptionService
+      .createwithsemester(2, new SemesterInscription(undefined, this.yes, 20, undefined, true, this.user!, undefined))
+      .subscribe(si => {
+        this.user?.semesterInscriptions ? this.user.semesterInscriptions.push(si.body!) : (this.user!.semesterInscriptions = [si.body!]);
+        localStorage.setItem('currentUser', JSON.stringify(this.user));
+      });
+  }
+
+  getSemesterPrices(): void {
+    this.pricesService.find(1).subscribe(price => {
+      this.semesterPriceNoted = price.body?.noted!;
+      this.semesterPriceNonNoted = price.body?.nonNoted!;
+    });
   }
 
   getUserame(): string {

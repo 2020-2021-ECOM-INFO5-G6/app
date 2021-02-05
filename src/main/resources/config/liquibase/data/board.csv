@@ -1,0 +1,17 @@
+id;board_id;name;volume;level;usable;comment
+1;BE1;Beach;175;BEGINNER;true;../data/blob/empty.txt
+2;BE1;Beach;175;BEGINNER;true;../data/blob/empty.txt
+3;BE1;Beach;175;BEGINNER;true;../data/blob/empty.txt
+4;C1;Calipso;220;BEGINNER;true;../data/blob/empty.txt
+5;C2;Calipso;220;BEGINNER;true;../data/blob/empty.txt
+6;C160;Core 160;160;PERF;false;../data/blob/empty.txt
+7;RDD Firerace 1;RDD Firerace;120;FOIL;false;../data/blob/6-RDDFirerace.txt
+8;RDD Firerace 2;RDD Firerace;120;FOIL;true;../data/blob/empty.txt
+9;T133 1;Techno 133;133;FUN;true;../data/blob/empty.txt
+10;T133 7;Techno 133;133;FUN;true;../data/blob/hipster.txt
+11;T133 8;Techno 133;133;FUN;true;../data/blob/hipster.txt
+12;T133 9;Techno 133;133;FUN;true;../data/blob/hipster.txt
+13;TABOU ROCKET 1;Tabou rocket;115;FUN;true;../data/blob/hipster.txt
+14;TABOU ROCKET 2;Tabou rocket;115;FUN;true;../data/blob/hipster.txt
+15;TABOU ROCKET 3;Tabou rocket;115;FUN;true;../data/blob/hipster.txt
+16;TABOU ROCKET 4;Tabou rocket;115;FUN;true;../data/blob/hipster.txt

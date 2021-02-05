@@ -10,20 +10,35 @@ Main page styles
   background-size: contain;
 }
 
-.row {
-  background-color: rgba(0, 0, 0, 0);
+table,
+td,
+th {
+  text-align: center;
+  border: 0;
 }
 
-.column {
+.column1 {
   float: left;
-  width: 50%;
+  text-align: center;
   padding: 10px;
 }
 
-.row:after {
-  content: '';
-  display: table;
-  clear: both;
+.column2 {
+  float: left;
+  text-align: center;
+  display: flex;
+  flex-grow: 1;
+  padding: 10px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  padding: 10px;
+}
+
+.row {
+  text-align: center;
 }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */

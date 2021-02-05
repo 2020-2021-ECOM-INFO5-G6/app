@@ -1,0 +1,6 @@
+id;name;date;place;capacity;inscription_open;coeff;lake
+1;sortie 1;2020-09-19;Laffrey;50;true;1;LAFFREY
+2;sortie 2;2020-09-20;Laffrey;50;true;1;LAFFREY
+3;sortie 3;2020-09-24;Laffrey;50;true;0.5;LAFFREY
+4;sortie 4;2020-09-26;Laffrey;50;true;1;LAFFREY
+5;sortie 5;2020-09-27;Laffrey;50;true;1;LAFFREY
