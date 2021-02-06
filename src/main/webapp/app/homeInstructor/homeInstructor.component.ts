@@ -65,16 +65,10 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
   getLinkedEntity(account: Account | null): void {
     this.account = account;
     if (this.isAuthenticated() && this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
-      this.user = this.getCurrentUser();
-      if (this.user == null) {
-        this.getCurrentUserAsynchronously();
-      }
+      this.getCurrentUserAsynchronously();
       this.getActivitiesAsynchronously();
     } else {
-      this.instructor = this.getCurrentUser();
-      if (this.instructor == null) {
-        this.getCurrentInstructorAsynchronously();
-      }
+      this.getCurrentInstructorAsynchronously();
     }
   }
 
@@ -105,6 +99,20 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
   }
 
   getActivitiesAsynchronously(): void {
+    this.activityService.query().subscribe(activities => {
+      if (activities != null) {
+        if (activities.body != null) {
+          this.activities = activities.body;
+        } else {
+          this.activities = [];
+        }
+      } else {
+        this.activities = [];
+      }
+    });
+  }
+
+  getInstructorActivitiesAsynchronously(): void {
     this.activityService.query().subscribe(activities => {
       if (activities != null) {
         if (activities.body != null) {

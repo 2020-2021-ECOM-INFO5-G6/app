@@ -6,6 +6,7 @@ import fr.uga.EcomApp;
 import fr.uga.domain.Cursus;
 import fr.uga.domain.Student;
 import fr.uga.domain.User;
+import fr.uga.repository.SemesterInscriptionRepository;
 import fr.uga.repository.StudentRepository;
 import fr.uga.repository.UserRepository;
 import io.github.jhipster.config.JHipsterProperties;
@@ -84,6 +85,9 @@ public class MailServiceIT {
     
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private SemesterInscriptionRepository semesterInscriptionRepository;
 
     @Spy
     private JavaMailSenderImpl javaMailSender;
@@ -99,7 +103,7 @@ public class MailServiceIT {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(javaMailSender).send(any(MimeMessage.class));
-        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, studentRepository);
+        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, studentRepository, semesterInscriptionRepository);
     }
 
     @Test

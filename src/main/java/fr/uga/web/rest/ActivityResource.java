@@ -156,18 +156,18 @@ public class ActivityResource {
                 User user = student.getInternalUser();
                 if (user != null) {
                     content += user.getFirstName() 
-                    + "," + user.getLastName();
+                    + ";" + user.getLastName();
                 } else {
-                    content += ",";
+                    content += ";";
                 }
-                content += "," + student.getSportLevel()
-                    + "," + student.getMeetingPlace();
+                content += ";" + student.getSportLevel()
+                    + ";" + student.getMeetingPlace();
                 Iterator<Material> iterMat = materials.iterator();
                 while (iterMat.hasNext()) {
                     Material material = iterMat.next();
-                    content += "," + material.getBoard().getName()
-                        + "," + material.getSail().getName()
-                        + "," + material.getTracksuit().getName();
+                    content += ";" + material.getBoard().getName()
+                        + ";" + material.getSail().getName()
+                        + ";" + material.getTracksuit().getName();
                 }
                 content += "\n";
             }

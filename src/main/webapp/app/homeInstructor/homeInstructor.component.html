@@ -6,10 +6,10 @@
 </div>
 
 <div class="row" id="body">
-    <div class="column" id="personal-data">
+    <div class="column1" id="personal-data">
         <table class="table">
             <thead></thead>
-            <tbody>
+            <tbody class="card">
                 <div>
                     <tr *ngIf="account">
                         <td><span style="font-weight:bold" jhiTranslate="homeInstructor.account.firstName">First Name</span></td>
@@ -23,58 +23,149 @@
                         <td><span style="font-weight:bold" jhiTranslate="homeInstructor.account.email">Email</span></td>
                         <td *ngIf="account.email">{{ account.email }}</td>
                     </tr>
-                    <tr>
-                        <td colspan="2"><button [routerLink]="['/account/settings']" class="btn btn-primary" jhiTranslate="homeInstructor.button.editData">Edit your data</button></td>
-                    </tr>
                 </div>
+                <button [routerLink]="['/account/settings']" class="btn btn-primary" jhiTranslate="homeStudent.button.editData">Edit your data</button>
             </tbody>
         </table>
     </div>
 
-    <div class="column" id="activities">
+    <div class="column2" id="activities">
         <table class="table">
             <thead></thead>
             <tbody>
                 <div *ngIf="user">
-                    <tr>
-                        <td><h4 jhiTranslate="homeInstructor.admin.activities">Activities</h4></td>
-                        <td>
-                            <button type="submit" class="btn btn-primary" (click)="downloadAllContent()">
-                                <span class="d-none d-md-inline" jhiTranslate="homeInstructor.button.exportAll">Export all registrants</span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr *ngFor="let activity of activities">
-                        <td><a *ngIf="activity" [routerLink]="['/activity', activity.id, 'view']">{{ activity.name }}</a></td>
-                        <td *ngIf="activity.id && activity.name">
-                            <button type="submit" class="btn btn-info btn-sm" (click)="downloadContent(activity.id, activity.name)">
-                                <span class="d-none d-md-inline" jhiTranslate="homeInstructor.button.export">Export registrants</span>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <p *ngIf="activities && activities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noActivities">No editable activities</p>
-                    </tr>
-                    <tr>
-                        <button jhiTranslate="homeInstructor.admin.createActivity" routerLink="/activityCreation"> Create activity </button>
-                    </tr>
-                </div>
-                <div *ngIf="instructor">
-                    <tr><h4 jhiTranslate="homeInstructor.instructor.editableActivities">Editable activities</h4></tr>
-                    <tr *ngFor="let editableActivity of instructor.editableActivities">
-                        <td><a *ngIf="editableActivity">{{ editableActivity.name }}</a></td>
-                    </tr>
-                    <tr>
-                        <p *ngIf="instructor.editableActivities && instructor.editableActivities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noEditableActivities">No editable activities</p>
-                    </tr>
+                    <div class="card">
+                        <tr>
+                            <td style="float: left"><h4 jhiTranslate="homeInstructor.admin.activities">Activities</h4></td>
+                            <td style="float: right">
+                                <button type="submit" class="btn btn-primary" (click)="downloadAllContent()">
+                                    <span class="d-none d-md-inline" jhiTranslate="homeInstructor.button.exportAll">Export all registrants</span>
+                                </button>
+                            </td>
+                        </tr>
 
-                    <tr><h4 jhiTranslate="homeInstructor.instructor.monitoredActivities">Monitored activities</h4></tr>
-                    <tr *ngFor="let participateActivity of instructor.participateActivities">
-                        <td><a *ngIf="participateActivity">{{ participateActivity.name }}</a></td>
-                    </tr>
-                    <tr>
-                        <p *ngIf="instructor.editableActivities && instructor.editableActivities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noMonitoredActivities">No monitored activities</p>
-                    </tr>
+                        <hr>
+
+                        <div class="table-responsive" id="activitiesTable" *ngIf="activities && activities.length > 0">
+                            <table class="table table-striped" aria-describedby="page-heading">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.name">Name</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.date">Date</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.place">Place</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.coeff">Coeff</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.lake">Lake</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.inscriptionOpen">Is opened</span></th>
+                                        <th scope="col" ></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let activity of activities">
+                                        <td><a [routerLink]="['/activity', activity.id, 'view']">{{ activity.name }}</a></td>
+                                        <td>{{ activity.date }}</td>
+                                        <td>{{ activity.place }}</td>
+                                        <td>{{ activity.coeff }}</td>
+                                        <td>{{ activity.lake }}</td>
+                                        <td *ngIf="activity.inscriptionOpen" jhiTranslate="homeInstructor.yes">Yes</td>
+                                        <td *ngIf="!activity.inscriptionOpen" jhiTranslate="homeInstructor.no">No</td>
+                                        <td *ngIf="activity.id && activity.name">
+                                            <button type="submit" class="btn btn-info btn-sm" (click)="downloadContent(activity.id, activity.name)">
+                                                <span class="d-none d-md-inline" jhiTranslate="homeInstructor.button.export">Export registrants</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <tr>
+                            <p *ngIf="activities && activities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noActivities">No activities</p>
+                        </tr>
+                    </div>
+                </div>
+
+                
+
+                <div *ngIf="instructor">
+                    <div class="card">
+                        <tr style="text-align: left"><h4 jhiTranslate="homeInstructor.instructor.editableActivities">Editable activities</h4></tr>
+
+                        <hr>
+
+                        <div class="table-responsive" id="editableActivitiesTable" *ngIf="instructor.editableActivities && instructor.editableActivities.length > 0">
+                            <table class="table table-striped" aria-describedby="page-heading">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.name">Name</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.date">Date</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.place">Place</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.coeff">Coeff</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.lake">Lake</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.inscriptionOpen">Is opened</span></th>
+                                        <th scope="col" ></th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="instructor.editableActivities && instructor.editableActivities.length > 0">
+                                    <tr *ngFor="let editableActivity of instructor.editableActivities">
+                                        <td><a [routerLink]="['/activity', editableActivity.id, 'view']">{{ editableActivity.name }}</a></td>
+                                        <td>{{ editableActivity.date }}</td>
+                                        <td>{{ editableActivity.place }}</td>
+                                        <td>{{ editableActivity.coeff }}</td>
+                                        <td>{{ editableActivity.lake }}</td>
+                                        <td *ngIf="editableActivity.inscriptionOpen" jhiTranslate="homeInstructor.yes">Yes</td>
+                                        <td *ngIf="!editableActivity.inscriptionOpen" jhiTranslate="homeInstructor.no">No</td>
+                                        <td *ngIf="editableActivity.id">
+                                            <button type="submit" class="btn btn-info btn-sm" [routerLink]="['/activity', editableActivity.id, 'edit']">
+                                                <span class="d-none d-md-inline" jhiTranslate="homeInstructor.activities.edit">Edit the activity</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <tr>
+                            <p *ngIf="instructor.editableActivities && instructor.editableActivities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noEditableActivities">No editable activities</p>
+                        </tr>
+                    </div>
+
+                    <tr><hr style="height:10px; visibility:hidden;"></tr>
+
+                    <div class="card">
+                        <tr style="text-align: left"><h4 jhiTranslate="homeInstructor.instructor.monitoredActivities">Monitored activities</h4></tr>
+
+                        <hr>
+
+                        <div class="table-responsive" id="monitoredActivitiesTable" *ngIf="instructor.participateActivities && instructor.participateActivities.length > 0">
+                            <table class="table table-striped" aria-describedby="page-heading">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.name">Name</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.date">Date</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.place">Place</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.coeff">Coeff</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.lake">Lake</span></th>
+                                        <th scope="col" ><span jhiTranslate="homeInstructor.activities.inscriptionOpen">Is opened</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="instructor.participateActivities && instructor.participateActivities.length > 0">
+                                    <tr *ngFor="let monitoredActivity of instructor.participateActivities">
+                                        <td><a [routerLink]="['/activity', monitoredActivity.id, 'view']">{{ monitoredActivity.name }}</a></td>
+                                        <td>{{ monitoredActivity.date }}</td>
+                                        <td>{{ monitoredActivity.place }}</td>
+                                        <td>{{ monitoredActivity.coeff }}</td>
+                                        <td>{{ monitoredActivity.lake }}</td>
+                                        <td *ngIf="monitoredActivity.inscriptionOpen" jhiTranslate="homeInstructor.yes">Yes</td>
+                                        <td *ngIf="!monitoredActivity.inscriptionOpen" jhiTranslate="homeInstructor.no">No</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <tr>
+                            <p *ngIf="instructor.participateActivities && instructor.participateActivities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noMonitoredActivities">No monitored activities</p>
+                        </tr>
+                    </div>
                 </div>
             </tbody>
         </table>

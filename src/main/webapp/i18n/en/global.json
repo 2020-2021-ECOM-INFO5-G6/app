@@ -18,6 +18,7 @@
         "tracksuit": "Tracksuit",
         "board": "Board",
         "sail": "Sail",
+        "prices": "Prices",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
