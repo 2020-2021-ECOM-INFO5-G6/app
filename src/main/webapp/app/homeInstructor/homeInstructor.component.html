@@ -12,44 +12,41 @@
             <tbody class="card">
                 <div>
                     <tr *ngIf="account">
-                        <td><span style="font-weight:bold" jhiTranslate="homeInstructor.account.firstName">First Name</span></td>
+                        <td style="text-align: left"><span style="font-weight:bold" jhiTranslate="homeInstructor.account.firstName">First Name</span></td>
                         <td *ngIf="account.firstName">{{ account.firstName }}</td>
                     </tr>
                     <tr *ngIf="account">
-                        <td><span style="font-weight:bold" jhiTranslate="homeInstructor.account.lastName">Last Name</span></td>
+                        <td style="text-align: left"><span style="font-weight:bold" jhiTranslate="homeInstructor.account.lastName">Last Name</span></td>
                         <td *ngIf="account.lastName">{{ account.lastName }}</td>
                     </tr>
                     <tr *ngIf="account">
-                        <td><span style="font-weight:bold" jhiTranslate="homeInstructor.account.email">Email</span></td>
+                        <td style="text-align: left"><span style="font-weight:bold" jhiTranslate="homeInstructor.account.email">Email</span></td>
                         <td *ngIf="account.email">{{ account.email }}</td>
                     </tr>
                 </div>
                 <button [routerLink]="['/account/settings']" class="btn btn-primary" jhiTranslate="homeInstructor.button.editData">Edit your data</button>
             </tbody>
         </table>
-        <div class="card">
+        <div class="card" *ngIf="prices">
             <tr style="text-align: left"><h4 jhiTranslate="homeInstructor.admin.prices">Semester prices</h4></tr>
 
             <table class="table">
                 <thead></thead>
-                <tbody class="card">
+                <tbody>
                     <div>
-                        <tr *ngIf="account">
-                            <td><span style="font-weight:bold" jhiTranslate="homeInstructor.account.firstName">First Name</span></td>
-                            <td *ngIf="account.firstName">{{ account.firstName }}</td>
+                        <tr>
+                            <td style="text-align: left"><span style="font-weight:bold" jhiTranslate="homeInstructor.prices.noted">Noted</span></td>
+                            <td *ngIf="prices">{{ prices.noted }} €</td>
                         </tr>
-                        <tr *ngIf="account">
-                            <td><span style="font-weight:bold" jhiTranslate="homeInstructor.account.lastName">Last Name</span></td>
-                            <td *ngIf="account.lastName">{{ account.lastName }}</td>
-                        </tr>
-                        <tr *ngIf="account">
-                            <td><span style="font-weight:bold" jhiTranslate="homeInstructor.account.email">Email</span></td>
-                            <td *ngIf="account.email">{{ account.email }}</td>
+                        <tr>
+                            <td style="text-align: left"><span style="font-weight:bold" jhiTranslate="homeInstructor.prices.nonnoted">Not noted</span></td>
+                            <td *ngIf="prices">{{ prices.nonNoted }} €</td>
                         </tr>
                     </div>
-                    <button [routerLink]="['/account/settings']" class="btn btn-primary" jhiTranslate="homeInstructor.button.editPrices">Edit your data</button>
                 </tbody>
             </table>
+
+            <button [routerLink]="['/prices', 1, 'edit']" class="btn btn-primary" jhiTranslate="homeInstructor.button.editPrices">Edit your data</button>
         </div>
     </div>
 

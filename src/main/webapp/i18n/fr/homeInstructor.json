@@ -19,6 +19,7 @@
     },
     "button": {
       "editData": "Modifier vos données",
+      "editPrices": "Modifier les prix des semestres",
       "export": "Exporter les inscrits",
       "exportAll": "Exporter tous les inscrits"
     },
@@ -35,6 +36,10 @@
       "lake": "Lac",
       "inscriptionOpen": "Est ouvert",
       "edit": "Modifier l'activité"
+    },
+    "prices": {
+      "noted": "FQ (noté)",
+      "nonnoted": "FP (non noté)"
     }
   }
 }
