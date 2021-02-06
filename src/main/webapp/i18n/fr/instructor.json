@@ -2,23 +2,23 @@
   "ecomApp": {
     "instructor": {
       "home": {
-        "title": "Instructors",
-        "createLabel": "Créer un nouveau Instructor",
-        "createOrEditLabel": "Créer ou éditer un Instructor",
-        "notFound": "Aucun Instructor trouvé"
+        "title": "Instructeurs",
+        "createLabel": "Créer un nouvel instructeur",
+        "createOrEditLabel": "Créer ou éditer un instructeur",
+        "notFound": "Aucun instructeur trouvé"
       },
-      "created": "Un nouveau Instructor a été créé avec l'identifiant {{ param }}",
-      "updated": "Le Instructor avec l'identifiant {{ param }} a été mis à jour",
-      "deleted": "Le Instructor avec l'identifiant {{ param }} a été supprimé",
+      "created": "Un nouvel instructeur a été créé avec l'identifiant {{ param }}",
+      "updated": "L'instructeur avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "L'instructeur avec l'identifiant {{ param }} a été supprimé",
       "delete": {
-        "question": "Etes-vous certain de vouloir supprimer le Instructor {{ id }} ?"
+        "question": "Etes-vous certain de vouloir supprimer l'instructeur {{ id }} ?"
       },
       "detail": {
-        "title": "Instructor"
+        "title": "Instructeur"
       },
-      "internalUser": "Internal User",
-      "participateActivity": "Participate Activity",
-      "editableActivity": "Editable Activity"
+      "internalUser": "Utilisateur interne",
+      "participateActivity": "Activités surveillées",
+      "editableActivity": "Activités modifiables"
     }
   }
 }

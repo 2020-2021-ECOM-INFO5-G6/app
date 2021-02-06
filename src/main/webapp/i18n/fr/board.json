@@ -2,27 +2,27 @@
   "ecomApp": {
     "board": {
       "home": {
-        "title": "Boards",
-        "createLabel": "Créer un nouveau Board",
-        "createOrEditLabel": "Créer ou éditer un Board",
-        "notFound": "Aucun Board trouvé"
+        "title": "Planches",
+        "createLabel": "Créer une nouvelle planche",
+        "createOrEditLabel": "Créer ou éditer une planche",
+        "notFound": "Aucune planche trouvée"
       },
-      "created": "Un nouveau Board a été créé avec l'identifiant {{ param }}",
-      "updated": "Le Board avec l'identifiant {{ param }} a été mis à jour",
-      "deleted": "Le Board avec l'identifiant {{ param }} a été supprimé",
+      "created": "Une nouvelle planche a été créée avec l'identifiant {{ param }}",
+      "updated": "La planche avec l'identifiant {{ param }} a été mise à jour",
+      "deleted": "La planche avec l'identifiant {{ param }} a été supprimée",
       "delete": {
-        "question": "Etes-vous certain de vouloir supprimer le Board {{ id }} ?"
+        "question": "Etes-vous certain de vouloir supprimer la planche {{ id }} ?"
       },
       "detail": {
-        "title": "Board"
+        "title": "Planche"
       },
-      "boardId": "Board Id",
-      "name": "Name",
+      "boardId": "Id planche",
+      "name": "Nom",
       "volume": "Volume",
-      "level": "Level",
-      "usable": "Usable",
-      "comment": "Comment",
-      "material": "Material"
+      "level": "Niveau",
+      "usable": "Utilisable",
+      "comment": "Commentaire",
+      "material": "Matériel"
     }
   }
 }

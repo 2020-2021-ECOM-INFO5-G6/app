@@ -2,22 +2,22 @@
   "ecomApp": {
     "prices": {
       "home": {
-        "title": "Prices",
-        "createLabel": "Créer un nouveau Prices",
-        "createOrEditLabel": "Créer ou éditer un Prices",
-        "notFound": "Aucun Prices trouvé"
+        "title": "Prix",
+        "createLabel": "Créer un nouveau prix",
+        "createOrEditLabel": "Créer ou éditer un prix",
+        "notFound": "Aucun prix trouvé"
       },
-      "created": "Un nouveau Prices a été créé avec l'identifiant {{ param }}",
-      "updated": "Le Prices avec l'identifiant {{ param }} a été mis à jour",
-      "deleted": "Le Prices avec l'identifiant {{ param }} a été supprimé",
+      "created": "Un nouveau prix a été créé avec l'identifiant {{ param }}",
+      "updated": "Le prix avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le prix avec l'identifiant {{ param }} a été supprimé",
       "delete": {
-        "question": "Etes-vous certain de vouloir supprimer le Prices {{ id }} ?"
+        "question": "Etes-vous certain de vouloir supprimer le prix {{ id }} ?"
       },
       "detail": {
-        "title": "Prices"
+        "title": "Prix"
       },
-      "noted": "Noted",
-      "nonNoted": "Non Noted"
+      "noted": "FQ (noté)",
+      "nonNoted": "FP (non noté)"
     }
   }
 }
