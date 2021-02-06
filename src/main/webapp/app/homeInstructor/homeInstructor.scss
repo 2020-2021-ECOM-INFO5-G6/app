@@ -10,6 +10,26 @@ Main page styles
   background-size: contain;
 }
 
+table,
+td,
+th {
+  text-align: center;
+  border: 0;
+}
+
+.column {
+  float: left;
+  box-align: center;
+  width: 50%;
+  padding: 10px;
+}
+
+.row:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
 @media only screen and (-webkit-min-device-pixel-ratio: 2),
   only screen and (-moz-min-device-pixel-ratio: 2),

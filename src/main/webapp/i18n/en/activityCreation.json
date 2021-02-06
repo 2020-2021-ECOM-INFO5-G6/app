@@ -1,0 +1,35 @@
+{
+  "activityCreation": {
+    "fields": "Please fill the gaps bellow:",
+    "instructors": "You can click on an instructor to affect the activity to him:",
+    "title": "Activity creation",
+    "subtitle": "Create a new activity",
+    "name": "Enter a name",
+    "date": "Select a date",
+    "place": "Enter a place",
+    "lake": "Choose a lake",
+    "capacity": "How many people can this activity count?",
+    "coeff": "Choose a coefficient",
+    "reset": "Reset",
+    "submit": "Submit",
+    "placeholder": {
+      "name": "Name",
+      "place": "Place",
+      "other": "Other"
+    },
+    "open": {
+      "label": "Inscription is open?",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "alert": {
+      "name": "Name required",
+      "date": "Date required",
+      "place": "Place required",
+      "lake": "Lake required",
+      "capacity": "Capacity required"
+    },
+    "allInstructors": "All instructors:",
+    "selectedInstructors": "Selected instructors:"
+  }
+}

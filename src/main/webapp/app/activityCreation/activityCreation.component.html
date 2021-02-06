@@ -1,101 +1,152 @@
 <h1 jhiTranslate="activityCreation.subtitle"> Create a new activity </h1> 
 
-User Id : {{getUserId()}}
-
-<h4 jhiTranslate="studentSemesterInscription.semesters"> Here you can subscribe to a semester inscription </h4>
 <br><br>
 
-<!-- First Semester Inscription -->
- <input type="checkbox" [disabled]= "submited" [checked]= "isFirstSemester" (change)="changeValueOfFirstSemester()">
- <span jhiTranslate="studentSemesterInscription.semester1">First semester</span>
+<!-- Activity creation form -->
 
- <br>
- <!-- Display inscription-->
- <div class="shadowbox" *ngIf = "isFirstSemester"> 
+    <div class="row" id="body">
+        <div class="column" id="personal-data">
+            <table class="table">
+                <thead></thead>
+                <tbody>
 
-     <span jhiTranslate="studentSemesterInscription.noted"> Is noted?</span>
+                    <h2 jhiTranslate="activityCreation.fields"> Fill the gaps </h2>
+                    <br>
 
-     <br>
+                    <!-- Name -->
+                    <span style="font-weight: bold;" jhiTranslate="activityCreation.name" > Name: </span>
+                    <input type="text" value='{{name}}' placeholder="{{ 'activityCreation.placeholder.name' | translate }}" (change)="onChangeName($event)" >
 
-     <input type="checkbox" [checked]= "yes" [disabled]= "submited"  (change)="changeNoted()" > 
-     <span jhiTranslate="studentSemesterInscription.yes"> Yes </span>
+                    <div *ngIf="submit && name==''" jhiTranslate="activityCreation.alert.name" style="color: brown; font-size: small;">
+                        Name required
+                    </div>
 
-     <input type="checkbox" [checked]= "no" [disabled]= "submited"  (change)="changeNoted()" > 
-     <span jhiTranslate="studentSemesterInscription.no"> No </span>
+                    <br><br>
 
-     <br><br>
+                    <!-- Date -->
 
-     <span jhiTranslate="studentSemesterInscription.pay"> I would like to pay </span>
+                    <span style="font-weight: bold;" jhiTranslate="activityCreation.date" >Date:</span>
+                    <input type="date" value="{{date}}" (change)="onChangeDate($event)">
 
-     <br>
-        
-     <input type="checkbox" [checked]= "later" [disabled]= "submited"  (change)="changePayement()" > 
-     <span jhiTranslate="studentSemesterInscription.later"> Later </span>
-
-     <input type="checkbox" [checked]= "now" [disabled]= "submited"  (change)="changePayement()" > 
-     <span jhiTranslate="studentSemesterInscription.now"> Now </span>
-
-     <br><br>
-
-     <button jhiTranslate="studentSemesterInscription.submit" (click)= "changeSubmited()"> Submit </button>
-     
-     
-</div>
-
-<br><br>
-
- <!-- Second Semester Inscription -->
+                    <div style="color: brown; font-size: small;" *ngIf="submit && date==''" jhiTranslate="activityCreation.alert.date">
+                        Date required.
+                    </div>
 
 
- <input type="checkbox" [disabled]= "submited2" [checked]= "isSecondSemester" (change)="changeValueOfSecondSemester()">
- <span jhiTranslate="studentSemesterInscription.semester2">Second semester</span>
 
- <br>
+                    <br><br>
 
-  <!-- Display inscription-->
-  <div class="shadowbox" *ngIf = "isSecondSemester"> 
+                    <!-- Place -->
+                    <span style="font-weight: bold;" jhiTranslate="activityCreation.place"> Place </span>   
+                    <input type="text" value='{{place}}' placeholder="{{ 'activityCreation.placeholder.place' | translate }}" (change)="onChangePlace($event)">
 
-    <span jhiTranslate="studentSemesterInscription.noted"> Is noted?</span>
+                    <div *ngIf="submit && place==''" jhiTranslate="activityCreation.alert.place" style="color: brown; font-size: small;">
+                        Place required
+                    </div>
 
-    <br>
+                    <br><br>
 
-    <input type="checkbox" [checked]= "yes2" [disabled]= "submited2" (change)="changeNoted2()" > 
-    <span jhiTranslate="studentSemesterInscription.yes"> Yes </span>
+                    <!-- Lake -->
+                    <span style="font-weight: bold;" jhiTranslate="activityCreation.lake"> Lake </span>   
+                    <div>
+                        <select value='{{lake}}' (click)="select($event)">
+                            <option value="LAFFREY">{{ 'ecomApp.Lakes.LAFFREY' | translate }}</option>
+                            <option value="MONTEYNARD">{{ 'ecomApp.Lakes.MONTEYNARD' | translate }}</option>
+                            <option value="MEZE">{{ 'ecomApp.Lakes.MEZE' | translate }}</option>
+                            <option value="HYERES">{{ 'ecomApp.Lakes.HYERES' | translate }}</option>
+                            <option value="LEUCATE">{{ 'ecomApp.Lakes.LEUCATE' | translate }}</option>
+                        </select>
+                    </div>
 
-    <input type="checkbox" [checked]= "no2" [disabled]= "submited2" (change)="changeNoted2()" > 
-    <span jhiTranslate="studentSemesterInscription.no" > No </span>
-
-    <br><br>
-
-    <span jhiTranslate="studentSemesterInscription.pay"> I would like to pay </span>
-
-    <br>
-       
-    <input type="checkbox" [checked]= "later2" [disabled]= "submited2" (change)="changePayement2()" > 
-    <span jhiTranslate="studentSemesterInscription.later"> Later </span>
-
-    <input type="checkbox" [checked]= "now2" [disabled]= "submited2" (change)="changePayement2()" > 
-    <span jhiTranslate="studentSemesterInscription.now"> Now </span>
-
-    <br><br>
-
-    <button jhiTranslate="studentSemesterInscription.submit" (click)= "changeSubmited2()"> Submit </button>
-
-</div>
+                    <div *ngIf="submit && lake===undefined" jhiTranslate="activityCreation.alert.lake" style="color: brown; font-size: small;">
+                        Lake required
+                    </div> 
 
 
-<br><br>
+                    <!-- "Other" option
+                    <div style="padding-left: 1.5em;" *ngIf="other && lake != ''; else elseBlock">
+                        <li> <input style="border: solid  green;" type="text" placeholder="{{ 'activityCreation.placeholder.other' | translate }}" value='{{lake}}' (click)="onClickLake($event)" (change)="onChangeLake($event)" > </li>
+                    </div>
+                    <ng-template #elseBlock>
+                        <div style="padding-left: 1.5em;">
+                        <li> <input type="text" placeholder="{{ 'activityCreation.placeholder.other' | translate }}" (click)="onClickLake($event)" (change)="onChangeLake($event)" > </li>
+                        </div>
+                    </ng-template>
 
-<div *ngIf = "(submited && now) || (submited2 && now2)">
-   <p> If you suscribe now you will have {{total}}€ to pay with PBox </p>
-</div>
+                    <div *ngIf="submit && lake==''" jhiTranslate="activityCreation.alert.lake" style="color: brown; font-size: small;">
+                        Lake required
+                    </div> -->
 
-<div>
-   <button jhiTranslate="studentSemesterInscription.finish" (click) = "onFinish()" style="background-color:black; color: white;"> Suscribe  </button> <br>
-</div>
+                    <br>
 
-<div *ngIf = "submited || submited2">
-   <br>
-   <button jhiTranslate="studentSemesterInscription.reset" style="background-color:black; color: white;" (click) = "reset()"> Reset </button>
-</div>
+                    <!-- Capacity -->
+                    <span style="font-weight: bold;" jhiTranslate="activityCreation.capacity"> How many people can this activity count? </span> <br>
+                    <input type="number" value='{{capacity}}' min="0" max="100" (change)="onChangeCapacity($event)" >
 
+                    <br><br>
+
+                    <!-- Inscription is open -->
+                    <span style="font-weight: bold;" jhiTranslate="activityCreation.open.label"> Inscription is open? </span> <br>
+
+                    <input type="checkbox" [checked]= "open"  (change)="onChangeOpen()" > 
+                    <span jhiTranslate="activityCreation.open.yes"> Yes </span>
+
+                    <input type="checkbox" [checked]= "!open" (change)="onChangeOpen()" > 
+                    <span jhiTranslate="activityCreation.open.no"> No </span>
+
+                    <br><br>
+
+                    <!-- Coeff -->
+                    <span style="font-weight: bold;" jhiTranslate="activityCreation.coeff"> Coeff </span> <br>
+                    <input type="number" value='{{coeff}}' min="0" max="5" (change)="onChangeCoeff($event)" >
+
+                    <br><br>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="column" id="activities">
+            <table class="table">
+                <thead></thead>
+                <tbody>
+                    <!-- Instructors -->
+                    <h2 jhiTranslate="activityCreation.instructors"> Click to select </h2>
+                    <br>
+                    <h3 jhiTranslate="activityCreation.allInstructors"> All instructors</h3>
+                    <nav>
+                        <ul *ngFor="let i of allInstructors" >
+                                <li *ngIf= "i.internalUser !== null" > 
+                                    <span style="border:solid;" (click)="addInstructor(i)">
+                                        &ensp;{{getName(i)}}&ensp;
+                                    </span>
+                                </li>
+                        </ul>
+                    </nav>
+                
+                    <br><br>
+                
+                    <h3 jhiTranslate="activityCreation.selectedInstructors"> Selected instructors</h3>
+                    <nav>
+                        <ul *ngFor="let i of selectedInstructors" >
+                            <li *ngIf= "i.internalUser !== null" > 
+                                <span style="border:solid;" (click)="removeInstructor(i)">
+                                    &ensp;{{getName(i)}}&ensp;
+                                </span>
+                            </li>
+                        </ul>
+                    </nav>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Submit -->
+    <button jhiTranslate="activityCreation.submit" (click)="onSubmit()"> Submit </button>
+
+     <!-- Reset -->
+     <button jhiTranslate="activityCreation.reset" (click)="reset()"> Reset </button>
+
+
+
+ 

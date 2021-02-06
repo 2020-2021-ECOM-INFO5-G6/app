@@ -1,0 +1,21 @@
+{
+  "studentSemesterInscription": {
+    "title": "Student semester inscription",
+    "subtitle": "Welcome ",
+    "semesters": "Here you can subscribe to a semester inscription",
+    "semester1": "First semester",
+    "semester2": "Second semester",
+    "yes": "yes",
+    "no": "no",
+    "later": "later",
+    "now": "now",
+    "alerte": "ALERTE! This semester inscription already exists",
+    "submit": "submit",
+    "noted": "Is noted?",
+    "pay": "I would like to pay",
+    "finish": "Subscribe",
+    "reset": "Reset",
+    "total1": "If you subscribe now you will have €",
+    "total2": "to pay via PBox app"
+  }
+}

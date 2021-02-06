@@ -1,39 +1,88 @@
-<div class="row">
-    <div class="col-md-3">
-        <span class="hipster img-fluid rounded"></span>
-    </div>
 
-    <div class="col-md-9">
-        <h1 class="display-4" jhiTranslate="home.title">Hello there</h1>
+<header>
+    <img src="../../content/images/UWIND.png" id="logo" width="100" alt="logoUWIND">
+    <br/>
+    <h1 class="display-4" jhiTranslate="home.title"><strong>Welcome on U-Wind platform</strong></h1>
+    <br/>
+</header>
+<body>
+    
+    <div class="row">
+        <div class="col-md-9">
+            <br/>
+            <p class="titlemessage" jhiTranslate="home.subtitle">This is your login page</p>
 
-        <p class="lead" jhiTranslate="home.subtitle">This is your login page</p>
+            <div [ngSwitch]="isAuthenticated()">
+                <div class="alert alert-warning" *ngSwitchCase="false">
+                    <span jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
+                    <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a><span jhiTranslate="global.messages.info.authenticated.suffix">, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
+                </div>
 
-        <div [ngSwitch]="isAuthenticated()">
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
-                <a class="alert-link" (click)="login()" jhiTranslate="global.messages.info.authenticated.link">sign in</a><span jhiTranslate="global.messages.info.authenticated.suffix">, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
-            </div>
-
-            <div class="alert alert-warning" *ngSwitchCase="false">
-                <span jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>&nbsp;
-                <a class="alert-link" routerLink="account/register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
+                <div class="alert alert-warning" *ngSwitchCase="false">
+                    <span jhiTranslate="global.messages.info.register.noaccount">You don't have an account yet?</span>&nbsp;
+                    <a class="alert-link" routerLink="account/register" jhiTranslate="global.messages.info.register.link">Register a new account</a>
+                </div>
             </div>
         </div>
-
-        <p jhiTranslate="home.question">
-            If you have any question on JHipster:
-        </p>
-
-        <ul>
-            <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.homepage">JHipster homepage</a></li>
-            <li><a href="http://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.stackoverflow">JHipster on Stack Overflow</a></li>
-            <li><a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.bugtracker">JHipster bug tracker</a></li>
-            <li><a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.chat">JHipster public chat room</a></li>
-            <li><a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.follow">follow @jhipster on Twitter</a></li>
-        </ul>
-
-        <p>
-            <span jhiTranslate="home.like">If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" jhiTranslate="home.github">GitHub</a>!
-        </p>
     </div>
-</div>
+    <br/><br/>
+    <h2 jhiTranslate="home.present" >Presentation</h2>
+    <br/>
+    <table class="present">
+        <caption>Checktable</caption>
+        <tr>
+            <th scope="col"><img src="../../content/images/check.png" width="40" height="40" alt="logocheck"></th>
+            <th scope="col"><img src="../../content/images/check.png" width="40" height="40" alt="logocheck"></th>
+            <th scope="col"><img src="../../content/images/check.png" width="40" height="40" alt="logocheck"></th>
+        </tr>
+        <tr>
+            <td id="gras">Ouvert à tous les étudiants</td>
+            <td id="gras">Encadrement</td>
+            <td id="gras">Matériel de qualité</td>
+        </tr>
+        <tr>
+            <td>Tous niveaux acceptés</td>
+            <td>Notre équipe de moniteurs saura te faire progresser en toute sécurité</td>
+            <td>Du débutant au confirmé et dans toutes les conditions</td>
+        </tr>
+        <br/><br/><br/>
+        </table>
+            <h2 jhiTranslate="home.area">Area</h2>
+            <br/>
+            <table class="present">
+                <caption>ImageTable</caption>
+                <tr>
+                    <th scope="col"><img src="../../content/images/lac.jpg" id="arrondi" width=40% alt="LacImage"></th>
+                    <th scope="col"><img src="../../content/images/etang.jpg" id="arrondi" width=40% alt="EtangImage"></th>
+                </tr>
+                <tr>
+                    <td id="gras"><br/>Lac de Laffrey</td>
+                    <td id="gras"><br>Étang de Thau</td>
+                </tr>
+            <br/>
+            </table>          
+</body>
+<footer>
+    <br/>
+    <h2 jhiTranslate="home.contact" id="foot">Contact us</h2>
+        <br/>
+        <table class="contact">
+            <caption>FooterTable</caption>
+            <tr>
+                <th scope="col"><img src="../../content/images/mail.png" width="70" height="70" alt="logoMail"></th>
+                <th scope="col"><img src="../../content/images/location.png" width="70" height="70" alt="logoLocation"></th>
+                <th scope="col"><img src="../../content/images/facebook.png" width="70" height="70" alt="logoFacebook"></th>
+                <th scope="col"><img src="../../content/images/instagram.png" width="70" height="70" alt="logoInstagram"></th>
+            </tr>
+            <tr>
+                <td jhiTranslate="home.email"><strong>Mail of U-Wind : info@u-wind.fr</strong></td>
+                <td><a href="https://goo.gl/maps/stHCZRgmETP42ys87" target="_blank" rel="noopener noreferrer" jhiTranslate="home.link.U-Wind" class="link">U-Wind location</a></td>
+                <td><a href="https://www.facebook.com/groups/32881424354/" jhiTranslate="home.link.facebook" class="link">Facebook Group</a></td>
+                <td><a href="https://www.instagram.com/uwind_grenoble/" jhiTranslate="home.link.instagram" class="link">Instagram Page</a></td>
+            </tr>
+        </table>
+        <br/>
+        <br/> 
+    <p>© Tous droits réservés u-wind.fr</p>
+    <br/>
+</footer>

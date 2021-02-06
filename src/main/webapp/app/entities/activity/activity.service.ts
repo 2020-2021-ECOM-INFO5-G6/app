@@ -8,9 +8,11 @@ import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IActivity } from 'app/shared/model/activity.model';
+import { IInstructor } from 'app/shared/model/instructor.model';
 
 type EntityResponseType = HttpResponse<IActivity>;
 type EntityArrayResponseType = HttpResponse<IActivity[]>;
+type EntityContentResponseType = HttpResponse<string>;
 
 @Injectable({ providedIn: 'root' })
 export class ActivityService {
@@ -47,6 +49,15 @@ export class ActivityService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  createwithinstructors(activity: IActivity, managers: IInstructor[], monitors: IInstructor[]): Observable<EntityResponseType> {
+    const myPostBody = { activity, managers, monitors };
+    return this.http.post(`${this.resourceUrl}/withedi`, myPostBody, { observe: 'response' });
+  }
+
+  download(id: number): Observable<EntityContentResponseType> {
+    return this.http.get(`${this.resourceUrl}/${id}/$content`, { observe: 'response', responseType: 'text' });
   }
 
   protected convertDateFromClient(activity: IActivity): IActivity {

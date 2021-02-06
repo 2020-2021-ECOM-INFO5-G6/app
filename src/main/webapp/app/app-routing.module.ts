@@ -5,18 +5,9 @@ import { navbarRoute } from './layouts/navbar/navbar.route';
 import { DEBUG_INFO_ENABLED } from 'app/app.constants';
 import { Authority } from 'app/shared/constants/authority.constants';
 
-// My components
-// import { HomeStudentComponent } from 'app/homeStudent/homeStudent.component';
-// import { HomeInstructorComponent } from 'app/homeInstructor/homeInstructor.component';
-
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 
-const LAYOUT_ROUTES: Routes = [
-  navbarRoute,
-  ...errorRoute,
-  // { path: '/account/homeStudent', component: HomeStudentComponent },
-  // { path: '/account/homeInstructor', component: HomeInstructorComponent },
-];
+const LAYOUT_ROUTES: Routes = [navbarRoute, ...errorRoute];
 
 @NgModule({
   imports: [
@@ -45,6 +36,15 @@ const LAYOUT_ROUTES: Routes = [
         {
           path: 'homeInstructor',
           loadChildren: () => import('./homeInstructor/homeInstructor.module').then(m => m.EcomHomeInstructorModule),
+        },
+        {
+          path: 'studentSemesterInscription',
+          loadChildren: () =>
+            import('./studentSemesterInscription/studentSemesterInscription.module').then(m => m.EcomStudentSemesterInscriptionModule),
+        },
+        {
+          path: 'activityCreation',
+          loadChildren: () => import('./activityCreation/activityCreation.module').then(m => m.EcomActivityCreationModule),
         },
         ...LAYOUT_ROUTES,
       ],

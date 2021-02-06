@@ -6,6 +6,11 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { Student } from 'app/shared/model/student.model';
+import { StudentService } from 'app/entities/student/student.service';
+import { UserService } from 'app/core/user/user.service';
+
+import { Router } from '@angular/router';
+import { LoginService } from 'app/core/login/login.service';
 
 @Component({
   selector: 'jhi-home',
@@ -16,10 +21,26 @@ export class HomeStudentComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   authSubscription?: Subscription;
 
-  constructor(private accountService: AccountService, private localStorage: LocalStorageService) {}
+  student: Student | null = null;
+
+  raw: string | null = null;
+
+  constructor(
+    private accountService: AccountService,
+    private userService: UserService,
+    private studentService: StudentService,
+    private router: Router,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit(): void {
-    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
+    // Authentification control
+    if (!this.accountService.isAuthenticated()) {
+      // this.navbarComponent.logout();
+      this.loginService.logout();
+      this.router.navigate(['']);
+    }
+    this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => this.getLinkedEntity(account));
   }
 
   isAuthenticated(): boolean {
@@ -32,9 +53,35 @@ export class HomeStudentComponent implements OnInit, OnDestroy {
     }
   }
 
-  // TODO : return current Instructor from local strorage
-  getCurrentInstructor(): Student | null {
-    // return localStorage.getItem('currentUser');
+  getLinkedEntity(account: Account | null): void {
+    this.account = account;
+    this.student = this.getCurrentStudent();
+    if (this.student == null) {
+      this.getCurrentStudentAsynchronously();
+    }
+  }
+
+  getCurrentStudent(): Student | null {
+    this.raw = localStorage.getItem('currentUser');
+    if (this.raw != null) {
+      return JSON.parse(this.raw);
+    }
     return null;
+  }
+
+  getCurrentStudentAsynchronously(): void {
+    if (this.account != null) {
+      this.userService.find(this.account.login).subscribe(user => {
+        this.studentService.findbyuser(user.id).subscribe(student => {
+          this.student = student.body;
+        });
+      });
+    }
+  }
+
+  getFirstName(): string {
+    if (this.student !== null && this.student.internalUser !== undefined && this.student.internalUser.firstName !== undefined)
+      return this.student.internalUser?.firstName;
+    return '';
   }
 }

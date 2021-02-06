@@ -1,11 +1,15 @@
 package fr.uga.service;
 
 import fr.uga.domain.User;
+import fr.uga.domain.Student;
+import fr.uga.repository.StudentRepository;
 
 import io.github.jhipster.config.JHipsterProperties;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+
+import javax.inject.Inject;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -20,6 +24,11 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
+import java.util.Optional;
+import java.util.Objects;
+
+
+
 /**
  * Service for sending emails.
  * <p>
@@ -32,7 +41,11 @@ public class MailService {
 
     private static final String USER = "user";
 
+    private static final String STUDENT = "student";
+
     private static final String BASE_URL = "baseUrl";
+    
+    private static final String EMAILKEY = "email.activation.title";
 
     private final JHipsterProperties jHipsterProperties;
 
@@ -41,14 +54,19 @@ public class MailService {
     private final MessageSource messageSource;
 
     private final SpringTemplateEngine templateEngine;
+    
+    @Inject
+    private final StudentRepository studentRepository;
+
 
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
-            MessageSource messageSource, SpringTemplateEngine templateEngine) {
+            MessageSource messageSource, SpringTemplateEngine templateEngine, StudentRepository studentRepository) {
 
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
         this.templateEngine = templateEngine;
+        this.studentRepository= studentRepository;
     }
 
     @Async
@@ -81,26 +99,50 @@ public class MailService {
         Context context = new Context(locale);
         context.setVariable(USER, user);
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        
+        Student student = getStudentMail(user.getId());
+        context.setVariable(STUDENT,student);
+
         String content = templateEngine.process(templateName, context);
         String subject = messageSource.getMessage(titleKey, null, locale);
+
         sendEmail(user.getEmail(), subject, content, false, true);
     }
 
     @Async
     public void sendActivationEmail(User user) {
         log.debug("Sending activation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "mail/activationEmail", "email.activation.title");
+        sendEmailFromTemplate(user, "mail/activationEmail", EMAILKEY);
+    }
+    
+    @Async
+    public void sendActivationEmailTest(User user) {
+        log.debug("Sending activation email to '{}'", user.getEmail());
+        sendEmailFromTemplate(user, "mail/testEmail", EMAILKEY);
     }
 
     @Async
     public void sendCreationEmail(User user) {
         log.debug("Sending creation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "mail/creationEmail", "email.activation.title");
+        sendEmailFromTemplate(user, "mail/creationEmail", EMAILKEY);
     }
 
     @Async
     public void sendPasswordResetMail(User user) {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
+    }
+
+    public Student getStudentMail(Long userid){
+            Optional<Student> student = studentRepository.findAll().stream()
+        		.filter(s -> Objects.nonNull(s.getInternalUser()))
+        		.filter(sbis -> sbis.getInternalUser().getId().equals(userid))
+                .findAny();
+        if(student.isPresent()) {
+            return student.get();
+        } else{
+        	log.error("Student null");
+        	return null;
+        }
     }
 }

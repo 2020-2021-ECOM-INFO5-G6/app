@@ -2,7 +2,6 @@ import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { LocalStorageService } from 'ngx-webstorage';
 
 import { LoginService } from 'app/core/login/login.service';
 import { AccountService } from 'app/core/auth/account.service';
@@ -32,7 +31,6 @@ export class LoginModalComponent implements AfterViewInit {
     private router: Router,
     public activeModal: NgbActiveModal,
     private fb: FormBuilder,
-    private localStorage: LocalStorageService,
     private accountService: AccountService,
     private userService: UserService,
     private studentService: StudentService,
@@ -78,7 +76,7 @@ export class LoginModalComponent implements AfterViewInit {
             if (this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
               this.userService
                 .find(this.loginForm.get('username')!.value)
-                .subscribe(user => localStorage.setItem('adminUser', JSON.stringify(user)));
+                .subscribe(user => localStorage.setItem('currentUser', JSON.stringify(user)));
               this.router.navigate(['/homeInstructor']);
             } else if (this.accountService.hasAnyAuthority('ROLE_INSTRUCTOR')) {
               this.userService.find(this.loginForm.get('username')!.value).subscribe(user => {

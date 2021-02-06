@@ -22,6 +22,8 @@ export class RegisterComponent implements AfterViewInit {
   success = false;
 
   registerForm = this.fb.group({
+    firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+    lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
     login: [
       '',
       [
@@ -65,6 +67,8 @@ export class RegisterComponent implements AfterViewInit {
       this.doNotMatch = true;
     } else {
       const login = this.registerForm.get(['login'])!.value;
+      const firstName = this.registerForm.get(['firstName'])!.value;
+      const lastName = this.registerForm.get(['firstName'])!.value;
       const email = this.registerForm.get(['email'])!.value;
       // Get extra information for registration
       const cursusComposant = this.registerForm.get(['cursusComposant'])!.value;
@@ -76,6 +80,8 @@ export class RegisterComponent implements AfterViewInit {
       this.registerService
         .saveExtra({
           login,
+          firstName,
+          lastName,
           email,
           password,
           langKey: this.languageService.getCurrentLanguage(),

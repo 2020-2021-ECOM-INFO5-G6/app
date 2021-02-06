@@ -1,6 +1,29 @@
 {
   "homeInstructor": {
     "title": "Home",
-    "subtitle": "Bienvenue Instructeur !"
+    "subtitle": "Bienvenue {{ param }} !",
+    "account": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email"
+    },
+    "instructor": {
+      "editableActivities": "Activités modifiables",
+      "monitoredActivities": "Activités surveillées"
+    },
+    "admin": {
+      "activities": "Activités",
+      "createActivity": "Créer une activité"
+    },
+    "button": {
+      "editData": "Modifier vos données",
+      "export": "Exporter les inscrits",
+      "exportAll": "Exporter tous les inscrits"
+    },
+    "alert": {
+      "noEditableActivities": "Pas d'activités modifiables",
+      "noMonitoredActivities": "Pas d'activités surveillées",
+      "noActivities": "Pas d'activités"
+    }
   }
 }

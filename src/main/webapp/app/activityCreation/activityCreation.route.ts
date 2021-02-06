@@ -7,6 +7,6 @@ export const ACTIVITY_CREATION_ROUTE: Route = {
   component: ActivityCreationComponent,
   data: {
     authorities: [],
-    pageTitle: 'homeInstructor.title',
+    pageTitle: 'activityCreation.title',
   },
 };

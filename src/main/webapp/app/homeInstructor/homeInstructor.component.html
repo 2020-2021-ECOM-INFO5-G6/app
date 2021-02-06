@@ -1,7 +1,82 @@
-<div class="row">
-    <div class="col-md-3">
+<div class="row" id="header">
+    <!-- <div class="col-md-3">
         <span class="hipster img-fluid rounded"></span>
+    </div> -->
+    <p class="lead" id="homeInstructor-subtitle" jhiTranslate="homeInstructor.subtitle" [translateValues]="{ param: getFirstName() }">Welcom {{getFirstName()}}!</p>
+</div>
+
+<div class="row" id="body">
+    <div class="column" id="personal-data">
+        <table class="table">
+            <thead></thead>
+            <tbody>
+                <div>
+                    <tr *ngIf="account">
+                        <td><span style="font-weight:bold" jhiTranslate="homeInstructor.account.firstName">First Name</span></td>
+                        <td *ngIf="account.firstName">{{ account.firstName }}</td>
+                    </tr>
+                    <tr *ngIf="account">
+                        <td><span style="font-weight:bold" jhiTranslate="homeInstructor.account.lastName">Last Name</span></td>
+                        <td *ngIf="account.lastName">{{ account.lastName }}</td>
+                    </tr>
+                    <tr *ngIf="account">
+                        <td><span style="font-weight:bold" jhiTranslate="homeInstructor.account.email">Email</span></td>
+                        <td *ngIf="account.email">{{ account.email }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button [routerLink]="['/account/settings']" class="btn btn-primary" jhiTranslate="homeInstructor.button.editData">Edit your data</button></td>
+                    </tr>
+                </div>
+            </tbody>
+        </table>
     </div>
-    <p class="lead" id="homeInstructor-subtitle" jhiTranslate="homeInstructor.subtitle">Welcom Instructor!</p>
-    <button id="activity-creation-button" (click)="createActivity()"></button>
+
+    <div class="column" id="activities">
+        <table class="table">
+            <thead></thead>
+            <tbody>
+                <div *ngIf="user">
+                    <tr>
+                        <td><h4 jhiTranslate="homeInstructor.admin.activities">Activities</h4></td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" (click)="downloadAllContent()">
+                                <span class="d-none d-md-inline" jhiTranslate="homeInstructor.button.exportAll">Export all registrants</span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngFor="let activity of activities">
+                        <td><a *ngIf="activity" [routerLink]="['/activity', activity.id, 'view']">{{ activity.name }}</a></td>
+                        <td *ngIf="activity.id && activity.name">
+                            <button type="submit" class="btn btn-info btn-sm" (click)="downloadContent(activity.id, activity.name)">
+                                <span class="d-none d-md-inline" jhiTranslate="homeInstructor.button.export">Export registrants</span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <p *ngIf="activities && activities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noActivities">No editable activities</p>
+                    </tr>
+                    <tr>
+                        <button jhiTranslate="homeInstructor.admin.createActivity" routerLink="/activityCreation"> Create activity </button>
+                    </tr>
+                </div>
+                <div *ngIf="instructor">
+                    <tr><h4 jhiTranslate="homeInstructor.instructor.editableActivities">Editable activities</h4></tr>
+                    <tr *ngFor="let editableActivity of instructor.editableActivities">
+                        <td><a *ngIf="editableActivity">{{ editableActivity.name }}</a></td>
+                    </tr>
+                    <tr>
+                        <p *ngIf="instructor.editableActivities && instructor.editableActivities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noEditableActivities">No editable activities</p>
+                    </tr>
+
+                    <tr><h4 jhiTranslate="homeInstructor.instructor.monitoredActivities">Monitored activities</h4></tr>
+                    <tr *ngFor="let participateActivity of instructor.participateActivities">
+                        <td><a *ngIf="participateActivity">{{ participateActivity.name }}</a></td>
+                    </tr>
+                    <tr>
+                        <p *ngIf="instructor.editableActivities && instructor.editableActivities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noMonitoredActivities">No monitored activities</p>
+                    </tr>
+                </div>
+            </tbody>
+        </table>
+    </div>
 </div>
