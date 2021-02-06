@@ -72,6 +72,7 @@ public class CacheConfiguration {
             createCache(cm, fr.uga.domain.Board.class.getName() + ".materials");
             createCache(cm, fr.uga.domain.Sail.class.getName());
             createCache(cm, fr.uga.domain.Sail.class.getName() + ".materials");
+            createCache(cm, fr.uga.domain.Prices.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

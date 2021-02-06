@@ -3,6 +3,9 @@
     "title": "Home",
     "subtitle": "Bienvenue Instructeur !",
     "contact": "Contactez nous",
+    "yes": "Oui",
+    "no": "Non",
+
     "account": {
       "firstName": "Prénom",
       "lastName": "Nom",
@@ -31,6 +34,15 @@
       "facebook": "Groupe Facebook",
       "instagram": "Page Instagram"
     },
-    "translate": "© Tous droits réservés u-wind.fr"
+    "translate": "© Tous droits réservés u-wind.fr",
+    "activities": {
+      "name": "Nom",
+      "date": "Date",
+      "place": "Place",
+      "coeff": "Coefficient",
+      "lake": "Lac",
+      "inscriptionOpen": "Est ouvert",
+      "edit": "Modifier l'activité"
+    }
   }
 }

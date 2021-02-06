@@ -35,4 +35,13 @@ export class StudentActivityService {
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
+
+  getfordefinedstudent(id: number): Observable<EntityArrayResponseType> {
+    return this.http.get<IStudentActivity[]>(`${this.resourceUrl}/fordefinedstudent/${id}`, { observe: 'response' });
+  }
+
+  subscribestudenttoactivity(studentId: number, activityId: number, comment: string): Observable<EntityResponseType> {
+    const myPostBody = { studentId, activityId, comment };
+    return this.http.post(`${this.resourceUrl}/subscribestudent`, myPostBody, { observe: 'response' });
+  }
 }

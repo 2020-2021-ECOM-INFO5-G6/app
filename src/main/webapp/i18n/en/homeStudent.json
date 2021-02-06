@@ -1,7 +1,9 @@
 {
   "homeStudent": {
     "title": "Home",
-    "subtitle": "Welcome Student!",
+    "subtitle": "Welcome student",
+    "yes": "Yes",
+    "no": "No",
     "account": {
       "firstName": "First name",
       "lastName": "Last name",
@@ -10,17 +12,15 @@
     "student": {
       "sportLevel": "Sport level",
       "drivingLicence": "Driving licence",
-      "drivingLicenceYes": "Yes",
-      "drivingLicenceNo": "No",
       "meetingPlace": "Meeintg place",
       "cursus": "Cursus",
-      "semesterInscriptions": "Semester inscriptions",
-      "studentActivities": "Activities"
+      "semesterInscriptions": "My semester inscriptions",
+      "studentActivities": "My activities"
     },
     "button": {
       "editData": "Edit you data",
-      "goToSemesterInscription": "Go to student semester inscription page",
-      "manageActivities": "Manage your activities"
+      "goToSemesterInscription": "Go to the student semester inscription page",
+      "goToActivities": "Go to the activities page"
     },
     "alert": {
       "noActivities": "No activities",
@@ -32,6 +32,20 @@
       "facebook": "Facebook group",
       "instagram": "Instagram page"
     },
-    "translate": "© All rights reserved by u-wind.fr"
+    "translate": "© All rights reserved by u-wind.fr",
+    "semesterInscription": {
+      "dates": "Dates",
+      "paid": "Paid",
+      "noted": "Noted",
+      "finalNote": "Final note"
+    },
+    "studentActivities": {
+      "name": "Name",
+      "date": "Date",
+      "place": "Place",
+      "coeff": "Coefficient",
+      "lake": "Lake",
+      "commentFromInstructor": "Comment from the instructor"
+    }
   }
 }
