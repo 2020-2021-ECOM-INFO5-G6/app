@@ -14,10 +14,12 @@
       "monitoredActivities": "Monitored activities"
     },
     "admin": {
-      "activities": "Activities"
+      "activities": "Activities",
+      "prices": "Semester prices"
     },
     "button": {
       "editData": "Edit you data",
+      "editPrices": "Edit the semester prices",
       "export": "Export registrants",
       "exportAll": "Export all registrants"
     },
@@ -34,6 +36,10 @@
       "lake": "Lake",
       "inscriptionOpen": "Is opened",
       "edit": "Edit the activity"
+    },
+    "prices": {
+      "noted": "FQ (noted)",
+      "nonnoted": "FP (not noted)"
     }
   }
 }
