@@ -1,3 +1,49 @@
+<style>
+caption {
+  display: none;
+}
+
+table.contact {
+  border-collapse: collapse;
+  margin: auto;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+}
+
+#foot {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-weight: bold;
+  font-size: 40px;
+  color: white;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+  transition-duration: 0.3s;
+}
+
+.link:hover {
+  color: #e67e22;
+  transition-duration: 0.3s;
+}
+
+footer {
+  width: 100%;
+  text-align: center;
+  background-color: #1f618d;
+  color: white;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+</style>
+
+
 <div>
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -164,3 +210,28 @@
         </div>
     </div>
 </div>
+<br/>
+<footer>
+    <br/>
+    <h2 jhiTranslate="settings.contact" id="foot">Contact us</h2>
+        <br/>
+        <table class="contact">
+            <caption>FooterTable</caption>
+            <tr>
+                <th scope="col"><img src="../../../content/images/mail.png" width="70" height="70" alt="logoMail"></th>
+                <th scope="col"><img src="../../../content/images/location.png" width="70" height="70" alt="logoLocation"></th>
+                <th scope="col"><img src="../../../content/images/facebook.png" width="70" height="70" alt="logoFacebook"></th>
+                <th scope="col"><img src="../../../content/images/instagram.png" width="70" height="70" alt="logoInstagram"></th>
+            </tr>
+            <tr>
+                <td jhiTranslate="settings.email"><strong>Mail of U-Wind : info@u-wind.fr</strong></td>
+                <td><a href="https://goo.gl/maps/stHCZRgmETP42ys87" target="_blank" rel="noopener noreferrer" jhiTranslate="settings.link.U-Wind" class="link">U-Wind location</a></td>
+                <td><a href="https://www.facebook.com/groups/32881424354/" jhiTranslate="settings.link.facebook" class="link">Facebook Group</a></td>
+                <td><a href="https://www.instagram.com/uwind_grenoble/" jhiTranslate="settings.link.instagram" class="link">Instagram Page</a></td>
+            </tr>
+        </table>
+        <br/>
+        <br/> 
+    <p jhiTranslate="settings.translate">© Tous droits réservés u-wind.fr</p>
+    <br/>
+</footer>

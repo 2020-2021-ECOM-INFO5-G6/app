@@ -62,13 +62,7 @@ export class HomeStudentComponent implements OnInit, OnDestroy {
 
   getLinkedEntity(account: Account | null): void {
     this.account = account;
-    this.student = this.getCurrentStudent();
-    if (this.student == null) {
-      this.getCurrentStudentAsynchronously();
-    } else {
-      this.isAlreadySubscribed1();
-      this.isAlreadySubscribed2();
-    }
+    this.getCurrentStudentAsynchronously();
   }
 
   getCurrentStudent(): Student | null {

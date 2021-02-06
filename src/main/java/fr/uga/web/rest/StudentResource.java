@@ -178,19 +178,19 @@ public class StudentResource {
                 User user = student.getInternalUser();
                 if (user != null) {
                     content += user.getFirstName() 
-                    + "," + user.getLastName();
+                    + ";" + user.getLastName();
                 } else {
-                    content += ",";
+                    content += ";";
                 }
-                content += "," + student.getSportLevel() 
-                    + "," + student.getMeetingPlace()
-                    + "," + student.isDrivingLicence();
+                content += ";" + student.getSportLevel() 
+                    + ";" + student.getMeetingPlace()
+                    + ";" + student.isDrivingLicence();
                 Cursus cursus = student.getCursus();
                 if (cursus != null) {
-                    content += "," + cursus.getComposant()
-                    + "," + cursus.getAcademicLevel();
+                    content += ";" + cursus.getComposant()
+                    + ";" + cursus.getAcademicLevel();
                 } else {
-                    content += ",";
+                    content += ";;";
                 }
                 content += "\n";
             }
