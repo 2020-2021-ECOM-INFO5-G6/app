@@ -2,28 +2,28 @@
   "ecomApp": {
     "semesterInscription": {
       "home": {
-        "title": "SemesterInscriptions",
-        "createLabel": "Créer un nouveau Semester Inscription",
-        "createOrEditLabel": "Créer ou éditer un Semester Inscription",
-        "notFound": "Aucun Semester Inscription trouvé"
+        "title": "Inscriptions à un semestre",
+        "createLabel": "Créer une nouvelle inscription à un semestre",
+        "createOrEditLabel": "Créer ou éditer une inscription à un semestre",
+        "notFound": "Aucune inscription à un semestre trouvée"
       },
-      "created": "Un nouveau Semester Inscription a été créé avec l'identifiant {{ param }}",
-      "updated": "Le Semester Inscription avec l'identifiant {{ param }} a été mis à jour",
-      "deleted": "Le Semester Inscription avec l'identifiant {{ param }} a été supprimé",
+      "created": "Une nouvelle inscription à un semestre a été créé avec l'identifiant {{ param }}",
+      "updated": "L'inscription à un semestre avec l'identifiant {{ param }} a été mise à jour",
+      "deleted": "L'inscription à un semestre avec l'identifiant {{ param }} a été supprimée",
       "delete": {
-        "question": "Etes-vous certain de vouloir supprimer le Semester Inscription {{ id }} ?"
+        "question": "Etes-vous certain de vouloir supprimer l'inscription à un semestre {{ id }} ?"
       },
       "detail": {
-        "title": "Semester Inscription"
+        "title": "Inscription à un semestre"
       },
-      "noted": "Noted",
-      "noteMax": "Note Max",
-      "noteGiven": "Note Given",
-      "paid": "Paid",
-      "student": "Student",
-      "semester": "Semester",
+      "noted": "Noté",
+      "noteMax": "Note maximale",
+      "noteGiven": "Note donnée",
+      "paid": "Payé",
+      "student": "Etudiant",
+      "semester": "Semestre",
       "help": {
-        "paid": "if the semester is paid by the student"
+        "paid": "si le semestre a été payé par l'étudiant"
       }
     }
   }
