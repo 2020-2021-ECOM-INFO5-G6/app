@@ -14,7 +14,8 @@
       "monitoredActivities": "Activités surveillées"
     },
     "admin": {
-      "activities": "Activités"
+      "activities": "Activités",
+      "prices": "Prix des semestres"
     },
     "button": {
       "editData": "Modifier vos données",

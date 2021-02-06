@@ -14,7 +14,8 @@
       "monitoredActivities": "Monitored activities"
     },
     "admin": {
-      "activities": "Activities"
+      "activities": "Activities",
+      "prices": "Semester prices"
     },
     "button": {
       "editData": "Edit you data",
