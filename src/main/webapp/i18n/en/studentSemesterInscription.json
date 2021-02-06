@@ -16,6 +16,14 @@
     "finish": "Subscribe",
     "reset": "Reset",
     "total1": "If you subscribe now you will have €",
-    "total2": "to pay via PBox app"
+    "total2": "to pay via PBox app",
+    "contact": "Contact us",
+    "link": {
+      "U-Wind": "Space of U-Wind",
+      "facebook": "Facebook group",
+      "instagram": "Instagram page"
+    },
+    "email": "info@u-wind.fr",
+    "translate": "© All rights reserved by u-wind.fr"
   }
 }

@@ -25,6 +25,14 @@
         "userexists": "<strong>Ce compte utilisateur existe déjà !</strong> Veuillez en choisir un autre.",
         "emailexists": "<strong>Cet email est déjà utilisé !</strong> Veuillez en choisir un autre."
       }
-    }
+    },
+    "contact": "Contactez nous",
+    "link": {
+      "U-Wind": "Local U-Wind",
+      "facebook": "Groupe Facebook",
+      "instagram": "Page Instagram"
+    },
+    "email": "info@u-wind.fr",
+    "translate": "© Tous droits réservés u-wind.fr"
   }
 }

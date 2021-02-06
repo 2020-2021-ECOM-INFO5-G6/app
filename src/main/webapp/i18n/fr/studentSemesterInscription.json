@@ -16,6 +16,14 @@
     "finish": "Terminer",
     "reset": "Recommencer",
     "total1": "Si vous enregistrez maintenant, vous devrez payer",
-    "total2": "€ via l'application PBox"
+    "total2": "€ via l'application PBox",
+    "contact": "Contactez nous",
+    "link": {
+      "U-Wind": "Local U-Wind",
+      "facebook": "Groupe Facebook",
+      "instagram": "Page Instagram"
+    },
+    "email": "info@u-wind.fr",
+    "translate": "© Tous droits réservés u-wind.fr"
   }
 }
