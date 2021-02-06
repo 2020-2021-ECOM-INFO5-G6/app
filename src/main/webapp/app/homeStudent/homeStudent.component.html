@@ -94,7 +94,7 @@
                         <hr>
 
                         <tr>
-                            <button class="btn btn-primary" jhiTranslate="homeStudent.button.goToSemesterInscription"  routerLink="/studentSemesterInscription">Go to the semester inscription page</button>
+                            <button *ngIf="isLoaded1 && isLoaded2" class="btn btn-primary" [hidden]= "isSubscribed1 && isSubscribed2" jhiTranslate="homeStudent.button.goToSemesterInscription"  routerLink="/studentSemesterInscription">Go to the semester inscription page</button>
                         </tr>
                     </div>
 

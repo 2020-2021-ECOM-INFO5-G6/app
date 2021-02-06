@@ -198,7 +198,7 @@ export class StudentSemesterInscriptionComponent implements OnInit {
 
   subscribeS1(): void {
     this.semesterInscriptionService
-      .createwithsemester(1, new SemesterInscription(undefined, this.yes, 20, undefined, true, this.user!, undefined))
+      .createwithsemester(1, new SemesterInscription(undefined, this.yes, 20, undefined, this.now, this.user!, undefined))
       .subscribe(si => {
         this.user?.semesterInscriptions ? this.user.semesterInscriptions.push(si.body!) : (this.user!.semesterInscriptions = [si.body!]);
         localStorage.setItem('currentUser', JSON.stringify(this.user));
@@ -207,7 +207,7 @@ export class StudentSemesterInscriptionComponent implements OnInit {
 
   subscribeS2(): void {
     this.semesterInscriptionService
-      .createwithsemester(2, new SemesterInscription(undefined, this.yes, 20, undefined, true, this.user!, undefined))
+      .createwithsemester(2, new SemesterInscription(undefined, this.yes2, 20, undefined, this.now2, this.user!, undefined))
       .subscribe(si => {
         this.user?.semesterInscriptions ? this.user.semesterInscriptions.push(si.body!) : (this.user!.semesterInscriptions = [si.body!]);
         localStorage.setItem('currentUser', JSON.stringify(this.user));
