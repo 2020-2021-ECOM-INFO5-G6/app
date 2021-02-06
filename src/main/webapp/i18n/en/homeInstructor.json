@@ -1,7 +1,9 @@
 {
   "homeInstructor": {
     "title": "Home",
-    "subtitle": "Welcome Instructor!",
+    "subtitle": "Welcome instructor",
+    "yes": "Yes",
+    "no": "No",
     "account": {
       "firstName": "First name",
       "lastName": "Last name",
@@ -12,7 +14,7 @@
       "monitoredActivities": "Monitored activities"
     },
     "admin": {
-      "activities": "Activités"
+      "activities": "Activities"
     },
     "button": {
       "editData": "Edit you data",
@@ -23,6 +25,15 @@
       "noEditableActivities": "No editable activities",
       "noMonitoredActivities": "No monitored activities",
       "noActivities": "No activities"
+    },
+    "activities": {
+      "name": "Name",
+      "date": "Date",
+      "place": "Place",
+      "coeff": "Coefficient",
+      "lake": "Lake",
+      "inscriptionOpen": "Is opened",
+      "edit": "Edit the activity"
     }
   }
 }
