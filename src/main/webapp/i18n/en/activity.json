@@ -1,6 +1,11 @@
 {
   "ecomApp": {
     "activity": {
+      "yes": "Yes",
+      "no": "No",
+      "register": "Register",
+      "validate": "Validate",
+      "unregisteredStudents": "Unregistered students",
       "home": {
         "title": "Activities",
         "createLabel": "Create a new Activity",

@@ -7,6 +7,9 @@ import { Observable } from 'rxjs';
 
 import { IActivity, Activity } from 'app/shared/model/activity.model';
 import { ActivityService } from './activity.service';
+import { StudentActivityService } from 'app/entities/student-activity/student-activity.service';
+import { StudentService } from 'app/entities/student/student.service';
+import { Student } from 'app/shared/model/student.model';
 
 @Component({
   selector: 'jhi-activity-update',
@@ -15,6 +18,10 @@ import { ActivityService } from './activity.service';
 export class ActivityUpdateComponent implements OnInit {
   isSaving = false;
   dateDp: any;
+
+  students: Student[] = [];
+  registeredStudents: Student[] | null = null;
+  selectedStudent: Student | null = null;
 
   editForm = this.fb.group({
     id: [],
@@ -27,10 +34,25 @@ export class ActivityUpdateComponent implements OnInit {
     lake: [],
   });
 
-  constructor(protected activityService: ActivityService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  materialForm = this.fb.group({
+    board: [],
+    sail: [],
+    tracksuit: [],
+  });
+
+  constructor(
+    protected activityService: ActivityService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    private studentService: StudentService,
+    private studentActivityService: StudentActivityService
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ activity }) => {
+      // this.studentService.getvalid(activity).subscribe(students => {
+      //   this.students = students.body;
+      // });
       this.updateForm(activity);
     });
   }
@@ -46,6 +68,22 @@ export class ActivityUpdateComponent implements OnInit {
       coeff: activity.coeff,
       lake: activity.lake,
     });
+  }
+
+  showPop(id: string): void {
+    const x = document.getElementById(id);
+
+    if (x !== null) {
+      if (x.style.display === 'none') {
+        x.style.display = 'block';
+      } else {
+        x.style.display = 'none';
+      }
+    }
+  }
+
+  registerStudent(student: Student): void {
+    // this.studentActivityService.subscribeStudent(student).subscribe();
   }
 
   previousState(): void {
