@@ -11,12 +11,14 @@ import { PricesService } from 'app/entities/prices/prices.service';
 
 import { Instructor } from 'app/shared/model/instructor.model';
 import { User } from 'app/core/user/user.model';
-import { Activity } from 'app/shared/model/activity.model';
+import { Activity, IActivity } from 'app/shared/model/activity.model';
 import { saveAs } from 'file-saver';
 import { Prices } from 'app/shared/model/prices.model';
 
 import { Router } from '@angular/router';
 import { LoginService } from 'app/core/login/login.service';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'jhi-home',
@@ -129,6 +131,10 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
         this.activities = [];
       }
     });
+  }
+
+  getDate(activity: IActivity): string {
+    return moment(activity.date).format('YYYY-MM-DD');
   }
 
   getInstructorActivitiesAsynchronously(): void {

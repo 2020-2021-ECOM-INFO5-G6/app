@@ -83,7 +83,7 @@
                                 <tbody>
                                     <tr *ngFor="let activity of activities">
                                         <td><a [routerLink]="['/activity', activity.id, 'view']">{{ activity.name }}</a></td>
-                                        <td>{{ activity.date }}</td>
+                                        <td>{{ getDate(activity) }}</td>
                                         <td>{{ activity.place }}</td>
                                         <td>{{ activity.coeff }}</td>
                                         <td>{{ activity.lake }}</td>
