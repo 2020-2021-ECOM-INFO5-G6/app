@@ -10,8 +10,6 @@ import { EcomHomeStudentModule } from './homeStudent/homeStudent.module';
 import { EcomHomeInstructorModule } from './homeInstructor/homeInstructor.module';
 // Student
 import { EcomStudentSemesterInscriptionModule } from './studentSemesterInscription/studentSemesterInscription.module';
-// Admin
-import { EcomActivityCreationModule } from './activityCreation/activityCreation.module';
 // Entities
 import { EcomEntityModule } from './entities/entity.module';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
@@ -32,8 +30,6 @@ import { ErrorComponent } from './layouts/error/error.component';
     EcomHomeInstructorModule,
     // Student
     EcomStudentSemesterInscriptionModule,
-    // Admin
-    EcomActivityCreationModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     EcomEntityModule,
     EcomAppRoutingModule,

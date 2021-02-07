@@ -42,10 +42,6 @@ const LAYOUT_ROUTES: Routes = [navbarRoute, ...errorRoute];
           loadChildren: () =>
             import('./studentSemesterInscription/studentSemesterInscription.module').then(m => m.EcomStudentSemesterInscriptionModule),
         },
-        {
-          path: 'activityCreation',
-          loadChildren: () => import('./activityCreation/activityCreation.module').then(m => m.EcomActivityCreationModule),
-        },
         ...LAYOUT_ROUTES,
       ],
       { enableTracing: DEBUG_INFO_ENABLED }
