@@ -1,6 +1,11 @@
 {
   "ecomApp": {
     "activity": {
+      "yes": "Yes",
+      "no": "No",
+      "register": "Register",
+      "validate": "Validate",
+      "unregisteredStudents": "Unregistered students",
       "home": {
         "title": "Activities",
         "createLabel": "Create a new Activity",
@@ -30,6 +35,9 @@
         "place": "the place the activity takes place in",
         "capacity": "number of student acceptable",
         "lake": "the name of lake in particular"
+      },
+      "alert": {
+        "noValidStudents": "No valid students"
       }
     }
   }
