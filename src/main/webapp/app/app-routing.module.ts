@@ -42,6 +42,11 @@ const LAYOUT_ROUTES: Routes = [navbarRoute, ...errorRoute];
           loadChildren: () =>
             import('./studentSemesterInscription/studentSemesterInscription.module').then(m => m.EcomStudentSemesterInscriptionModule),
         },
+        {
+          path: 'gdpr',
+          loadChildren: () =>
+            import('./GDPR/GDPR.module').then(m => m.GDPRModule),
+        },
         ...LAYOUT_ROUTES,
       ],
       { enableTracing: DEBUG_INFO_ENABLED }

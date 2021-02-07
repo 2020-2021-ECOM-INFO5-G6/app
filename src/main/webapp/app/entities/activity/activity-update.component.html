@@ -75,7 +75,7 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="ecomApp.activity.coeff" for="field_coeff">Coeff</label>
-                    <input type="number" class="form-control" name="coeff" id="field_coeff"
+                    <input type="number" step="0.05" class="form-control" name="coeff" id="field_coeff"
                            formControlName="coeff"/>
                     <div *ngIf="editForm.get('coeff')!.invalid && (editForm.get('coeff')!.dirty || editForm.get('coeff')!.touched)">
                         <small class="form-text text-danger"
@@ -105,6 +105,91 @@
                 </div>
             </div>
 
+            <!-- Instructors -->
+
+            <br>
+            <h4 jhiTranslate="activityCreation.instructors"> Click to select </h4>
+
+            <br>
+
+            <label jhiTranslate="activityCreation.allInstructors"> All instructors</label>
+            <nav>
+                <ul *ngFor="let i of allInstructors" >
+                        <li *ngIf= "i.internalUser !== null" > 
+                            <button class="btn btn-primary" style="border:solid;" (click)="addInstructor(i)">
+                                &ensp;{{getName(i)}}&ensp;
+                            </button>
+                        </li>
+                </ul>
+            </nav>
+        
+            <br>
+        
+            <label jhiTranslate="activityCreation.selectedInstructors"> Selected instructors</label>
+            <nav>
+                <ul *ngFor="let i of selectedInstructors" >
+                    <li *ngIf= "i.internalUser !== null" > 
+                        <button class="btn btn-primary" style="border:solid;" (click)="removeInstructor(i)">
+                            &ensp;{{getName(i)}}&ensp;
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+            <br><br>
+
+            <!-- Cancel or Save-->
+
+            <div class="table-responsive">
+                <h4 jhiTranslate="ecomApp.activity.unregisteredStudents">Unregistered students</h4>
+                <table class="table table-striped" aria-describedby="page-heading" *ngIf="students && students.length > 0 && activity && activity.id">
+                    <thead>
+                        <tr>
+                            <th scope="col" ><span jhiTranslate="userManagement.firstName">First name</span></th>
+                            <th scope="col" ><span jhiTranslate="userManagement.lastName">Last name</span></th>
+                            <th scope="col" ></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <div *ngFor="let student of students" style="display: contents">
+                            <tr>
+                                <td *ngIf="student.internalUser">{{ student.internalUser.firstName }}</td>
+                                <td *ngIf="student.internalUser">{{ student.internalUser.lastName }}</td>
+                                <td class="text-right">
+                                    <div class="btn-group" *ngIf="student.id">
+                                        <button type="button" (click)="showPop(student.id)"
+                                                class="btn btn-primary btn-sm">
+                                            <fa-icon icon="pencil-alt"></fa-icon>
+                                            <span class="d-none d-md-inline" jhiTranslate="ecomApp.activity.register">Register</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <div class="card" id="pop-{{student.id}}" style="display: none">
+                                    <form name="materialForm" role="form" novalidate (ngSubmit)="registerStudent(student)" [formGroup]="materialForm">
+                                        <div class="form-group">
+                                            <label class="form-control-label" jhiTranslate="ecomApp.studentActivity.commentToInstructor" for="field_comment">Comment</label>
+                                            <input type="text" class="form-control" name="comment" formControlName="comment">
+                                        </div>
+                                        <button *ngIf="activity" type="submit" id="save-entity" [disabled]="materialForm.invalid || isSaving" class="btn btn-primary">
+                                            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="ecomApp.activity.validate">Validate</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </tr>
+                        </div>
+                    </tbody>
+                </table>
+            </div>
+
+            <tr>
+                <p *ngIf="students && students.length == 0" style="color:#bfbfbf; text-align: center" jhiTranslate="ecomApp.activity.alert.noValidStudents">No valid students</p>
+            </tr>
+            <tr>
+                <p *ngIf="activity && !activity.id" style="color:#bfbfbf; text-align: center" jhiTranslate="ecomApp.activity.alert.cantAssignStudents">Can't assign students during activity creation</p>
+            </tr>
+
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
@@ -114,6 +199,7 @@
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>
+
         </form>
     </div>
 </div>

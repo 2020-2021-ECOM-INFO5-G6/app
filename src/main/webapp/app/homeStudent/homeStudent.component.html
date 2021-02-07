@@ -2,7 +2,7 @@
     <!-- <div class="col-md-3">
         <span class="hipster img-fluid rounded"></span>
     </div> -->
-    <h1 id="homeStudent-subtitle" jhiTranslate="homeStudent.subtitle">Welcome Student!</h1>
+    <h1 class="lead" id="homeStudent-subtitle" jhiTranslate="homeStudent.subtitle" [translateValues]="{ param: getFirstName() }">Welcome</h1>
 </div>
 <br>  
 
@@ -26,7 +26,14 @@
                     </tr>
                     <tr *ngIf="student">
                         <td style="text-align: left"><span style="font-weight:bold" jhiTranslate="homeStudent.student.sportLevel">Sport level</span></td>
-                        <td *ngIf="student.sportLevel">{{ student.sportLevel }}</td>
+                        <td *ngIf="student.sportLevel && student.sportLevel == 'BEGINNER'">{{ 'ecomApp.SportLevel.BEGINNER' | translate }}</td>
+                        <td *ngIf="student.sportLevel && student.sportLevel == 'BEGINNER2'">{{ 'ecomApp.SportLevel.BEGINNER2' | translate }}</td>
+                        <td *ngIf="student.sportLevel && student.sportLevel == 'BEGINNERSUP'">{{ 'ecomApp.SportLevel.BEGINNERSUP' | translate }}</td>
+                        <td *ngIf="student.sportLevel && student.sportLevel == 'PERF'">{{ 'ecomApp.SportLevel.PERF' | translate }}</td>
+                        <td *ngIf="student.sportLevel && student.sportLevel == 'PERFSUP'">{{ 'ecomApp.SportLevel.PERFSUP' | translate }}</td>
+                        <td *ngIf="student.sportLevel && student.sportLevel == 'FUN'">{{ 'ecomApp.SportLevel.FUN' | translate }}</td>
+                        <td *ngIf="student.sportLevel && student.sportLevel == 'FOIL'">{{ 'ecomApp.SportLevel.FOIL' | translate }}</td>
+                        <td *ngIf="student.sportLevel && student.sportLevel == 'MONITOR'">{{ 'ecomApp.SportLevel.MONITOR' | translate }}</td>
                     </tr>
                     <tr *ngIf="student">
                         <td style="text-align: left"><span style="font-weight:bold" jhiTranslate="homeStudent.student.drivingLicence">Driving licence</span></td>
@@ -87,7 +94,7 @@
                         <hr>
 
                         <tr>
-                            <button class="btn btn-primary" jhiTranslate="homeStudent.button.goToSemesterInscription"  routerLink="/studentSemesterInscription">Go to the semester inscription page</button>
+                            <button *ngIf="isLoaded1 && isLoaded2" class="btn btn-primary" [hidden]= "isSubscribed1 && isSubscribed2" jhiTranslate="homeStudent.button.goToSemesterInscription"  routerLink="/studentSemesterInscription">Go to the semester inscription page</button>
                         </tr>
                     </div>
 

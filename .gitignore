@@ -151,3 +151,5 @@ Desktop.ini
 # Mail Server
 ######################
 /src/main/resources/config/application-dev.yml
+
+src/main/resources/.h2.server.properties

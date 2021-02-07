@@ -58,7 +58,7 @@
         <loadData
                   file="config/liquibase/data/tracksuit.csv"
                   separator=";"
-                  tableName="tracksuit">
+                  tableName="tracksuit" identityInsertEnabled="true">
             <column name="id" type="numeric"/>
             <column name="tracksuit_id" type="numeric"/>
             <column name="name" type="string"/>

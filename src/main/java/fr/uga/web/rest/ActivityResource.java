@@ -156,18 +156,18 @@ public class ActivityResource {
                 User user = student.getInternalUser();
                 if (user != null) {
                     content += user.getFirstName() 
-                    + "," + user.getLastName();
+                    + ";" + user.getLastName();
                 } else {
-                    content += ",";
+                    content += ";";
                 }
-                content += "," + student.getSportLevel()
-                    + "," + student.getMeetingPlace();
+                content += ";" + student.getSportLevel()
+                    + ";" + student.getMeetingPlace();
                 Iterator<Material> iterMat = materials.iterator();
                 while (iterMat.hasNext()) {
                     Material material = iterMat.next();
-                    content += "," + material.getBoard().getName()
-                        + "," + material.getSail().getName()
-                        + "," + material.getTracksuit().getName();
+                    content += ";" + material.getBoard().getName()
+                        + ";" + material.getSail().getName()
+                        + ";" + material.getTracksuit().getName();
                 }
                 content += "\n";
             }
@@ -182,9 +182,9 @@ public class ActivityResource {
     
     
     // NOT OUT-OF-THE-BOX
-    public static class RequestWrapper {
+    public static class RequestWrapperActivity {
     	
-    	public RequestWrapper () {
+    	public RequestWrapperActivity () {
     		
     	}
     	
@@ -217,7 +217,7 @@ public class ActivityResource {
      */
     @RequestMapping(path = "/activities/withedi", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<Activity> createActivityWithCorrespondingInstructors( 
-    		@RequestBody RequestWrapper requestWrapper) throws URISyntaxException {
+    		@RequestBody RequestWrapperActivity requestWrapper) throws URISyntaxException {
     	
     	Activity activity = requestWrapper.getActivity();
     	
@@ -256,6 +256,63 @@ public class ActivityResource {
         
         return ResponseEntity.created(new URI("/api/activities/withedi" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+    
+    
+    @RequestMapping(path = "/activities/withedi", method = RequestMethod.PUT, consumes = "application/json")
+    public ResponseEntity<Activity> updateActivityWithCorrespondingInstructors( 
+    		@RequestBody RequestWrapperActivity requestWrapper) throws URISyntaxException {
+    	
+    	Activity activity = requestWrapper.getActivity();
+    	
+        log.debug("REST request to save Activity : {}", activity);
+        if (activity.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        
+        Set<Instructor> monitors = requestWrapper.getMonitors();
+        Set<Instructor> managers = requestWrapper.getManagers();
+        Set<Instructor> merged = new HashSet<Instructor>();
+        
+        //Workaround to avoid duplicates
+        merged.addAll(monitors);
+        merged.removeAll(managers);
+        merged.addAll(managers);
+        
+        merged.stream().forEach(instructor -> {
+        	boolean changed = false;
+        	if (managers.contains(instructor)) {
+        		activity.addManagers(instructor);
+        		changed = true;
+        	} 
+        	if (monitors.contains(instructor)) {
+        		activity.addMonitors(instructor);
+        		changed = true;
+        	}         	
+        	if (changed) {
+        		instructorRepository.save(instructor);
+        	}
+       	});
+        
+        instructorRepository.findAll().stream().forEach(instructor -> {
+        	boolean changed = false;
+        	if (instructor.getEditableActivities().contains(activity) && !managers.contains(instructor)) {
+        		activity.removeManagers(instructor);
+        		changed = true;
+        	} 
+        	if (instructor.getParticipateActivities().contains(activity) && !monitors.contains(instructor)) {
+        		activity.removeMonitors(instructor);
+        		changed = true;
+        	}         	
+        	if (changed) {
+        		instructorRepository.save(instructor);
+        	}
+        });
+        
+        Activity result = activityRepository.save(activity);
+        
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
     

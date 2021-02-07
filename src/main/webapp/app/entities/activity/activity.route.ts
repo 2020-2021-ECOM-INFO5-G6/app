@@ -39,7 +39,7 @@ export const activityRoute: Routes = [
     path: '',
     component: ActivityComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.activity.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const activityRoute: Routes = [
       activity: ActivityResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN, Authority.INSTRUCTOR],
       pageTitle: 'ecomApp.activity.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const activityRoute: Routes = [
       activity: ActivityResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.activity.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const activityRoute: Routes = [
       activity: ActivityResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN, Authority.INSTRUCTOR],
       pageTitle: 'ecomApp.activity.home.title',
     },
     canActivate: [UserRouteAccessService],

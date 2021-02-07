@@ -2,11 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable,  Subscription} from 'rxjs';
 
 import { IActivity, Activity } from 'app/shared/model/activity.model';
+import { IInstructor, Instructor } from 'app/shared/model/instructor.model';
+import { InstructorService } from '../instructor/instructor.service';
 import { ActivityService } from './activity.service';
+import { StudentActivityService } from 'app/entities/student-activity/student-activity.service';
+import { StudentService } from 'app/entities/student/student.service';
+import { IStudent } from 'app/shared/model/student.model';
+import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
   selector: 'jhi-activity-update',
@@ -15,6 +21,11 @@ import { ActivityService } from './activity.service';
 export class ActivityUpdateComponent implements OnInit {
   isSaving = false;
   dateDp: any;
+
+  students: IStudent[] | null = null;
+  activity: IActivity | null = null;
+
+  authSubscription?: Subscription;
 
   editForm = this.fb.group({
     id: [],
@@ -27,12 +38,40 @@ export class ActivityUpdateComponent implements OnInit {
     lake: [],
   });
 
-  constructor(protected activityService: ActivityService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  materialForm = this.fb.group({
+    comment: [],
+  });
+
+  allInstructors?: IInstructor[];
+  selectedInstructors: IInstructor[] = [];
+  constructor(
+    protected activityService: ActivityService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    private studentService: StudentService,
+    private studentActivityService: StudentActivityService,
+    private router: Router,
+    protected instructorService: InstructorService,
+    private accountService: AccountService
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ activity }) => {
+      if (activity.id !== null && activity.id !== undefined) {
+        this.studentService.getvalid(activity.id).subscribe(students => {
+          this.students = students.body;
+          console.log(this.students?.length);
+          console.log(this.students);
+        });
+      }
+      this.activity = activity;
+      this.loadInstructors();
       this.updateForm(activity);
     });
+  }
+
+  isAuthenticated(): boolean {
+    return this.accountService.isAuthenticated();
   }
 
   updateForm(activity: IActivity): void {
@@ -48,6 +87,30 @@ export class ActivityUpdateComponent implements OnInit {
     });
   }
 
+  showPop(id: number): void {
+    const x = document.getElementById('pop-' + id);
+
+    if (x !== null) {
+      if (x.style.display === 'none') {
+        x.style.display = 'block';
+      } else {
+        x.style.display = 'none';
+      }
+    }
+  }
+
+  registerStudent(student: IStudent): void {
+    if (student !== null && this.activity !== null) {
+      this.studentActivityService.subscribestudent(student.id!, this.activity.id!, this.materialForm.get(['comment'])!.value).subscribe();
+      if (this.isAuthenticated() && this.accountService.hasAnyAuthority('ROLE_ADMIN')){
+        this.router.navigate(['activity']);
+      } else {
+        this.router.navigate(['homeInstructor']);
+      }
+      
+    }
+  }
+
   previousState(): void {
     window.history.back();
   }
@@ -55,11 +118,19 @@ export class ActivityUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const activity = this.createFromForm();
-    if (activity.id !== undefined) {
+    if (activity.id !== undefined && activity.id !== null) {
       this.subscribeToSaveResponse(this.activityService.update(activity));
     } else {
-      this.subscribeToSaveResponse(this.activityService.create(activity));
+      //this.subscribeToSaveResponse(this.activityService.create(activity));
+      this.subscribeToSaveResponse(
+        this.activityService.createwithinstructors(activity, this.selectedInstructors, this.selectedInstructors)
+      );
     }
+  }
+
+  trackId(index: number, item: IStudent): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
   }
 
   private createFromForm(): IActivity {
@@ -73,6 +144,8 @@ export class ActivityUpdateComponent implements OnInit {
       inscriptionOpen: this.editForm.get(['inscriptionOpen'])!.value,
       coeff: this.editForm.get(['coeff'])!.value,
       lake: this.editForm.get(['lake'])!.value,
+      monitors: this.selectedInstructors,
+      managers: this.selectedInstructors,
     };
   }
 
@@ -90,5 +163,36 @@ export class ActivityUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  loadInstructors(): void {
+    //allInstructors
+    this.instructorService.query().subscribe((res: HttpResponse<IInstructor[]>) => {
+      this.allInstructors = res.body || [];
+
+      console.log(this.allInstructors)
+      if (this.allInstructors !== undefined)
+        for (const i of this.allInstructors)
+          if (i.participateActivities !== undefined)
+            for (const a of i.participateActivities) if (this.activity !== null) if (a.id === this.activity.id) this.addInstructor(i);
+    });
+  }
+
+  addInstructor(i: IInstructor): void {
+    this.selectedInstructors?.push(i);
+    const index = this.allInstructors?.indexOf(i);
+    if (index !== undefined) this.allInstructors?.splice(index, 1);
+  }
+
+  removeInstructor(i: IInstructor): void {
+    this.allInstructors?.push(i);
+    const index = this.selectedInstructors?.indexOf(i);
+    if (index !== undefined) this.selectedInstructors?.splice(index, 1);
+  }
+
+  getName(i: Instructor): string {
+    if (i.internalUser?.firstName !== undefined && i.internalUser?.lastName !== undefined)
+      return i.internalUser?.firstName + ' ' + i.internalUser?.lastName;
+    return '';
   }
 }

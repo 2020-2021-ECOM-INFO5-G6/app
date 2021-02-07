@@ -57,21 +57,14 @@ export class StudentSemesterInscriptionComponent implements OnInit {
   // Student
 
   constructor(
-    private router: Router,
     private accountService: AccountService,
+    private router: Router,
     private loginService: LoginService,
     private semesterInscriptionService: SemesterInscriptionService,
     private pricesService: PricesService
   ) {}
 
   ngOnInit(): void {
-    // Authentification control
-    if (!this.accountService.isAuthenticated()) {
-      // this.navbarComponent.logout();
-      this.loginService.logout();
-      this.router.navigate(['']);
-    }
-
     // JSON.parse(localStorage.getItem('currentUser'))
     this.userjs = localStorage.getItem('currentUser');
     this.user = this.userjs !== null ? JSON.parse(this.userjs) : null;
@@ -194,11 +187,13 @@ export class StudentSemesterInscriptionComponent implements OnInit {
       this.subscribeS2();
     }
     this.finish = true;
+    this.router.navigate(['/homeStudent']);
   }
 
   subscribeS1(): void {
+    console.log(this.user);
     this.semesterInscriptionService
-      .createwithsemester(1, new SemesterInscription(undefined, this.yes, 20, undefined, true, this.user!, undefined))
+      .createwithsemester(1, new SemesterInscription(undefined, this.yes, 20, undefined, this.now, this.user!, undefined))
       .subscribe(si => {
         this.user?.semesterInscriptions ? this.user.semesterInscriptions.push(si.body!) : (this.user!.semesterInscriptions = [si.body!]);
         localStorage.setItem('currentUser', JSON.stringify(this.user));
@@ -207,7 +202,7 @@ export class StudentSemesterInscriptionComponent implements OnInit {
 
   subscribeS2(): void {
     this.semesterInscriptionService
-      .createwithsemester(2, new SemesterInscription(undefined, this.yes, 20, undefined, true, this.user!, undefined))
+      .createwithsemester(2, new SemesterInscription(undefined, this.yes2, 20, undefined, this.now2, this.user!, undefined))
       .subscribe(si => {
         this.user?.semesterInscriptions ? this.user.semesterInscriptions.push(si.body!) : (this.user!.semesterInscriptions = [si.body!]);
         localStorage.setItem('currentUser', JSON.stringify(this.user));

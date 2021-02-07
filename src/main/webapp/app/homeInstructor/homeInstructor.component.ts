@@ -1,18 +1,24 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { LocalStorageService } from 'ngx-webstorage';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { InstructorService } from 'app/entities/instructor/instructor.service';
 import { UserService } from 'app/core/user/user.service';
 import { ActivityService } from 'app/entities/activity/activity.service';
 import { StudentService } from 'app/entities/student/student.service';
+import { PricesService } from 'app/entities/prices/prices.service';
 
 import { Instructor } from 'app/shared/model/instructor.model';
 import { User } from 'app/core/user/user.model';
-import { Activity } from 'app/shared/model/activity.model';
+import { Activity, IActivity } from 'app/shared/model/activity.model';
 import { saveAs } from 'file-saver';
+import { Prices } from 'app/shared/model/prices.model';
+
+import { Router } from '@angular/router';
+import { LoginService } from 'app/core/login/login.service';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'jhi-home',
@@ -26,6 +32,8 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
   user: User | null = null;
   instructor: Instructor | null = null;
 
+  prices: Prices | null = null;
+
   activities: Activity[] = [];
 
   raw: string | null = null;
@@ -33,13 +41,21 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
   constructor(
     private accountService: AccountService,
     private userService: UserService,
-    private localStorage: LocalStorageService,
     private instructorService: InstructorService,
     private activityService: ActivityService,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private router: Router,
+    private loginService: LoginService,
+    private pricesService: PricesService
   ) {}
 
   ngOnInit(): void {
+    this.account = null;
+    this.user = null;
+    this.instructor = null;
+    this.prices = null;
+    this.activities = [];
+    this.raw = null;
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => this.getLinkedEntity(account));
   }
 
@@ -56,16 +72,11 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
   getLinkedEntity(account: Account | null): void {
     this.account = account;
     if (this.isAuthenticated() && this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
-      this.user = this.getCurrentUser();
-      if (this.user == null) {
-        this.getCurrentUserAsynchronously();
-      }
+      this.getCurrentUserAsynchronously();
+      this.getPricesAsynchronously();
       this.getActivitiesAsynchronously();
     } else {
-      this.instructor = this.getCurrentUser();
-      if (this.instructor == null) {
-        this.getCurrentInstructorAsynchronously();
-      }
+      this.getCurrentInstructorAsynchronously();
     }
   }
 
@@ -95,7 +106,38 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
     }
   }
 
+  getPricesAsynchronously(): void {
+    this.pricesService.query().subscribe(allPrices => {
+      if (allPrices === null || allPrices.body?.length === 0) {
+        this.prices = { id: 1, noted: 20, nonNoted: 50 };
+        this.pricesService.create(this.prices).subscribe();
+      } else {
+        if (allPrices.body != null) {
+          this.prices = allPrices.body[0];
+        }
+      }
+    });
+  }
+
   getActivitiesAsynchronously(): void {
+    this.activityService.query().subscribe(activities => {
+      if (activities != null) {
+        if (activities.body != null) {
+          this.activities = activities.body;
+        } else {
+          this.activities = [];
+        }
+      } else {
+        this.activities = [];
+      }
+    });
+  }
+
+  getDate(activity: IActivity): string {
+    return moment(activity.date).format('YYYY-MM-DD');
+  }
+
+  getInstructorActivitiesAsynchronously(): void {
     this.activityService.query().subscribe(activities => {
       if (activities != null) {
         if (activities.body != null) {
@@ -123,5 +165,19 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
         saveAs(new File([content.body.replace(/\n/g, '\r\n')], 'tous-les-inscrits.csv'));
       }
     });
+  }
+
+  createActivity(): void {
+    this.router.navigate(['/activityCreation']);
+  }
+
+  getFirstName(): string {
+    if (this.isAuthenticated() && this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
+      if (this.user !== null && this.user.firstName !== undefined) return this.user.firstName;
+    } else {
+      if (this.instructor !== null && this.instructor.internalUser !== undefined && this.instructor.internalUser.firstName !== undefined)
+        return this.instructor.internalUser?.firstName;
+    }
+    return '';
   }
 }

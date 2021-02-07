@@ -60,6 +60,11 @@ export class ActivityService {
     return this.http.get(`${this.resourceUrl}/${id}/$content`, { observe: 'response', responseType: 'text' });
   }
 
+  updatewithinstructors(activity: IActivity, managers: IInstructor[], monitors: IInstructor[]): Observable<EntityResponseType> {
+    const myPostBody = { activity, managers, monitors };
+    return this.http.put(`${this.resourceUrl}/withedi`, myPostBody, { observe: 'response' });
+  }
+
   protected convertDateFromClient(activity: IActivity): IActivity {
     const copy: IActivity = Object.assign({}, activity, {
       date: activity.date && activity.date.isValid() ? activity.date.format(DATE_FORMAT) : undefined,

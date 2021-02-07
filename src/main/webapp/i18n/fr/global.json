@@ -7,18 +7,18 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entités",
-        "student": "Student",
-        "instructor": "Instructor",
-        "activity": "Activity",
-        "studentActivity": "Student Activity",
+        "student": "Etudiants",
+        "instructor": "Instructeurs",
+        "activity": "Activités",
+        "studentActivity": "Combinaison étudiant-activité",
         "cursus": "Cursus",
-        "semesterInscription": "Semester Inscription",
-        "semester": "Semester",
-        "material": "Material",
-        "tracksuit": "Tracksuit",
-        "board": "Board",
-        "sail": "Sail",
-        "prices": "Prices",
+        "semesterInscription": "Inscriptions à un semestre",
+        "semester": "Semestres",
+        "material": "Matériels",
+        "tracksuit": "Combinaisons",
+        "board": "Planches",
+        "sail": "Voiles",
+        "prices": "Prix",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -160,5 +160,15 @@
       "not.image": "Le fichier doit être une image et non du type \"{{ fileType }}\""
     }
   },
-  "footer": "Ceci est votre pied de page"
+  "footer": {
+    "contact": "Contactez nous",
+    "link": {
+      "U-Wind": "Local U-Wind",
+      "facebook": "Groupe Facebook",
+      "instagram": "Page Instagram"
+    },
+    "email": "Mail de U-Wind : info@u-wind.fr",
+    "gdpr": "En savoir plus sur la gestion de vos données et vos droits",
+    "translate": "© Tous droits réservés u-wind.fr"
+  }
 }

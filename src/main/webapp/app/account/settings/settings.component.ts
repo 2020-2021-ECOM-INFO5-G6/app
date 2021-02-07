@@ -10,6 +10,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { StudentService } from 'app/entities/student/student.service';
 import { InstructorService } from 'app/entities/instructor/instructor.service';
 import { UserService } from 'app/core/user/user.service';
+import { CursusService } from 'app/entities/cursus/cursus.service';
 
 import { Student } from 'app/shared/model/student.model';
 import { Instructor } from 'app/shared/model/instructor.model';
@@ -49,7 +50,8 @@ export class SettingsComponent implements OnInit {
     private localStorage: LocalStorageService,
     private userService: UserService,
     private instructorService: InstructorService,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private cursusService: CursusService
   ) {}
 
   ngOnInit(): void {
@@ -69,15 +71,6 @@ export class SettingsComponent implements OnInit {
         this.account = account;
       }
       this.getLinkedEntity(account);
-      if (this.student != null) {
-        this.settingsForm.patchValue({
-          cursusComposant: this.student.cursus?.composant,
-          cursusLevel: this.student.cursus?.academicLevel,
-          sportLevel: this.student.sportLevel,
-          drivingLicence: this.student.drivingLicence,
-          meetingPlace: this.student.meetingPlace,
-        });
-      }
     });
   }
 
@@ -92,7 +85,6 @@ export class SettingsComponent implements OnInit {
 
       this.accountService.save(this.account).subscribe(() => {
         this.success = true;
-
         this.accountService.authenticate(this.account);
 
         if (this.account != null && this.account.langKey !== this.languageService.getCurrentLanguage()) {
@@ -105,33 +97,25 @@ export class SettingsComponent implements OnInit {
       if (this.student.cursus != null) {
         this.student.cursus.composant = this.settingsForm.get(['cursusComposant'])!.value;
         this.student.cursus.academicLevel = this.settingsForm.get(['cursusLevel'])!.value;
+        this.cursusService.update(this.student.cursus).subscribe();
       }
       this.student.sportLevel = this.settingsForm.get(['sportLevel'])!.value;
       this.student.drivingLicence = this.settingsForm.get(['drivingLicence'])!.value;
       this.student.meetingPlace = this.settingsForm.get(['meetingPlace'])!.value;
 
       localStorage.setItem('currentUser', JSON.stringify(this.student));
-      this.studentService.update(this.student);
+      this.studentService.update(this.student).subscribe();
     }
   }
 
   getLinkedEntity(account: Account | null): void {
     this.account = account;
     if (this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
-      this.user = this.getCurrentUser();
-      if (this.user == null) {
-        this.getCurrentUserAsynchronously();
-      }
+      this.getCurrentUserAsynchronously();
     } else if (this.accountService.hasAnyAuthority('ROLE_INSTRUCTOR')) {
-      this.instructor = this.getCurrentUser();
-      if (this.instructor == null) {
-        this.getCurrentInstructorAsynchronously();
-      }
+      this.getCurrentInstructorAsynchronously();
     } else {
-      this.student = this.getCurrentUser();
-      if (this.student == null) {
-        this.getCurrentStudentAsynchronously();
-      }
+      this.getCurrentStudentAsynchronously();
     }
   }
 
@@ -166,6 +150,15 @@ export class SettingsComponent implements OnInit {
       this.userService.find(this.account.login).subscribe(user => {
         this.studentService.findbyuser(user.id).subscribe(student => {
           this.student = student.body;
+          if (this.student != null) {
+            this.settingsForm.patchValue({
+              cursusComposant: this.student.cursus?.composant,
+              cursusLevel: this.student.cursus?.academicLevel,
+              sportLevel: this.student.sportLevel,
+              drivingLicence: this.student.drivingLicence,
+              meetingPlace: this.student.meetingPlace,
+            });
+          }
         });
       });
     }

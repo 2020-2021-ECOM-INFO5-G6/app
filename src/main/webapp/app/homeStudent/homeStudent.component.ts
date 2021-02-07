@@ -9,7 +9,12 @@ import { StudentActivity } from 'app/shared/model/student-activity.model';
 import { Student } from 'app/shared/model/student.model';
 import { StudentService } from 'app/entities/student/student.service';
 import { StudentActivityService } from 'app/entities/student-activity/student-activity.service';
+import { SemesterInscriptionService } from 'app/entities/semester-inscription/semester-inscription.service';
 import { UserService } from 'app/core/user/user.service';
+import * as moment from 'moment';
+
+import { Router } from '@angular/router';
+import { LoginService } from 'app/core/login/login.service';
 
 @Component({
   selector: 'jhi-home',
@@ -25,12 +30,24 @@ export class HomeStudentComponent implements OnInit, OnDestroy {
 
   raw: string | null = null;
 
+  START_DATE1 = '2021-09-03';
+  END_DATE1 = '2021-12-18';
+
+  START_DATE2 = '2022-01-06';
+  END_DATE2 = '2022-06-13';
+  isSubscribed1 = false;
+  isSubscribed2 = false;
+  isLoaded1 = false;
+  isLoaded2 = false;
+
   constructor(
     private accountService: AccountService,
-    private localStorage: LocalStorageService,
     private userService: UserService,
     private studentService: StudentService,
-    private studentActivityService: StudentActivityService
+    private router: Router,
+    private loginService: LoginService,
+    private studentActivityService: StudentActivityService,
+    private semesterInscriptionService: SemesterInscriptionService
   ) {}
 
   ngOnInit(): void {
@@ -49,10 +66,7 @@ export class HomeStudentComponent implements OnInit, OnDestroy {
 
   getLinkedEntity(account: Account | null): void {
     this.account = account;
-    this.student = this.getCurrentStudent();
-    if (this.student == null) {
-      this.getCurrentStudentAsynchronously();
-    }
+    this.getCurrentStudentAsynchronously();
   }
 
   getCurrentStudent(): Student | null {
@@ -71,6 +85,8 @@ export class HomeStudentComponent implements OnInit, OnDestroy {
         this.studentService.findbyuser(user.id).subscribe(student => {
           this.student = student.body;
           this.getActivitiesOfStudentAsynchronously(this.student?.id?.valueOf());
+          this.isAlreadySubscribed1();
+          this.isAlreadySubscribed2();
         });
       });
     }
@@ -82,5 +98,41 @@ export class HomeStudentComponent implements OnInit, OnDestroy {
         this.studentActivities = studentActivities.body;
       });
     }
+  }
+
+  isAlreadySubscribed1(): void {
+    this.semesterInscriptionService.query().subscribe(array => {
+      array.body?.forEach(insc => {
+        if (
+          insc.student?.id === this.student?.id &&
+          moment(insc.semester?.startDate).format('YYYY-MM-DD') === this.START_DATE1 &&
+          moment(insc.semester?.endDate).format('YYYY-MM-DD') === this.END_DATE1
+        ) {
+          this.isSubscribed1 = true;
+        }
+      });
+    });
+    this.isLoaded1 = true;
+  }
+
+  isAlreadySubscribed2(): void {
+    this.semesterInscriptionService.query().subscribe(array => {
+      array.body?.forEach(insc => {
+        if (
+          insc.student?.id === this.student?.id &&
+          moment(insc.semester?.startDate).format('YYYY-MM-DD') === this.START_DATE2 &&
+          moment(insc.semester?.endDate).format('YYYY-MM-DD') === this.END_DATE2
+        ) {
+          this.isSubscribed2 = true;
+        }
+      });
+    });
+    this.isLoaded2 = true;
+  }
+
+  getFirstName(): string {
+    if (this.student !== null && this.student.internalUser !== undefined && this.student.internalUser.firstName !== undefined)
+      return this.student.internalUser?.firstName;
+    return '';
   }
 }

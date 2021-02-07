@@ -43,7 +43,7 @@
         <loadData
                   file="config/liquibase/data/prices.csv"
                   separator=";"
-                  tableName="prices">
+                  tableName="prices" identityInsertEnabled="true">
             <column name="id" type="numeric"/>
             <column name="noted" type="numeric"/>
             <column name="non_noted" type="numeric"/>
