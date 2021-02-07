@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { IActivity, Activity } from 'app/shared/model/activity.model';
@@ -36,9 +36,7 @@ export class ActivityUpdateComponent implements OnInit {
   });
 
   materialForm = this.fb.group({
-    board: [],
-    sail: [],
-    tracksuit: [],
+    comment: [],
   });
 
   constructor(
@@ -46,7 +44,8 @@ export class ActivityUpdateComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private studentService: StudentService,
-    private studentActivityService: StudentActivityService
+    private studentActivityService: StudentActivityService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -88,9 +87,10 @@ export class ActivityUpdateComponent implements OnInit {
     }
   }
 
-  registerStudent(student: IStudent, comment: string): void {
+  registerStudent(student: IStudent): void {
     if (student !== null && this.activity !== null) {
-      this.studentActivityService.subscribestudent(student.id!, this.activity.id!, 'Commentaire ' + student.id!).subscribe();
+      this.studentActivityService.subscribestudent(student.id!, this.activity.id!, this.materialForm.get(['comment'])!.value).subscribe();
+      this.router.navigate(['activity']);
     }
   }
 
