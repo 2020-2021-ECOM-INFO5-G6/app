@@ -197,6 +197,7 @@ export class StudentSemesterInscriptionComponent implements OnInit {
   }
 
   subscribeS1(): void {
+    console.log(this.user);
     this.semesterInscriptionService
       .createwithsemester(1, new SemesterInscription(undefined, this.yes, 20, undefined, this.now, this.user!, undefined))
       .subscribe(si => {

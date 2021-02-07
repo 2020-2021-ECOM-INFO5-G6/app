@@ -25,9 +25,16 @@
         <p th:text="#{email.activation.sportLevel(${student.sportLevel})}">
             Sport Level :
         </p>
-        <p th:text="#{email.activation.drivingLicence(${student.drivingLicence})}">
-            Driving Licence :
-        </p>
+        <div th:if="${student.drivingLicence == true}">
+            <p th:text="#{email.activation.drivingLicence}">
+                Paid :
+            </p>
+        </div>
+        <div th:unless="${student.drivingLicence == true}">
+            <p th:text="#{email.activation.notdrivingLicence}">
+                Paid :
+            </p>
+        </div>
         <p th:text="#{email.activation.meetingPlace(${student.meetingPlace})}">
             Meeting Place :
         </p>
