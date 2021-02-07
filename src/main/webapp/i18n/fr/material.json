@@ -2,24 +2,24 @@
   "ecomApp": {
     "material": {
       "home": {
-        "title": "Materials",
-        "createLabel": "Créer un nouveau Material",
-        "createOrEditLabel": "Créer ou éditer un Material",
-        "notFound": "Aucun Material trouvé"
+        "title": "Matériels",
+        "createLabel": "Créer un nouveau matériel",
+        "createOrEditLabel": "Créer ou éditer un matériel",
+        "notFound": "Aucun matériel trouvé"
       },
-      "created": "Un nouveau Material a été créé avec l'identifiant {{ param }}",
-      "updated": "Le Material avec l'identifiant {{ param }} a été mis à jour",
-      "deleted": "Le Material avec l'identifiant {{ param }} a été supprimé",
+      "created": "Un nouveau matériel a été créé avec l'identifiant {{ param }}",
+      "updated": "Le matériel avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le matériel avec l'identifiant {{ param }} a été supprimé",
       "delete": {
-        "question": "Etes-vous certain de vouloir supprimer le Material {{ id }} ?"
+        "question": "Etes-vous certain de vouloir supprimer le matériel {{ id }} ?"
       },
       "detail": {
-        "title": "Material"
+        "title": "Matériel"
       },
-      "student": "Student",
-      "board": "Board",
-      "sail": "Sail",
-      "tracksuit": "Tracksuit"
+      "student": "Etudiant",
+      "board": "Planche",
+      "sail": "Voile",
+      "tracksuit": "Combinaison"
     }
   }
 }

@@ -28,5 +28,5 @@ jobs:
       with:
         app-name: 'uwind'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_a1404acbb5ce445990cbba8603107f08 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_985cd93a2e144c2083ca93e8dcfda4d1 }}
         package: '${{ github.workspace }}/target/*.jar'

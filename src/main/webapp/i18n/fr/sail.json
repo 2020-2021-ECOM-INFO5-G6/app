@@ -2,27 +2,27 @@
   "ecomApp": {
     "sail": {
       "home": {
-        "title": "Sails",
-        "createLabel": "Créer un nouveau Sail",
-        "createOrEditLabel": "Créer ou éditer un Sail",
-        "notFound": "Aucun Sail trouvé"
+        "title": "Voiles",
+        "createLabel": "Créer une nouvelle voile",
+        "createOrEditLabel": "Créer ou éditer une voile",
+        "notFound": "Aucune voile trouvée"
       },
-      "created": "Un nouveau Sail a été créé avec l'identifiant {{ param }}",
-      "updated": "Le Sail avec l'identifiant {{ param }} a été mis à jour",
-      "deleted": "Le Sail avec l'identifiant {{ param }} a été supprimé",
+      "created": "Une nouvelle voile a été créée avec l'identifiant {{ param }}",
+      "updated": "La voile avec l'identifiant {{ param }} a été mise à jour",
+      "deleted": "La voile avec l'identifiant {{ param }} a été supprimée",
       "delete": {
-        "question": "Etes-vous certain de vouloir supprimer le Sail {{ id }} ?"
+        "question": "Etes-vous certain de vouloir supprimer la voile {{ id }} ?"
       },
       "detail": {
-        "title": "Sail"
+        "title": "Voile"
       },
-      "sailId": "Sail Id",
-      "name": "Name",
-      "area": "Area",
-      "level": "Level",
-      "usable": "Usable",
-      "comment": "Comment",
-      "material": "Material"
+      "sailId": "Id voile",
+      "name": "Nom",
+      "area": "Surface",
+      "level": "Niveau",
+      "usable": "Utilisable",
+      "comment": "Commentaire",
+      "material": "Matériel"
     }
   }
 }

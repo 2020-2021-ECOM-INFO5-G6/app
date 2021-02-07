@@ -6,11 +6,11 @@ services:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=prod,swagger
       - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
-      - SPRING_DATASOURCE_URL=jdbc:mysql://ecom-mysql:3306/ecom?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ecom-postgresql:5432/ecom
       - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
     ports:
       - 8080:8080
-  ecom-mysql:
+  ecom-postgresql:
     extends:
-      file: mysql.yml
-      service: ecom-mysql
+      file: postgresql.yml
+      service: ecom-postgresql
