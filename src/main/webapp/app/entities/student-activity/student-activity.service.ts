@@ -40,7 +40,7 @@ export class StudentActivityService {
     return this.http.get<IStudentActivity[]>(`${this.resourceUrl}/fordefinedstudent/${id}`, { observe: 'response' });
   }
 
-  subscribestudenttoactivity(studentId: number, activityId: number, comment: string): Observable<EntityResponseType> {
+  subscribestudent(studentId: number, activityId: number, comment: string): Observable<EntityResponseType> {
     const myPostBody = { studentId, activityId, comment };
     return this.http.post(`${this.resourceUrl}/subscribestudent`, myPostBody, { observe: 'response' });
   }

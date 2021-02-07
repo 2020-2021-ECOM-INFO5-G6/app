@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -192,9 +193,29 @@ public class StudentActivityResource {
     		throw new BadRequestAlertException("Activity or Student cannot be null", ENTITY_NAME, "nullparameter");
       	}
     	
-    	boolean isAlreadySubscribed = activity.get().getStudentActivities().stream()
-    			.filter(stA -> Objects.nonNull(stA.getStudent()))
-    			.anyMatch(stA -> stA.getStudent().getId().equals(student.get().getId()));
+    	LocalDate startDate;
+    	LocalDate date = LocalDate.of(2021, 12, 18);
+    	if (activity.get().getDate().compareTo(date) < 0) {
+    		startDate = LocalDate.of(2021, 9, 3);
+    	} else {
+    		startDate = LocalDate.of(2022, 1, 6);
+    	}
+    	
+    	boolean hasPaidSemester = student.get().getSemesterInscriptions().stream()
+    			.filter(sem -> Objects.nonNull(sem.getSemester()) && Objects.nonNull(sem.getSemester().getStartDate()))
+    			.filter(sem -> sem.getSemester().getStartDate().equals(startDate))
+    			.anyMatch(sem -> sem.isPaid());
+    	
+    	log.debug("stAs: {}", activity.get().getStudentActivities());
+    	
+    	List<StudentActivity> studentActivities = studentActivityRepository.findAll();
+    	boolean isAlreadySubscribed = Objects.nonNull(studentActivities) && studentActivities.stream()
+    			.filter(stA -> Objects.nonNull(stA.getStudent()) && Objects.nonNull(stA.getActivity()))
+    			.anyMatch(stA -> stA.getStudent().getId().equals(student.get().getId()) && stA.getActivity().getId().equals(activity.get().getId()));
+    	
+    	if (!hasPaidSemester) {
+    		throw new BadRequestAlertException("Student hasnt paid his semesterInscription yet, he can't register to activity", ENTITY_NAME, "notpaid");
+    	}
     	
     	if (isAlreadySubscribed) {
     		throw new BadRequestAlertException("Student is already subscribed to this Activity", ENTITY_NAME, "alreadysubscribed");
