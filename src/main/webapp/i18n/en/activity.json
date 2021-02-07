@@ -37,7 +37,8 @@
         "lake": "the name of lake in particular"
       },
       "alert": {
-        "noValidStudents": "No valid students"
+        "noValidStudents": "No valid students",
+        "cantAssignStudents": "Can't assign students during activity creation"
       }
     }
   }

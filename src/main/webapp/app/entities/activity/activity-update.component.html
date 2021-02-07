@@ -140,9 +140,9 @@
 
             <!-- Cancel or Save-->
 
-            <div class="table-responsive" *ngIf="activity && activity.id">
-                <label jhiTranslate="ecomApp.activity.unregisteredStudents">Unregistered students</label>
-                <table class="table table-striped" aria-describedby="page-heading" *ngIf="students && students.length > 0">
+            <div class="table-responsive">
+                <h4 jhiTranslate="ecomApp.activity.unregisteredStudents">Unregistered students</h4>
+                <table class="table table-striped" aria-describedby="page-heading" *ngIf="students && students.length > 0 && activity && activity.id">
                     <thead>
                         <tr>
                             <th scope="col" ><span jhiTranslate="userManagement.firstName">First name</span></th>
@@ -184,7 +184,10 @@
             </div>
 
             <tr>
-                <p *ngIf="students && students.length == 0 || !students" style="color:#bfbfbf; text-align: center" jhiTranslate="ecomApp.activity.alert.noValidStudents">No valid students</p>
+                <p *ngIf="students && students.length == 0" style="color:#bfbfbf; text-align: center" jhiTranslate="ecomApp.activity.alert.noValidStudents">No valid students</p>
+            </tr>
+            <tr>
+                <p *ngIf="activity && !activity.id" style="color:#bfbfbf; text-align: center" jhiTranslate="ecomApp.activity.alert.cantAssignStudents">Can't assign students during activity creation</p>
             </tr>
 
             <div>

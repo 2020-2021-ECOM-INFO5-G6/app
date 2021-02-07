@@ -3,7 +3,7 @@ import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable,  Subscription} from 'rxjs';
 
 import { IActivity, Activity } from 'app/shared/model/activity.model';
 import { IInstructor, Instructor } from 'app/shared/model/instructor.model';
@@ -12,6 +12,7 @@ import { ActivityService } from './activity.service';
 import { StudentActivityService } from 'app/entities/student-activity/student-activity.service';
 import { StudentService } from 'app/entities/student/student.service';
 import { IStudent } from 'app/shared/model/student.model';
+import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
   selector: 'jhi-activity-update',
@@ -23,6 +24,8 @@ export class ActivityUpdateComponent implements OnInit {
 
   students: IStudent[] | null = null;
   activity: IActivity | null = null;
+
+  authSubscription?: Subscription;
 
   editForm = this.fb.group({
     id: [],
@@ -48,12 +51,13 @@ export class ActivityUpdateComponent implements OnInit {
     private studentService: StudentService,
     private studentActivityService: StudentActivityService,
     private router: Router,
-    protected instructorService: InstructorService
+    protected instructorService: InstructorService,
+    private accountService: AccountService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ activity }) => {
-      if (activity.id !== null) {
+      if (activity.id !== null && activity.id !== undefined) {
         this.studentService.getvalid(activity.id).subscribe(students => {
           this.students = students.body;
           console.log(this.students?.length);
@@ -64,6 +68,10 @@ export class ActivityUpdateComponent implements OnInit {
       this.loadInstructors();
       this.updateForm(activity);
     });
+  }
+
+  isAuthenticated(): boolean {
+    return this.accountService.isAuthenticated();
   }
 
   updateForm(activity: IActivity): void {
@@ -94,7 +102,12 @@ export class ActivityUpdateComponent implements OnInit {
   registerStudent(student: IStudent): void {
     if (student !== null && this.activity !== null) {
       this.studentActivityService.subscribestudent(student.id!, this.activity.id!, this.materialForm.get(['comment'])!.value).subscribe();
-      this.router.navigate(['activity']);
+      if (this.isAuthenticated() && this.accountService.hasAnyAuthority('ROLE_ADMIN')){
+        this.router.navigate(['activity']);
+      } else {
+        this.router.navigate(['homeInstructor']);
+      }
+      
     }
   }
 
@@ -105,7 +118,7 @@ export class ActivityUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const activity = this.createFromForm();
-    if (activity.id !== undefined) {
+    if (activity.id !== undefined && activity.id !== null) {
       this.subscribeToSaveResponse(this.activityService.update(activity));
     } else {
       //this.subscribeToSaveResponse(this.activityService.create(activity));
@@ -157,6 +170,7 @@ export class ActivityUpdateComponent implements OnInit {
     this.instructorService.query().subscribe((res: HttpResponse<IInstructor[]>) => {
       this.allInstructors = res.body || [];
 
+      console.log(this.allInstructors)
       if (this.allInstructors !== undefined)
         for (const i of this.allInstructors)
           if (i.participateActivities !== undefined)

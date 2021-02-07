@@ -5,7 +5,7 @@
       "no": "Non",
       "register": "Enregistrer",
       "validate": "Valider",
-      "unregisteredStudents": "Etudiants non inscrit",
+      "unregisteredStudents": "Etudiants non inscrits",
       "home": {
         "title": "Activités",
         "createLabel": "Créer une nouvelle activité",
@@ -37,7 +37,8 @@
         "lake": "le nom du lac en particulier"
       },
       "alert": {
-        "noValidStudents": "Aucun étudiant valide"
+        "noValidStudents": "Aucun étudiant valide",
+        "cantAssignStudents": "Impossible d'assigner des étudiants pendant la création de l'activité"
       }
     }
   }
