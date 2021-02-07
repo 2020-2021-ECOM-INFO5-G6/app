@@ -43,7 +43,7 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
     private activityService: ActivityService,
     private studentService: StudentService,
     private router: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
     private pricesService: PricesService
   ) {}
 
