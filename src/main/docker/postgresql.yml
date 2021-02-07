@@ -1,0 +1,13 @@
+version: '2'
+services:
+  ecom-postgresql:
+    image: postgres:12.3
+    # volumes:
+    #     - ~/volumes/jhipster/eCOM/postgresql/:/var/lib/postgresql/data/
+    #     - ~/volumes/jhipster/ecom/postgresql/:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=ecom
+      - POSTGRES_PASSWORD=
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 5432:5432

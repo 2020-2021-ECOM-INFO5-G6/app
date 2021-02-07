@@ -1,7 +1,11 @@
 package fr.uga.web.rest;
 
+import fr.uga.domain.Activity;
+import fr.uga.domain.Student;
 import fr.uga.domain.StudentActivity;
+import fr.uga.repository.ActivityRepository;
 import fr.uga.repository.StudentActivityRepository;
+import fr.uga.repository.StudentRepository;
 import fr.uga.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -36,9 +40,15 @@ public class StudentActivityResource {
     private String applicationName;
 
     private final StudentActivityRepository studentActivityRepository;
+    
+    private final StudentRepository studentRepository;
+    
+    private final ActivityRepository activityRepository;
 
-    public StudentActivityResource(StudentActivityRepository studentActivityRepository) {
+    public StudentActivityResource(StudentActivityRepository studentActivityRepository, StudentRepository studentRepository, ActivityRepository activityRepository) {
         this.studentActivityRepository = studentActivityRepository;
+        this.activityRepository = activityRepository;
+        this.studentRepository = studentRepository;
     }
 
     /**
@@ -141,4 +151,70 @@ public class StudentActivityResource {
         
         return studentActivities;
     }
+    
+    
+    public static class RequestWrapper {
+    	
+    	public RequestWrapper () {}
+    	
+    	long studentId;
+    	long activityId;
+    	String comment;
+    	
+    	public long getStudentId(){
+    		return studentId;
+    	}
+    	
+    	public long getActivityId() {
+    		return activityId;
+    	}
+    	
+    	public String getComment() {
+    		return comment;
+    	}
+    }
+    
+    /**
+     * {@code POST  /student-activities/subscribestudent} : Create a new studentActivity.
+     *
+     * @param RequestWrapper containing the Student to register and the Activity.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new studentActivity, or with status {@code 400 (Bad Request)} if the studentActivity has already an ID.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     */
+    @PostMapping("/student-activities/subscribestudent")
+    public ResponseEntity<StudentActivity> subscribeStudentToActivity(@RequestBody RequestWrapper requestWrapper) throws URISyntaxException {
+    	
+    	Optional<Student> student = studentRepository.findById(requestWrapper.getStudentId());
+
+    	Optional<Activity> activity = activityRepository.findById(requestWrapper.getActivityId());
+    	
+    	if (activity.isEmpty() || student.isEmpty()) {
+    		throw new BadRequestAlertException("Activity or Student cannot be null", ENTITY_NAME, "nullparameter");
+      	}
+    	
+    	boolean isAlreadySubscribed = activity.get().getStudentActivities().stream()
+    			.filter(stA -> Objects.nonNull(stA.getStudent()))
+    			.anyMatch(stA -> stA.getStudent().getId().equals(student.get().getId()));
+    	
+    	if (isAlreadySubscribed) {
+    		throw new BadRequestAlertException("Student is already subscribed to this Activity", ENTITY_NAME, "alreadysubscribed");
+      	}
+    	
+    	log.debug("REST request to save StudentActivity with corresponding Student & Activity IDs: {}", requestWrapper);
+    	
+    	StudentActivity studentActivity = new StudentActivity();
+    	studentActivity.setActivity(activity.get());
+    	studentActivity.setStudent(student.get());
+    	
+    	if(Objects.nonNull(requestWrapper.getComment())) {
+    		studentActivity.setCommentToIntructor(requestWrapper.getComment());
+    	}
+    	
+        StudentActivity result = studentActivityRepository.save(studentActivity);
+        
+        return ResponseEntity.created(new URI("/api/student-activities/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+    
 }

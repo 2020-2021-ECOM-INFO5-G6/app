@@ -2,22 +2,22 @@
   "ecomApp": {
     "cursus": {
       "home": {
-        "title": "Cursuses",
-        "createLabel": "Créer un nouveau Cursus",
-        "createOrEditLabel": "Créer ou éditer un Cursus",
-        "notFound": "Aucun Cursus trouvé"
+        "title": "Cursus",
+        "createLabel": "Créer un nouveau cursus",
+        "createOrEditLabel": "Créer ou éditer un cursus",
+        "notFound": "Aucun cursus trouvé"
       },
-      "created": "Un nouveau Cursus a été créé avec l'identifiant {{ param }}",
-      "updated": "Le Cursus avec l'identifiant {{ param }} a été mis à jour",
-      "deleted": "Le Cursus avec l'identifiant {{ param }} a été supprimé",
+      "created": "Un nouveau cursus a été créé avec l'identifiant {{ param }}",
+      "updated": "Le cursus avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le cursus avec l'identifiant {{ param }} a été supprimé",
       "delete": {
-        "question": "Etes-vous certain de vouloir supprimer le Cursus {{ id }} ?"
+        "question": "Etes-vous certain de vouloir supprimer le cursus {{ id }} ?"
       },
       "detail": {
         "title": "Cursus"
       },
-      "composant": "Composant",
-      "academicLevel": "Academic Level"
+      "composant": "Composante",
+      "academicLevel": "Niveau académique"
     }
   }
 }

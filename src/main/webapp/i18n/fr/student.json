@@ -2,30 +2,30 @@
   "ecomApp": {
     "student": {
       "home": {
-        "title": "Students",
-        "createLabel": "Créer un nouveau Student",
-        "createOrEditLabel": "Créer ou éditer un Student",
-        "notFound": "Aucun Student trouvé"
+        "title": "Etudiants",
+        "createLabel": "Créer un nouvel étudiant",
+        "createOrEditLabel": "Créer ou éditer un étudiant",
+        "notFound": "Aucun étudiant trouvé"
       },
-      "created": "Un nouveau Student a été créé avec l'identifiant {{ param }}",
-      "updated": "Le Student avec l'identifiant {{ param }} a été mis à jour",
-      "deleted": "Le Student avec l'identifiant {{ param }} a été supprimé",
+      "created": "Un nouvel étudiant a été créé avec l'identifiant {{ param }}",
+      "updated": "L'étudiant avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "L'étudiant avec l'identifiant {{ param }} a été supprimé",
       "delete": {
-        "question": "Etes-vous certain de vouloir supprimer le Student {{ id }} ?"
+        "question": "Etes-vous certain de vouloir supprimer l'étudiant {{ id }} ?"
       },
       "detail": {
-        "title": "Student"
+        "title": "Etudiant"
       },
-      "sportLevel": "Sport Level",
-      "drivingLicence": "Driving Licence",
-      "meetingPlace": "Meeting Place",
-      "internalUser": "Internal User",
-      "semesterInscription": "Semester Inscription",
-      "studentActivity": "Student Activity",
+      "sportLevel": "Niveau sportif",
+      "drivingLicence": "Permis de conduire",
+      "meetingPlace": "Lieu de rendez-vous",
+      "internalUser": "Utilisateur interne",
+      "semesterInscription": "Inscription à un semestre",
+      "studentActivity": "Combinaison étudiant-activité",
       "cursus": "Cursus",
-      "material": "Material",
+      "material": "Matériel",
       "help": {
-        "meetingPlace": "the place the student accept to depart to the activities"
+        "meetingPlace": "le lieu depuis lequel l'étudiant souhaite partir pour les activités"
       }
     }
   }

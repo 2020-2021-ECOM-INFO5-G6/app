@@ -55,7 +55,7 @@
         <loadData
                   file="config/liquibase/data/sail.csv"
                   separator=";"
-                  tableName="sail">
+                  tableName="sail" identityInsertEnabled="true">
             <column name="id" type="numeric"/>
             <column name="sail_id" type="string"/>
             <column name="name" type="string"/>

@@ -1,16 +1,14 @@
 {
   "home": {
-    "title": "Hello there",
+    "title": "Welcome on U-Wind application !",
     "subtitle": "This is your login page",
-    "question": "If you have any question on JHipster:",
-    "link": {
-      "homepage": "JHipster homepage",
-      "stackoverflow": "JHipster on Stack Overflow",
-      "bugtracker": "JHipster bug tracker",
-      "chat": "JHipster public chat room",
-      "follow": "follow @jhipster on Twitter"
-    },
-    "like": "If you like JHipster, don't forget to give us a star on",
-    "github": "GitHub"
+    "present": "About U-Wind",
+    "openStudent": "Open to all students",
+    "management": "Supervision",
+    "stuff": "Hight quality equipments",
+    "level": "For any levels",
+    "security": "Our team of instructors will know how to make you progress in complete safety",
+    "condition": "From beginner to expert and for all wind conditions",
+    "area": "Two places of activities"
   }
 }

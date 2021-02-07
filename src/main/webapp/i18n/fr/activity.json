@@ -2,34 +2,34 @@
   "ecomApp": {
     "activity": {
       "home": {
-        "title": "Activities",
-        "createLabel": "Créer un nouveau Activity",
-        "createOrEditLabel": "Créer ou éditer un Activity",
-        "notFound": "Aucun Activity trouvé"
+        "title": "Activités",
+        "createLabel": "Créer une nouvelle activité",
+        "createOrEditLabel": "Créer ou éditer une activité",
+        "notFound": "Aucune activité trouvée"
       },
-      "created": "Un nouveau Activity a été créé avec l'identifiant {{ param }}",
-      "updated": "Le Activity avec l'identifiant {{ param }} a été mis à jour",
-      "deleted": "Le Activity avec l'identifiant {{ param }} a été supprimé",
+      "created": "Une nouvelle activité a été créée avec l'identifiant {{ param }}",
+      "updated": "L'activité avec l'identifiant {{ param }} a été mise à jour",
+      "deleted": "L'activité avec l'identifiant {{ param }} a été supprimée",
       "delete": {
-        "question": "Etes-vous certain de vouloir supprimer le Activity {{ id }} ?"
+        "question": "Etes-vous certain de vouloir supprimer l'activité {{ id }} ?"
       },
       "detail": {
-        "title": "Activity"
+        "title": "Activité"
       },
-      "name": "Name",
+      "name": "Nom",
       "date": "Date",
-      "place": "Place",
-      "capacity": "Capacity",
-      "inscriptionOpen": "Inscription Open",
-      "coeff": "Coeff",
-      "lake": "Lake",
-      "studentActivity": "Student Activity",
-      "monitors": "Monitors",
+      "place": "Lieu",
+      "capacity": "Capacité",
+      "inscriptionOpen": "Inscription ouverte",
+      "coeff": "Coefficient",
+      "lake": "Lac",
+      "studentActivity": "Combinaison étudiant-activité",
+      "monitors": "Moniteurs",
       "managers": "Managers",
       "help": {
-        "place": "the place the activity takes place in",
-        "capacity": "number of student acceptable",
-        "lake": "the name of lake in particular"
+        "place": "l'endroit où l'activité à lieu",
+        "capacity": "la capacité en nombre d'étudiant",
+        "lake": "le nom du lac en particulier"
       }
     }
   }
