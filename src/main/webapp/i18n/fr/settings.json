@@ -27,14 +27,6 @@
           "maxlength": "Votre nom ne doit pas comporter plus de 50 caractères."
         }
       }
-    },
-    "contact": "Contactez nous",
-    "link": {
-      "U-Wind": "Local U-Wind",
-      "facebook": "Groupe Facebook",
-      "instagram": "Page Instagram"
-    },
-    "email": "info@u-wind.fr",
-    "translate": "© Tous droits réservés u-wind.fr"
+    }
   }
 }

@@ -160,5 +160,15 @@
       "not.image": "Le fichier doit être une image et non du type \"{{ fileType }}\""
     }
   },
-  "footer": "Ceci est votre pied de page"
+  "footer": {
+    "contact": "Contactez nous",
+    "link": {
+      "U-Wind": "Local U-Wind",
+      "facebook": "Groupe Facebook",
+      "instagram": "Page Instagram"
+    },
+    "email": "Mail de U-Wind : info@u-wind.fr",
+    "gdpr": "En savoir plus sur la gestion de vos données et vos droits",
+    "translate": "© Tous droits réservés u-wind.fr"
+  }
 }
