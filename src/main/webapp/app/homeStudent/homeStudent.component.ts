@@ -45,7 +45,7 @@ export class HomeStudentComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private studentService: StudentService,
     private router: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
     private studentActivityService: StudentActivityService,
     private semesterInscriptionService: SemesterInscriptionService
   ) {}
