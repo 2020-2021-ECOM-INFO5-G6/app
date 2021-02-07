@@ -3,7 +3,7 @@ import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable,  Subscription} from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { IActivity, Activity } from 'app/shared/model/activity.model';
 import { IInstructor, Instructor } from 'app/shared/model/instructor.model';
@@ -60,8 +60,6 @@ export class ActivityUpdateComponent implements OnInit {
       if (activity.id !== null && activity.id !== undefined) {
         this.studentService.getvalid(activity.id).subscribe(students => {
           this.students = students.body;
-          console.log(this.students?.length);
-          console.log(this.students);
         });
       }
       this.activity = activity;
@@ -102,12 +100,11 @@ export class ActivityUpdateComponent implements OnInit {
   registerStudent(student: IStudent): void {
     if (student !== null && this.activity !== null) {
       this.studentActivityService.subscribestudent(student.id!, this.activity.id!, this.materialForm.get(['comment'])!.value).subscribe();
-      if (this.isAuthenticated() && this.accountService.hasAnyAuthority('ROLE_ADMIN')){
+      if (this.isAuthenticated() && this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
         this.router.navigate(['activity']);
       } else {
         this.router.navigate(['homeInstructor']);
       }
-      
     }
   }
 
@@ -119,7 +116,9 @@ export class ActivityUpdateComponent implements OnInit {
     this.isSaving = true;
     const activity = this.createFromForm();
     if (activity.id !== undefined && activity.id !== null) {
-      this.subscribeToSaveResponse(this.activityService.update(activity));
+      this.subscribeToSaveResponse(
+        this.activityService.updatewithinstructors(activity, this.selectedInstructors, this.selectedInstructors)
+      );
     } else {
       //this.subscribeToSaveResponse(this.activityService.create(activity));
       this.subscribeToSaveResponse(
@@ -170,11 +169,17 @@ export class ActivityUpdateComponent implements OnInit {
     this.instructorService.query().subscribe((res: HttpResponse<IInstructor[]>) => {
       this.allInstructors = res.body || [];
 
-      console.log(this.allInstructors)
       if (this.allInstructors !== undefined)
         for (const i of this.allInstructors)
-          if (i.participateActivities !== undefined)
-            for (const a of i.participateActivities) if (this.activity !== null) if (a.id === this.activity.id) this.addInstructor(i);
+          if (i.editableActivities !== undefined)
+            for (const a of i.editableActivities)
+              if (this.activity !== undefined && this.activity !== null) if (a.id === this.activity.id) this.selectedInstructors?.push(i);
+
+      if (this.selectedInstructors !== undefined)
+        for (const i of this.selectedInstructors) {
+          const index = this.allInstructors?.indexOf(i);
+          if (index !== undefined) this.allInstructors?.splice(index, 1);
+        }
     });
   }
 
