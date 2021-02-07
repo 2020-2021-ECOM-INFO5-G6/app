@@ -39,7 +39,7 @@ export const tracksuitRoute: Routes = [
     path: '',
     component: TracksuitComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.tracksuit.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const tracksuitRoute: Routes = [
       tracksuit: TracksuitResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.tracksuit.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const tracksuitRoute: Routes = [
       tracksuit: TracksuitResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.tracksuit.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const tracksuitRoute: Routes = [
       tracksuit: TracksuitResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.tracksuit.home.title',
     },
     canActivate: [UserRouteAccessService],

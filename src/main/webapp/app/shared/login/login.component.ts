@@ -63,37 +63,37 @@ export class LoginModalComponent implements AfterViewInit {
         () => {
           this.authenticationError = false;
           this.activeModal.close();
-          if (
+          /*if (
             this.router.url === '/account/register' ||
             this.router.url.startsWith('/account/activate') ||
             this.router.url.startsWith('/account/reset/')
           ) {
             this.router.navigate(['']);
-          } else {
-            // Navigate from login to home page
-            // /!\ ADMIN account has both admin and user authorities, so don't invert these conditions (@baptboleat)
+          } else {*/
+          // Navigate from login to home page
+          // /!\ ADMIN account has both admin and user authorities, so don't invert these conditions (@baptboleat)
 
-            if (this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
-              this.userService
-                .find(this.loginForm.get('username')!.value)
-                .subscribe(user => localStorage.setItem('currentUser', JSON.stringify(user)));
-              this.router.navigate(['/homeInstructor']);
-            } else if (this.accountService.hasAnyAuthority('ROLE_INSTRUCTOR')) {
-              this.userService.find(this.loginForm.get('username')!.value).subscribe(user => {
-                this.instructorService
-                  .findbyuser(user.id)
-                  .subscribe(instructor => localStorage.setItem('currentUser', JSON.stringify(instructor.body)));
-              });
-              this.router.navigate(['/homeInstructor']);
-            } else {
-              this.userService.find(this.loginForm.get('username')!.value).subscribe(user => {
-                this.studentService
-                  .findbyuser(user.id)
-                  .subscribe(student => localStorage.setItem('currentUser', JSON.stringify(student.body)));
-              });
-              this.router.navigate(['/homeStudent']);
-            }
+          if (this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
+            this.userService
+              .find(this.loginForm.get('username')!.value)
+              .subscribe(user => localStorage.setItem('currentUser', JSON.stringify(user)));
+            this.router.navigate(['/homeInstructor']);
+          } else if (this.accountService.hasAnyAuthority('ROLE_INSTRUCTOR')) {
+            this.userService.find(this.loginForm.get('username')!.value).subscribe(user => {
+              this.instructorService
+                .findbyuser(user.id)
+                .subscribe(instructor => localStorage.setItem('currentUser', JSON.stringify(instructor.body)));
+            });
+            this.router.navigate(['/homeInstructor']);
+          } else {
+            this.userService.find(this.loginForm.get('username')!.value).subscribe(user => {
+              this.studentService
+                .findbyuser(user.id)
+                .subscribe(student => localStorage.setItem('currentUser', JSON.stringify(student.body)));
+            });
+            this.router.navigate(['/homeStudent']);
           }
+          //}
         },
         () => (this.authenticationError = true)
       );

@@ -46,12 +46,6 @@ export class ActivityCreationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Authentification control
-    if (!this.accountService.isAuthenticated()) {
-      // this.navbarComponent.logout();
-      this.loginService.logout();
-      this.router.navigate(['']);
-    }
     this.loadInstructors();
   }
 
@@ -131,7 +125,7 @@ export class ActivityCreationComponent implements OnInit {
       coeff: this.coeff,
       lake: this.lake,
       monitors: this.selectedInstructors,
-      managers: [],
+      managers: this.selectedInstructors,
       studentActivities: [],
     };
   }

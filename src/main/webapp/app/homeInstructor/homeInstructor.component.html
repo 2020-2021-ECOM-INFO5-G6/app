@@ -56,13 +56,13 @@
                         <p *ngIf="activities && activities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noActivities">No editable activities</p>
                     </tr>
                     <tr>
-                        <button jhiTranslate="homeInstructor.admin.createActivity" routerLink="/activityCreation"> Create activity </button>
+                        <button class="btn btn-primary" jhiTranslate="homeInstructor.admin.createActivity" routerLink="/activity/new"> Create activity </button>
                     </tr>
                 </div>
                 <div *ngIf="instructor">
                     <tr><h4 jhiTranslate="homeInstructor.instructor.editableActivities">Editable activities</h4></tr>
                     <tr *ngFor="let editableActivity of instructor.editableActivities">
-                        <td><a *ngIf="editableActivity">{{ editableActivity.name }}</a></td>
+                        <td><button class="btn btn-primary" *ngIf="editableActivity" [routerLink]="['/activity', editableActivity.id, 'view']">{{ editableActivity.name }}</button></td>
                     </tr>
                     <tr>
                         <p *ngIf="instructor.editableActivities && instructor.editableActivities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noEditableActivities">No editable activities</p>
@@ -70,7 +70,7 @@
 
                     <tr><h4 jhiTranslate="homeInstructor.instructor.monitoredActivities">Monitored activities</h4></tr>
                     <tr *ngFor="let participateActivity of instructor.participateActivities">
-                        <td><a *ngIf="participateActivity">{{ participateActivity.name }}</a></td>
+                        <td><button class="btn btn-primary" *ngIf="participateActivity" [routerLink]="['/activity', participateActivity.id, 'edit']">{{ participateActivity.name }}</button></td>
                     </tr>
                     <tr>
                         <p *ngIf="instructor.editableActivities && instructor.editableActivities.length == 0" style="color:#bfbfbf" jhiTranslate="homeInstructor.alert.noMonitoredActivities">No monitored activities</p>

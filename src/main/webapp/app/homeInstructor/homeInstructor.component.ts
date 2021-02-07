@@ -43,12 +43,6 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Authentification control
-    if (!this.accountService.isAuthenticated()) {
-      // this.navbarComponent.logout();
-      this.loginService.logout();
-      this.router.navigate(['']);
-    }
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => this.getLinkedEntity(account));
   }
 
