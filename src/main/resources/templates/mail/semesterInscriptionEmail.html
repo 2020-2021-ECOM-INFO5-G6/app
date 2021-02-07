@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="en">
+    <head>
+        <title th:text="#{email.semester.title}">JHipster activation</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+    </head>
+    <body>
+        <p th:text="#{email.activation.greeting(${user.login})}">
+            Dear
+        </p> 
+        <p th:text="#{email.semester.text1(${number})}">
+            You have just subscribed to a semester, here is what you chose :
+        </p>
+        <div th:if="${semester.paid == true}">
+            <p th:text="#{email.semester.paid}">
+                Paid :
+            </p>
+        </div>
+        <div th:unless="${semester.paid == true}">
+            <p th:text="#{email.semester.notpaid}">
+                Paid :
+            </p>
+        </div>
+        <div th:if="${semester.noted == true}">
+            <p th:text="#{email.semester.noted}">
+                Paid :
+            </p>
+        </div>
+        <div th:unless="${semester.noted == true}">
+            <p th:text="#{email.semester.notnoted}">
+                Paid :
+            </p>
+        </div>
+        <p>
+            <span th:text="#{email.activation.text2}">Regards, </span>
+            <br/>
+            <em th:text="#{email.signature}">U-WIND Team.</em>
+        </p>
+    </body>
+</html>

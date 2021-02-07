@@ -7,11 +7,13 @@ import { InstructorService } from 'app/entities/instructor/instructor.service';
 import { UserService } from 'app/core/user/user.service';
 import { ActivityService } from 'app/entities/activity/activity.service';
 import { StudentService } from 'app/entities/student/student.service';
+import { PricesService } from 'app/entities/prices/prices.service';
 
 import { Instructor } from 'app/shared/model/instructor.model';
 import { User } from 'app/core/user/user.model';
 import { Activity } from 'app/shared/model/activity.model';
 import { saveAs } from 'file-saver';
+import { Prices } from 'app/shared/model/prices.model';
 
 import { Router } from '@angular/router';
 import { LoginService } from 'app/core/login/login.service';
@@ -28,6 +30,8 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
   user: User | null = null;
   instructor: Instructor | null = null;
 
+  prices: Prices | null = null;
+
   activities: Activity[] = [];
 
   raw: string | null = null;
@@ -40,9 +44,16 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
     private studentService: StudentService,
     private router: Router,
     private loginService: LoginService
+    private pricesService: PricesService
   ) {}
 
   ngOnInit(): void {
+    this.account = null;
+    this.user = null;
+    this.instructor = null;
+    this.prices = null;
+    this.activities = [];
+    this.raw = null;
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => this.getLinkedEntity(account));
   }
 
@@ -59,16 +70,11 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
   getLinkedEntity(account: Account | null): void {
     this.account = account;
     if (this.isAuthenticated() && this.accountService.hasAnyAuthority('ROLE_ADMIN')) {
-      this.user = this.getCurrentUser();
-      if (this.user == null) {
-        this.getCurrentUserAsynchronously();
-      }
+      this.getCurrentUserAsynchronously();
+      this.getPricesAsynchronously();
       this.getActivitiesAsynchronously();
     } else {
-      this.instructor = this.getCurrentUser();
-      if (this.instructor == null) {
-        this.getCurrentInstructorAsynchronously();
-      }
+      this.getCurrentInstructorAsynchronously();
     }
   }
 
@@ -98,7 +104,34 @@ export class HomeInstructorComponent implements OnInit, OnDestroy {
     }
   }
 
+  getPricesAsynchronously(): void {
+    this.pricesService.query().subscribe(allPrices => {
+      if (allPrices === null || allPrices.body?.length === 0) {
+        this.prices = { id: 1, noted: 20, nonNoted: 50 };
+        this.pricesService.create(this.prices).subscribe();
+      } else {
+        if (allPrices.body != null) {
+          this.prices = allPrices.body[0];
+        }
+      }
+    });
+  }
+
   getActivitiesAsynchronously(): void {
+    this.activityService.query().subscribe(activities => {
+      if (activities != null) {
+        if (activities.body != null) {
+          this.activities = activities.body;
+        } else {
+          this.activities = [];
+        }
+      } else {
+        this.activities = [];
+      }
+    });
+  }
+
+  getInstructorActivitiesAsynchronously(): void {
     this.activityService.query().subscribe(activities => {
       if (activities != null) {
         if (activities.body != null) {

@@ -2,27 +2,27 @@
   "ecomApp": {
     "studentActivity": {
       "home": {
-        "title": "StudentActivities",
-        "createLabel": "Créer un nouveau Student Activity",
-        "createOrEditLabel": "Créer ou éditer un Student Activity",
-        "notFound": "Aucun Student Activity trouvé"
+        "title": "Combinaisons étudiant-activité",
+        "createLabel": "Créer une nouvelle combinaison étudiant-activité",
+        "createOrEditLabel": "Créer ou éditer une combinaison étudiant-activité",
+        "notFound": "Aucune combinaison étudiant-activité trouvée"
       },
-      "created": "Un nouveau Student Activity a été créé avec l'identifiant {{ param }}",
-      "updated": "Le Student Activity avec l'identifiant {{ param }} a été mis à jour",
-      "deleted": "Le Student Activity avec l'identifiant {{ param }} a été supprimé",
+      "created": "Une nouvelle combinaison étudiant-activité a été créée avec l'identifiant {{ param }}",
+      "updated": "La combinaison étudiant-activité avec l'identifiant {{ param }} a été mise à jour",
+      "deleted": "La combinaison étudiant-activité avec l'identifiant {{ param }} a été supprimée",
       "delete": {
-        "question": "Etes-vous certain de vouloir supprimer le Student Activity {{ id }} ?"
+        "question": "Etes-vous certain de vouloir supprimer la combinaison étudiant-activité {{ id }} ?"
       },
       "detail": {
-        "title": "Student Activity"
+        "title": "Combinaison étudiant-activité"
       },
-      "commentToIntructor": "Comment To Intructor",
-      "commentByInstructor": "Comment By Instructor",
-      "student": "Student",
-      "activity": "Activity",
+      "commentToIntructor": "Commentaire au moniteur",
+      "commentByInstructor": "Commentaire par le moniteur",
+      "student": "Etudiant",
+      "activity": "Activité",
       "help": {
-        "commentToIntructor": "Complementary information about the student",
-        "commentByInstructor": "Comment for Student&#39;s eval"
+        "commentToIntructor": "Informations complémentaires à propos de l'étudiant",
+        "commentByInstructor": "Commentaire pour l'évaluation de l'étudiant"
       }
     }
   }

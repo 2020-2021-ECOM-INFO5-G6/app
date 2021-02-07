@@ -2,6 +2,8 @@
   "homeInstructor": {
     "title": "Home",
     "subtitle": "Welcome {{ param }}!",
+    "yes": "Yes",
+    "no": "No",
     "account": {
       "firstName": "First name",
       "lastName": "Last name",
@@ -14,9 +16,11 @@
     "admin": {
       "activities": "Activités",
       "createActivity": "Create Activity"
+      "prices": "Semester prices"
     },
     "button": {
       "editData": "Edit you data",
+      "editPrices": "Edit the semester prices",
       "export": "Export registrants",
       "exportAll": "Export all registrants"
     },
@@ -24,6 +28,19 @@
       "noEditableActivities": "No editable activities",
       "noMonitoredActivities": "No monitored activities",
       "noActivities": "No activities"
+    },
+    "activities": {
+      "name": "Name",
+      "date": "Date",
+      "place": "Place",
+      "coeff": "Coefficient",
+      "lake": "Lake",
+      "inscriptionOpen": "Is opened",
+      "edit": "Edit the activity"
+    },
+    "prices": {
+      "noted": "FQ (noted)",
+      "nonnoted": "FP (not noted)"
     }
   }
 }

@@ -5,6 +5,7 @@ import { LoginService } from 'app/core/login/login.service';
 import { IStudent } from 'app/shared/model/student.model';
 import { SemesterInscription } from 'app/shared/model/semester-inscription.model';
 import { SemesterInscriptionService } from 'app/entities/semester-inscription/semester-inscription.service';
+import { PricesService } from 'app/entities/prices/prices.service';
 import * as moment from 'moment';
 
 @Component({
@@ -38,7 +39,8 @@ export class StudentSemesterInscriptionComponent implements OnInit {
 
   total = 0;
 
-  semesterPrice = 35;
+  semesterPriceNoted = 0;
+  semesterPriceNonNoted = 0;
 
   userjs: any;
   user: IStudent | null = null;
@@ -58,18 +60,21 @@ export class StudentSemesterInscriptionComponent implements OnInit {
     private accountService: AccountService,
     private router: Router,
     private loginService: LoginService,
-    private semesterInscriptionService: SemesterInscriptionService
+    private semesterInscriptionService: SemesterInscriptionService,
+    private pricesService: PricesService
   ) {}
 
   ngOnInit(): void {
     // JSON.parse(localStorage.getItem('currentUser'))
     this.userjs = localStorage.getItem('currentUser');
     this.user = this.userjs !== null ? JSON.parse(this.userjs) : null;
-    /*console.log('User :');
+    /* console.log('User :');
     console.log(this.user);*/
 
     this.isAlreadySubscribed1();
     this.isAlreadySubscribed2();
+
+    this.getSemesterPrices();
   }
 
   reset(): void {
@@ -127,7 +132,8 @@ export class StudentSemesterInscriptionComponent implements OnInit {
   changeSubmited(): void {
     this.submited = true;
     if (this.now) {
-      this.total += this.semesterPrice;
+      const price = this.yes ? this.semesterPriceNoted : this.semesterPriceNonNoted;
+      this.total += price;
     }
 
     // TODO: check if the semester inscription already exists
@@ -168,7 +174,8 @@ export class StudentSemesterInscriptionComponent implements OnInit {
   changeSubmited2(): void {
     this.submited2 = true;
     if (this.now2) {
-      this.total += this.semesterPrice;
+      const price = this.yes2 ? this.semesterPriceNoted : this.semesterPriceNonNoted;
+      this.total += price;
     }
   }
 
@@ -184,8 +191,9 @@ export class StudentSemesterInscriptionComponent implements OnInit {
   }
 
   subscribeS1(): void {
+    console.log(this.user);
     this.semesterInscriptionService
-      .createwithsemester(1, new SemesterInscription(undefined, this.yes, 20, undefined, true, this.user!, undefined))
+      .createwithsemester(1, new SemesterInscription(undefined, this.yes, 20, undefined, this.now, this.user!, undefined))
       .subscribe(si => {
         this.user?.semesterInscriptions ? this.user.semesterInscriptions.push(si.body!) : (this.user!.semesterInscriptions = [si.body!]);
         localStorage.setItem('currentUser', JSON.stringify(this.user));
@@ -194,11 +202,18 @@ export class StudentSemesterInscriptionComponent implements OnInit {
 
   subscribeS2(): void {
     this.semesterInscriptionService
-      .createwithsemester(2, new SemesterInscription(undefined, this.yes, 20, undefined, true, this.user!, undefined))
+      .createwithsemester(2, new SemesterInscription(undefined, this.yes2, 20, undefined, this.now2, this.user!, undefined))
       .subscribe(si => {
         this.user?.semesterInscriptions ? this.user.semesterInscriptions.push(si.body!) : (this.user!.semesterInscriptions = [si.body!]);
         localStorage.setItem('currentUser', JSON.stringify(this.user));
       });
+  }
+
+  getSemesterPrices(): void {
+    this.pricesService.find(1).subscribe(price => {
+      this.semesterPriceNoted = price.body?.noted!;
+      this.semesterPriceNonNoted = price.body?.nonNoted!;
+    });
   }
 
   getUserame(): string {

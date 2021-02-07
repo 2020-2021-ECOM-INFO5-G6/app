@@ -2,28 +2,28 @@
   "ecomApp": {
     "tracksuit": {
       "home": {
-        "title": "Tracksuits",
-        "createLabel": "Créer un nouveau Tracksuit",
-        "createOrEditLabel": "Créer ou éditer un Tracksuit",
-        "notFound": "Aucun Tracksuit trouvé"
+        "title": "Combinaisons",
+        "createLabel": "Créer une nouvelle combinaison",
+        "createOrEditLabel": "Créer ou éditer une combinaison",
+        "notFound": "Aucune combinaison trouvée"
       },
-      "created": "Un nouveau Tracksuit a été créé avec l'identifiant {{ param }}",
-      "updated": "Le Tracksuit avec l'identifiant {{ param }} a été mis à jour",
-      "deleted": "Le Tracksuit avec l'identifiant {{ param }} a été supprimé",
+      "created": "Une nouvelle combinaison a été créée avec l'identifiant {{ param }}",
+      "updated": "La combinaison avec l'identifiant {{ param }} a été mise à jour",
+      "deleted": "La combinaison avec l'identifiant {{ param }} a été supprimée",
       "delete": {
-        "question": "Etes-vous certain de vouloir supprimer le Tracksuit {{ id }} ?"
+        "question": "Etes-vous certain de vouloir supprimer la combinaison {{ id }} ?"
       },
       "detail": {
-        "title": "Tracksuit"
+        "title": "Combinaison"
       },
-      "tracksuitId": "Tracksuit Id",
-      "name": "Name",
-      "sizeMin": "Size Min",
-      "sizeMax": "Size Max",
-      "weightMin": "Weight Min",
-      "weightMax": "Weight Max",
-      "comment": "Comment",
-      "material": "Material"
+      "tracksuitId": "Id combinaison",
+      "name": "Nom",
+      "sizeMin": "Taille minimale",
+      "sizeMax": "Taille maximale",
+      "weightMin": "Poids minimal",
+      "weightMax": "Poids maximal",
+      "comment": "Commentaire",
+      "material": "Matériel"
     }
   }
 }

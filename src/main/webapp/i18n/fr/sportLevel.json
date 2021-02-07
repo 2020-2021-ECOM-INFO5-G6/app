@@ -2,14 +2,14 @@
   "ecomApp": {
     "SportLevel": {
       "null": "",
-      "BEGINNER": "BEGINNER",
-      "BEGINNER2": "BEGINNER2",
-      "BEGINNERSUP": "BEGINNERSUP",
+      "BEGINNER": "DEB",
+      "BEGINNER2": "DEB2",
+      "BEGINNERSUP": "DEB+",
       "PERF": "PERF",
-      "PERFSUP": "PERFSUP",
+      "PERFSUP": "PERF+",
       "FUN": "FUN",
       "FOIL": "FOIL",
-      "MONITOR": "MONITOR"
+      "MONITOR": "MONITEUR"
     }
   }
 }

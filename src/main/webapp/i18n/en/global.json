@@ -18,6 +18,7 @@
         "tracksuit": "Tracksuit",
         "board": "Board",
         "sail": "Sail",
+        "prices": "Prices",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -159,5 +160,14 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "This is your footer"
+  "footer": {
+    "contact": "Contact us",
+    "link": {
+      "U-Wind": "Space of U-Wind",
+      "facebook": "Facebook group",
+      "instagram": "Instagram page"
+    },
+    "gdpr": "Learn more about managing your data and your rights",
+    "translate": "© All rights reserved by u-wind.fr"
+  }
 }

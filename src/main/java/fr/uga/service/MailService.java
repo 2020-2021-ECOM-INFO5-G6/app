@@ -1,12 +1,15 @@
 package fr.uga.service;
 
 import fr.uga.domain.User;
+import fr.uga.domain.SemesterInscription;
 import fr.uga.domain.Student;
+import fr.uga.repository.SemesterInscriptionRepository;
 import fr.uga.repository.StudentRepository;
 
 import io.github.jhipster.config.JHipsterProperties;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -25,6 +28,8 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.Objects;
 
 
@@ -46,7 +51,11 @@ public class MailService {
     private static final String BASE_URL = "baseUrl";
     
     private static final String EMAILKEY = "email.activation.title";
-
+    
+    private static final String S = "semester";
+    
+    private static final String SEMESTER_NUMBER = "number";
+    
     private final JHipsterProperties jHipsterProperties;
 
     private final JavaMailSender javaMailSender;
@@ -57,16 +66,20 @@ public class MailService {
     
     @Inject
     private final StudentRepository studentRepository;
+    
+    @Inject
+    private final SemesterInscriptionRepository semesterInscriptionRepository;
 
 
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
-            MessageSource messageSource, SpringTemplateEngine templateEngine, StudentRepository studentRepository) {
+            MessageSource messageSource, SpringTemplateEngine templateEngine, StudentRepository studentRepository, SemesterInscriptionRepository semesterInscriptionRepository) {
 
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
         this.templateEngine = templateEngine;
         this.studentRepository= studentRepository;
+        this.semesterInscriptionRepository = semesterInscriptionRepository;
     }
 
     @Async
@@ -102,11 +115,49 @@ public class MailService {
         
         Student student = getStudentMail(user.getId());
         context.setVariable(STUDENT,student);
-
+        
         String content = templateEngine.process(templateName, context);
-        String subject = messageSource.getMessage(titleKey, null, locale);
-
-        sendEmail(user.getEmail(), subject, content, false, true);
+	    String subject = messageSource.getMessage(titleKey, null, locale);
+	
+	    sendEmail(user.getEmail(), subject, content, false, true);
+    }   
+     
+    @Async
+    public void sendSemesterEmailFromTemplate(User user, String templateName, String titleKey, int semester) {
+	    if (user.getEmail() == null) {
+	        log.debug("Email doesn't exist for user '{}'", user.getLogin());
+	        return;
+	    }
+	    Locale locale = Locale.forLanguageTag(user.getLangKey());
+	    Context context = new Context(locale);
+	    context.setVariable(USER, user);
+	    context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+	    context.setVariable(SEMESTER_NUMBER, Integer.toString(semester));
+	    
+	    Student student = getStudentMail(user.getId());
+	    context.setVariable(STUDENT,student);
+	    if(templateName.equals("mail/semesterInscriptionEmail") && Objects.nonNull(student)) {
+	    	if (semester == 1) {
+	    		Optional<SemesterInscription> s1 = student.getSemesterInscriptions().stream()
+	    				.filter(sem -> sem.getSemester().getStartDate().equals(LocalDate.of(2021, 9, 3)) && sem.getSemester().getEndDate().equals(LocalDate.of(2021, 12, 18)))
+	    				.findAny();
+	    		if(s1.isPresent()) {
+	    			context.setVariable(S, s1.get());
+	    		}
+	    	} else if (semester == 2) {
+	        	Optional<SemesterInscription> s2 = student.getSemesterInscriptions().stream()
+	        			.filter(sem -> sem.getSemester().getStartDate().equals(LocalDate.of(2022, 1, 6)) && sem.getSemester().getEndDate().equals(LocalDate.of(2022, 6, 13)))
+	        			.findAny();
+	        	if(s2.isPresent()) {
+	        		context.setVariable(S, s2.get());
+	        	}
+	    	}
+	    }
+	
+	    String content = templateEngine.process(templateName, context);
+	    String subject = messageSource.getMessage(titleKey, null, locale);
+	
+	    sendEmail(user.getEmail(), subject, content, false, true);
     }
 
     @Async
@@ -132,14 +183,27 @@ public class MailService {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mail/passwordResetEmail", "email.reset.title");
     }
+    
+    @Async
+    public void sendSemesterInscriptionEmail(User user, int semester) {
+    	log.debug("Sending semester inscription email to '{}'", user.getEmail());
+    	sendSemesterEmailFromTemplate(user, "mail/semesterInscriptionEmail", "email.semester.title", semester);
+    	
+    }
 
     public Student getStudentMail(Long userid){
-            Optional<Student> student = studentRepository.findAll().stream()
-        		.filter(s -> Objects.nonNull(s.getInternalUser()))
-        		.filter(sbis -> sbis.getInternalUser().getId().equals(userid))
-                .findAny();
+        Optional<Student> student = studentRepository.findAll().stream()
+    		.filter(s -> Objects.nonNull(s.getInternalUser()))
+    		.filter(sbis -> sbis.getInternalUser().getId().equals(userid))
+            .findAny();
         if(student.isPresent()) {
-            return student.get();
+        	Student st = student.get();
+        	Set<SemesterInscription> siSet = semesterInscriptionRepository.findAll().stream()
+        			.filter(si -> Objects.nonNull(si.getStudent()))
+        			.filter(si -> si.getStudent().getId().equals(st.getId()))
+        			.collect(Collectors.toSet());
+        	st.semesterInscriptions(siSet);
+            return st;
         } else{
         	log.error("Student null");
         	return null;

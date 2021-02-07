@@ -2,6 +2,8 @@
   "homeInstructor": {
     "title": "Home",
     "subtitle": "Bienvenue {{ param }} !",
+    "yes": "Oui",
+    "no": "Non",
     "account": {
       "firstName": "Prénom",
       "lastName": "Nom",
@@ -14,9 +16,11 @@
     "admin": {
       "activities": "Activités",
       "createActivity": "Créer une activité"
+      "prices": "Prix des semestres"
     },
     "button": {
       "editData": "Modifier vos données",
+      "editPrices": "Modifier les prix des semestres",
       "export": "Exporter les inscrits",
       "exportAll": "Exporter tous les inscrits"
     },
@@ -24,6 +28,19 @@
       "noEditableActivities": "Pas d'activités modifiables",
       "noMonitoredActivities": "Pas d'activités surveillées",
       "noActivities": "Pas d'activités"
+    },
+    "activities": {
+      "name": "Nom",
+      "date": "Date",
+      "place": "Place",
+      "coeff": "Coefficient",
+      "lake": "Lac",
+      "inscriptionOpen": "Est ouvert",
+      "edit": "Modifier l'activité"
+    },
+    "prices": {
+      "noted": "FQ (noté)",
+      "nonnoted": "FP (non noté)"
     }
   }
 }
