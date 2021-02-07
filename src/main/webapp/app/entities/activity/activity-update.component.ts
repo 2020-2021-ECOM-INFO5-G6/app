@@ -9,7 +9,7 @@ import { IActivity, Activity } from 'app/shared/model/activity.model';
 import { ActivityService } from './activity.service';
 import { StudentActivityService } from 'app/entities/student-activity/student-activity.service';
 import { StudentService } from 'app/entities/student/student.service';
-import { Student } from 'app/shared/model/student.model';
+import { IStudent } from 'app/shared/model/student.model';
 
 @Component({
   selector: 'jhi-activity-update',
@@ -19,9 +19,10 @@ export class ActivityUpdateComponent implements OnInit {
   isSaving = false;
   dateDp: any;
 
-  students: Student[] = [];
-  registeredStudents: Student[] | null = null;
-  selectedStudent: Student | null = null;
+  students: IStudent[] | null = null;
+  activity: IActivity | null = null;
+
+  // comment: string = "";
 
   editForm = this.fb.group({
     id: [],
@@ -50,9 +51,14 @@ export class ActivityUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ activity }) => {
-      // this.studentService.getvalid(activity).subscribe(students => {
-      //   this.students = students.body;
-      // });
+      if (activity.id !== null) {
+        this.studentService.getvalid(activity.id).subscribe(students => {
+          this.students = students.body;
+          console.log(this.students?.length);
+          console.log(this.students);
+        });
+      }
+      this.activity = activity;
       this.updateForm(activity);
     });
   }
@@ -70,8 +76,8 @@ export class ActivityUpdateComponent implements OnInit {
     });
   }
 
-  showPop(id: string): void {
-    const x = document.getElementById(id);
+  showPop(id: number): void {
+    const x = document.getElementById('pop-' + id);
 
     if (x !== null) {
       if (x.style.display === 'none') {
@@ -82,8 +88,10 @@ export class ActivityUpdateComponent implements OnInit {
     }
   }
 
-  registerStudent(student: Student): void {
-    // this.studentActivityService.subscribeStudent(student).subscribe();
+  registerStudent(student: IStudent, comment: string): void {
+    if (student !== null && this.activity !== null) {
+      this.studentActivityService.subscribestudent(student.id!, this.activity.id!, 'Commentaire ' + student.id!).subscribe();
+    }
   }
 
   previousState(): void {
@@ -98,6 +106,11 @@ export class ActivityUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.activityService.create(activity));
     }
+  }
+
+  trackId(index: number, item: IStudent): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
   }
 
   private createFromForm(): IActivity {

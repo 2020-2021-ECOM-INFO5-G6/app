@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-    <div class="column">
+    <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="jhi-activity-heading" jhiTranslate="ecomApp.activity.home.createOrEditLabel">Create or edit a Activity</h2>
 
@@ -105,7 +105,7 @@
                 </div>
             </div>
 
-            <div class="tableContainer">
+            <div class="tableContainer" *ngIf="activity && activity.id">
                 <label class="form-control-label" jhiTranslate="ecomApp.activity.unregisteredStudents">Unregistered students</label>
                 <table class="table table-striped" aria-describedby="page-heading">
                     <thead>
@@ -115,19 +115,14 @@
                             <th scope="col" ></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr *ngFor="let student of students">
+                    <tbody *ngIf="students">
+                        <div *ngFor="let student of students" style="display: contents">
                             <tr>
-                                <td>
-                                    <tr>{{ student.internalUser.firstName }}</tr>
-                                </td>
-                                <td>
-                                    <tr>{{ student.internalUser.lastName }}</tr>
-                                </td>
+                                <td *ngIf="student.internalUser">{{ student.internalUser.firstName }}</td>
+                                <td *ngIf="student.internalUser">{{ student.internalUser.lastName }}</td>
                                 <td class="text-right">
-                                    <div class="btn-group">
-                                        <button type="submit"
-                                                (click)="showPop(student.id)"
+                                    <div class="btn-group" *ngIf="student.id">
+                                        <button (click)="showPop(student.id)"
                                                 class="btn btn-primary btn-sm">
                                             <fa-icon icon="pencil-alt"></fa-icon>
                                             <span class="d-none d-md-inline" jhiTranslate="ecomApp.activity.register">Register</span>
@@ -135,37 +130,36 @@
                                     </div>
                                 </td>
                             </tr>
-                            <div class="card" id="{student.id}">
-                                <form name="materialForm" role="form" novalidate (ngSubmit)="registerStudent(student)" [formGroup]="materialForm">
-                                    <div class="form-group">
-                                        <label class="form-control-label" jhiTranslate="ecomApp.material.board" for="field_board">Board</label>
-                                        <select class="form-control" id="field_board" name="board" formControlName="board">
-                                            <option [ngValue]="null"></option>
-                                            <option [ngValue]="boardOption.id === editForm.get('board')!.value?.id ? editForm.get('board')!.value : boardOption" *ngFor="let boardOption of boards; trackBy: trackById">{{ boardOption.id }}</option>
-                                        </select>
-                                    </div>
-                    
-                                    <div class="form-group">
-                                        <label class="form-control-label" jhiTranslate="ecomApp.material.sail" for="field_sail">Sail</label>
-                                        <select class="form-control" id="field_sail" name="sail" formControlName="sail">
-                                            <option [ngValue]="null"></option>
-                                            <option [ngValue]="sailOption.id === editForm.get('sail')!.value?.id ? editForm.get('sail')!.value : sailOption" *ngFor="let sailOption of sails; trackBy: trackById">{{ sailOption.id }}</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-control-label" jhiTranslate="ecomApp.material.tracksuit" for="field_tracksuit">Tracksuit</label>
-                                        <select class="form-control" id="field_tracksuit" name="tracksuit" formControlName="tracksuit">
-                                            <option [ngValue]="null"></option>
-                                            <option [ngValue]="tracksuitOption.id === editForm.get('tracksuit')!.value?.id ? editForm.get('tracksuit')!.value : tracksuitOption" *ngFor="let tracksuitOption of tracksuits; trackBy: trackById">{{ tracksuitOption.id }}</option>
-                                        </select>
-                                    </div>
-                                    <button [routerLink]="['/activity', activity.id, 'edit']" type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                                        <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="ecomApp.activity.validate">Validate</span>
-                                    </button>
-                                </form>
-                            </div>
-                        </tr>
+                            <tr>
+                                <div class="card" id="pop-{student.id}" style="display: none">
+                                    <form name="materialForm" role="form" novalidate (ngSubmit)="registerStudent(student, 'NoComment')" [formGroup]="materialForm">
+                                        <div class="form-group">
+                                            <label class="form-control-label" jhiTranslate="ecomApp.material.board" for="field_board">Board</label>
+                                            <select class="form-control" id="field_board" name="board" formControlName="board">
+                                                <option [ngValue]="null"></option>
+                                            </select>
+                                        </div>
+                        
+                                        <div class="form-group">
+                                            <label class="form-control-label" jhiTranslate="ecomApp.material.sail" for="field_sail">Sail</label>
+                                            <select class="form-control" id="field_sail" name="sail" formControlName="sail">
+                                                <option [ngValue]="null"></option>
+                                            </select>
+                                        </div>
+    
+                                        <div class="form-group">
+                                            <label class="form-control-label" jhiTranslate="ecomApp.material.tracksuit" for="field_tracksuit">Tracksuit</label>
+                                            <select class="form-control" id="field_tracksuit" name="tracksuit" formControlName="tracksuit">
+                                                <option [ngValue]="null"></option>
+                                            </select>
+                                        </div>
+                                        <button *ngIf="activity" [routerLink]="['/activity', activity.id, 'edit']" type="submit" id="save-entity" [disabled]="materialForm.invalid || isSaving" class="btn btn-primary">
+                                            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="ecomApp.activity.validate">Validate</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </tr>
+                        </div>
                     </tbody>
                 </table>
             </div>
