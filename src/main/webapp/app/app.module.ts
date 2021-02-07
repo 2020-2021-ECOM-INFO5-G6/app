@@ -8,6 +8,7 @@ import { EcomAppRoutingModule } from './app-routing.module';
 // Homes
 import { EcomHomeStudentModule } from './homeStudent/homeStudent.module';
 import { EcomHomeInstructorModule } from './homeInstructor/homeInstructor.module';
+import { GDPRModule } from './GDPR/GDPR.module';
 // Student
 import { EcomStudentSemesterInscriptionModule } from './studentSemesterInscription/studentSemesterInscription.module';
 // Entities
@@ -20,6 +21,7 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -28,6 +30,7 @@ import { ErrorComponent } from './layouts/error/error.component';
     // Homes
     EcomHomeStudentModule,
     EcomHomeInstructorModule,
+    GDPRModule,
     // Student
     EcomStudentSemesterInscriptionModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
