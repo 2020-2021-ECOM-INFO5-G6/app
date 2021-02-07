@@ -105,9 +105,9 @@
                 </div>
             </div>
 
-            <div class="tableContainer" *ngIf="activity && activity.id">
-                <label class="form-control-label" jhiTranslate="ecomApp.activity.unregisteredStudents">Unregistered students</label>
-                <table class="table table-striped" aria-describedby="page-heading">
+            <div class="table-responsive" *ngIf="activity && activity.id">
+                <label jhiTranslate="ecomApp.activity.unregisteredStudents">Unregistered students</label>
+                <table class="table table-striped" aria-describedby="page-heading" *ngIf="students && students.length > 0">
                     <thead>
                         <tr>
                             <th scope="col" ><span jhiTranslate="userManagement.firstName">First name</span></th>
@@ -115,7 +115,7 @@
                             <th scope="col" ></th>
                         </tr>
                     </thead>
-                    <tbody *ngIf="students">
+                    <tbody>
                         <div *ngFor="let student of students" style="display: contents">
                             <tr>
                                 <td *ngIf="student.internalUser">{{ student.internalUser.firstName }}</td>
@@ -134,7 +134,7 @@
                                 <div class="card" id="pop-{{student.id}}" style="display: none">
                                     <form name="materialForm" role="form" novalidate (ngSubmit)="registerStudent(student)" [formGroup]="materialForm">
                                         <div class="form-group">
-                                            <label class="form-control-label" jhiTranslate="ecomApp.studentActivity.commentToInstructor" for="field_comment">Board</label>
+                                            <label class="form-control-label" jhiTranslate="ecomApp.studentActivity.commentToInstructor" for="field_comment">Comment</label>
                                             <input type="text" class="form-control" name="comment" formControlName="comment">
                                         </div>
                                         <button *ngIf="activity" type="submit" id="save-entity" [disabled]="materialForm.invalid || isSaving" class="btn btn-primary">
@@ -147,6 +147,10 @@
                     </tbody>
                 </table>
             </div>
+
+            <tr>
+                <p *ngIf="students && students.length == 0 || !students" style="color:#bfbfbf; text-align: center" jhiTranslate="ecomApp.activity.alert.noValidStudents">No valid students</p>
+            </tr>
 
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">

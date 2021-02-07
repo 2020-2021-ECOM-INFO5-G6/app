@@ -35,6 +35,9 @@
         "place": "l'endroit où l'activité à lieu",
         "capacity": "la capacité en nombre d'étudiant",
         "lake": "le nom du lac en particulier"
+      },
+      "alert": {
+        "noValidStudents": "Aucun étudiant valide"
       }
     }
   }

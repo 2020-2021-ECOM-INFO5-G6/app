@@ -22,8 +22,6 @@ export class ActivityUpdateComponent implements OnInit {
   students: IStudent[] | null = null;
   activity: IActivity | null = null;
 
-  // comment: string = "";
-
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
