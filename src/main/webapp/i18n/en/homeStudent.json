@@ -1,7 +1,7 @@
 {
   "homeStudent": {
     "title": "Home",
-    "subtitle": "Welcome student",
+    "subtitle": "Welcome {{ param }}!",
     "yes": "Yes",
     "no": "No",
     "account": {

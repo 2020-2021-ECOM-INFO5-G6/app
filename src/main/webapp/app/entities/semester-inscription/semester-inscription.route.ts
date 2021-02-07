@@ -39,7 +39,7 @@ export const semesterInscriptionRoute: Routes = [
     path: '',
     component: SemesterInscriptionComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.semesterInscription.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const semesterInscriptionRoute: Routes = [
       semesterInscription: SemesterInscriptionResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.semesterInscription.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const semesterInscriptionRoute: Routes = [
       semesterInscription: SemesterInscriptionResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.semesterInscription.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const semesterInscriptionRoute: Routes = [
       semesterInscription: SemesterInscriptionResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.semesterInscription.home.title',
     },
     canActivate: [UserRouteAccessService],

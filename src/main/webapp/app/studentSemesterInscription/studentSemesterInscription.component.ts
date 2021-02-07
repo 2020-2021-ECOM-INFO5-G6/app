@@ -57,21 +57,14 @@ export class StudentSemesterInscriptionComponent implements OnInit {
   // Student
 
   constructor(
-    private router: Router,
     private accountService: AccountService,
+    private router: Router,
     private loginService: LoginService,
     private semesterInscriptionService: SemesterInscriptionService,
     private pricesService: PricesService
   ) {}
 
   ngOnInit(): void {
-    // Authentification control
-    if (!this.accountService.isAuthenticated()) {
-      // this.navbarComponent.logout();
-      this.loginService.logout();
-      this.router.navigate(['']);
-    }
-
     // JSON.parse(localStorage.getItem('currentUser'))
     this.userjs = localStorage.getItem('currentUser');
     this.user = this.userjs !== null ? JSON.parse(this.userjs) : null;
@@ -194,6 +187,7 @@ export class StudentSemesterInscriptionComponent implements OnInit {
       this.subscribeS2();
     }
     this.finish = true;
+    this.router.navigate(['/homeStudent']);
   }
 
   subscribeS1(): void {

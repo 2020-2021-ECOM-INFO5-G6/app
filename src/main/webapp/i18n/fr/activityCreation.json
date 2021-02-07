@@ -1,0 +1,35 @@
+{
+  "activityCreation": {
+    "fields": "Remplissez les champs suivants :",
+    "instructors": "Vous pouvez cliquer sur un instructeur pour lui affecter l'activité :",
+    "title": "Création d'activité",
+    "subtitle": "Créer une nouvelle activité",
+    "name": "Saisir un nom",
+    "date": "Selectionner une date",
+    "place": "Saisir un lieu",
+    "lake": "Choisir un lac",
+    "capacity": "Combien de personne cette activité peut-elle acceuillir ?",
+    "coeff": "Choisir un coefficient",
+    "reset": "Réinitialiser",
+    "submit": "Envoyer",
+    "placeholder": {
+      "name": "Nom",
+      "place": "Lieu",
+      "other": "Autre"
+    },
+    "open": {
+      "label": "L'inscription est-elle ouverte ?",
+      "yes": "Oui",
+      "no": "Non"
+    },
+    "alert": {
+      "name": "Nom requis",
+      "date": "Date requise",
+      "place": "Lieu requis",
+      "lake": "Lac requis",
+      "capacity": "Capacité requise"
+    },
+    "allInstructors": "Tous les instructeurs :",
+    "selectedInstructors": "Instructeurs séléctionnés:"
+  }
+}

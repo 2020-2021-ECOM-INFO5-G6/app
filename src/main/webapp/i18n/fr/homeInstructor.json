@@ -1,10 +1,9 @@
 {
   "homeInstructor": {
     "title": "Home",
-    "subtitle": "Bienvenue Instructeur !",
+    "subtitle": "Bienvenue {{ param }} !",
     "yes": "Oui",
     "no": "Non",
-
     "account": {
       "firstName": "Prénom",
       "lastName": "Nom",
@@ -16,6 +15,7 @@
     },
     "admin": {
       "activities": "Activités",
+      "createActivity": "Créer une activité",
       "prices": "Prix des semestres"
     },
     "button": {

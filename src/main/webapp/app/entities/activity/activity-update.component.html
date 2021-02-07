@@ -75,7 +75,7 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="ecomApp.activity.coeff" for="field_coeff">Coeff</label>
-                    <input type="number" class="form-control" name="coeff" id="field_coeff"
+                    <input type="number" step="0.05" class="form-control" name="coeff" id="field_coeff"
                            formControlName="coeff"/>
                     <div *ngIf="editForm.get('coeff')!.invalid && (editForm.get('coeff')!.dirty || editForm.get('coeff')!.touched)">
                         <small class="form-text text-danger"
@@ -104,6 +104,41 @@
                     </select>
                 </div>
             </div>
+
+            <!-- Instructors -->
+
+            <br>
+            <h4 jhiTranslate="activityCreation.instructors"> Click to select </h4>
+
+            <br>
+
+            <label jhiTranslate="activityCreation.allInstructors"> All instructors</label>
+            <nav>
+                <ul *ngFor="let i of allInstructors" >
+                        <li *ngIf= "i.internalUser !== null" > 
+                            <button class="btn btn-primary" style="border:solid;" (click)="addInstructor(i)">
+                                &ensp;{{getName(i)}}&ensp;
+                            </button>
+                        </li>
+                </ul>
+            </nav>
+        
+            <br>
+        
+            <label jhiTranslate="activityCreation.selectedInstructors"> Selected instructors</label>
+            <nav>
+                <ul *ngFor="let i of selectedInstructors" >
+                    <li *ngIf= "i.internalUser !== null" > 
+                        <button class="btn btn-primary" style="border:solid;" (click)="removeInstructor(i)">
+                            &ensp;{{getName(i)}}&ensp;
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+            <br><br>
+
+            <!-- Cancel or Save-->
 
             <div class="table-responsive" *ngIf="activity && activity.id">
                 <label jhiTranslate="ecomApp.activity.unregisteredStudents">Unregistered students</label>
@@ -161,6 +196,7 @@
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>
+
         </form>
     </div>
 </div>

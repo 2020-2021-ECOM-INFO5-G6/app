@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { IActivity, Activity } from 'app/shared/model/activity.model';
+import { IInstructor, Instructor } from 'app/shared/model/instructor.model';
+import { InstructorService } from '../instructor/instructor.service';
 import { ActivityService } from './activity.service';
 import { StudentActivityService } from 'app/entities/student-activity/student-activity.service';
 import { StudentService } from 'app/entities/student/student.service';
@@ -37,13 +39,16 @@ export class ActivityUpdateComponent implements OnInit {
     comment: [],
   });
 
+  allInstructors?: IInstructor[];
+  selectedInstructors: IInstructor[] = [];
   constructor(
     protected activityService: ActivityService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private studentService: StudentService,
     private studentActivityService: StudentActivityService,
-    private router: Router
+    private router: Router,
+    protected instructorService: InstructorService
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +61,7 @@ export class ActivityUpdateComponent implements OnInit {
         });
       }
       this.activity = activity;
+      this.loadInstructors();
       this.updateForm(activity);
     });
   }
@@ -102,7 +108,10 @@ export class ActivityUpdateComponent implements OnInit {
     if (activity.id !== undefined) {
       this.subscribeToSaveResponse(this.activityService.update(activity));
     } else {
-      this.subscribeToSaveResponse(this.activityService.create(activity));
+      //this.subscribeToSaveResponse(this.activityService.create(activity));
+      this.subscribeToSaveResponse(
+        this.activityService.createwithinstructors(activity, this.selectedInstructors, this.selectedInstructors)
+      );
     }
   }
 
@@ -122,6 +131,8 @@ export class ActivityUpdateComponent implements OnInit {
       inscriptionOpen: this.editForm.get(['inscriptionOpen'])!.value,
       coeff: this.editForm.get(['coeff'])!.value,
       lake: this.editForm.get(['lake'])!.value,
+      monitors: this.selectedInstructors,
+      managers: this.selectedInstructors,
     };
   }
 
@@ -139,5 +150,35 @@ export class ActivityUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  loadInstructors(): void {
+    //allInstructors
+    this.instructorService.query().subscribe((res: HttpResponse<IInstructor[]>) => {
+      this.allInstructors = res.body || [];
+
+      if (this.allInstructors !== undefined)
+        for (const i of this.allInstructors)
+          if (i.participateActivities !== undefined)
+            for (const a of i.participateActivities) if (this.activity !== null) if (a.id === this.activity.id) this.addInstructor(i);
+    });
+  }
+
+  addInstructor(i: IInstructor): void {
+    this.selectedInstructors?.push(i);
+    const index = this.allInstructors?.indexOf(i);
+    if (index !== undefined) this.allInstructors?.splice(index, 1);
+  }
+
+  removeInstructor(i: IInstructor): void {
+    this.allInstructors?.push(i);
+    const index = this.selectedInstructors?.indexOf(i);
+    if (index !== undefined) this.selectedInstructors?.splice(index, 1);
+  }
+
+  getName(i: Instructor): string {
+    if (i.internalUser?.firstName !== undefined && i.internalUser?.lastName !== undefined)
+      return i.internalUser?.firstName + ' ' + i.internalUser?.lastName;
+    return '';
   }
 }

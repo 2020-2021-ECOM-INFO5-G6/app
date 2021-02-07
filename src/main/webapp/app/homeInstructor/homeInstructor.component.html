@@ -2,7 +2,7 @@
     <!-- <div class="col-md-3">
         <span class="hipster img-fluid rounded"></span>
     </div> -->
-    <h1 id="homeInstructor-subtitle" jhiTranslate="homeInstructor.subtitle">Welcome instructor!</h1>
+    <p class="lead" id="homeInstructor-subtitle" jhiTranslate="homeInstructor.subtitle" [translateValues]="{ param: getFirstName() }">Welcom {{getFirstName()}}!</p>
 </div>
 
 <div class="row" id="body">
@@ -83,7 +83,7 @@
                                 <tbody>
                                     <tr *ngFor="let activity of activities">
                                         <td><a [routerLink]="['/activity', activity.id, 'view']">{{ activity.name }}</a></td>
-                                        <td>{{ activity.date }}</td>
+                                        <td>{{ getDate(activity) }}</td>
                                         <td>{{ activity.place }}</td>
                                         <td>{{ activity.coeff }}</td>
                                         <td>{{ activity.lake }}</td>

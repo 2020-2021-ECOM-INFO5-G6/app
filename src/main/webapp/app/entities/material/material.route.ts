@@ -39,7 +39,7 @@ export const materialRoute: Routes = [
     path: '',
     component: MaterialComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.material.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const materialRoute: Routes = [
       material: MaterialResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.material.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const materialRoute: Routes = [
       material: MaterialResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.material.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const materialRoute: Routes = [
       material: MaterialResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.material.home.title',
     },
     canActivate: [UserRouteAccessService],

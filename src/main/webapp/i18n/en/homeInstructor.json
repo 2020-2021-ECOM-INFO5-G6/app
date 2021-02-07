@@ -1,7 +1,7 @@
 {
   "homeInstructor": {
     "title": "Home",
-    "subtitle": "Welcome instructor",
+    "subtitle": "Welcome {{ param }}!",
     "yes": "Yes",
     "no": "No",
     "account": {
@@ -14,7 +14,8 @@
       "monitoredActivities": "Monitored activities"
     },
     "admin": {
-      "activities": "Activities",
+      "activities": "Activités",
+      "createActivity": "Create Activity",
       "prices": "Semester prices"
     },
     "button": {

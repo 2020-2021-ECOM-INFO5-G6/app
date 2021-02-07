@@ -39,7 +39,7 @@ export const sailRoute: Routes = [
     path: '',
     component: SailComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.sail.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const sailRoute: Routes = [
       sail: SailResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.sail.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const sailRoute: Routes = [
       sail: SailResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.sail.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const sailRoute: Routes = [
       sail: SailResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.sail.home.title',
     },
     canActivate: [UserRouteAccessService],

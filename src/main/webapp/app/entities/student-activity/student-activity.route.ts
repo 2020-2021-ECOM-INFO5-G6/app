@@ -39,7 +39,7 @@ export const studentActivityRoute: Routes = [
     path: '',
     component: StudentActivityComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.studentActivity.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -51,7 +51,7 @@ export const studentActivityRoute: Routes = [
       studentActivity: StudentActivityResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.studentActivity.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -63,7 +63,7 @@ export const studentActivityRoute: Routes = [
       studentActivity: StudentActivityResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.studentActivity.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -75,7 +75,7 @@ export const studentActivityRoute: Routes = [
       studentActivity: StudentActivityResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'ecomApp.studentActivity.home.title',
     },
     canActivate: [UserRouteAccessService],

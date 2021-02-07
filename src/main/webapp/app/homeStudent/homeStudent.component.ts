@@ -13,6 +13,9 @@ import { SemesterInscriptionService } from 'app/entities/semester-inscription/se
 import { UserService } from 'app/core/user/user.service';
 import * as moment from 'moment';
 
+import { Router } from '@angular/router';
+import { LoginService } from 'app/core/login/login.service';
+
 @Component({
   selector: 'jhi-home',
   templateUrl: './homeStudent.component.html',
@@ -39,9 +42,10 @@ export class HomeStudentComponent implements OnInit, OnDestroy {
 
   constructor(
     private accountService: AccountService,
-    private localStorage: LocalStorageService,
     private userService: UserService,
     private studentService: StudentService,
+    private router: Router,
+    private loginService: LoginService,
     private studentActivityService: StudentActivityService,
     private semesterInscriptionService: SemesterInscriptionService
   ) {}
@@ -124,5 +128,11 @@ export class HomeStudentComponent implements OnInit, OnDestroy {
       });
     });
     this.isLoaded2 = true;
+  }
+
+  getFirstName(): string {
+    if (this.student !== null && this.student.internalUser !== undefined && this.student.internalUser.firstName !== undefined)
+      return this.student.internalUser?.firstName;
+    return '';
   }
 }
