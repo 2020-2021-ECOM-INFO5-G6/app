@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { IActivity, Activity } from 'app/shared/model/activity.model';
 import { ActivityService } from './activity.service';
+import { StudentActivityService } from 'app/entities/student-activity/student-activity.service';
+import { StudentService } from 'app/entities/student/student.service';
+import { IStudent } from 'app/shared/model/student.model';
 
 @Component({
   selector: 'jhi-activity-update',
@@ -15,6 +18,9 @@ import { ActivityService } from './activity.service';
 export class ActivityUpdateComponent implements OnInit {
   isSaving = false;
   dateDp: any;
+
+  students: IStudent[] | null = null;
+  activity: IActivity | null = null;
 
   editForm = this.fb.group({
     id: [],
@@ -27,10 +33,29 @@ export class ActivityUpdateComponent implements OnInit {
     lake: [],
   });
 
-  constructor(protected activityService: ActivityService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  materialForm = this.fb.group({
+    comment: [],
+  });
+
+  constructor(
+    protected activityService: ActivityService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    private studentService: StudentService,
+    private studentActivityService: StudentActivityService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ activity }) => {
+      if (activity.id !== null) {
+        this.studentService.getvalid(activity.id).subscribe(students => {
+          this.students = students.body;
+          console.log(this.students?.length);
+          console.log(this.students);
+        });
+      }
+      this.activity = activity;
       this.updateForm(activity);
     });
   }
@@ -48,6 +73,25 @@ export class ActivityUpdateComponent implements OnInit {
     });
   }
 
+  showPop(id: number): void {
+    const x = document.getElementById('pop-' + id);
+
+    if (x !== null) {
+      if (x.style.display === 'none') {
+        x.style.display = 'block';
+      } else {
+        x.style.display = 'none';
+      }
+    }
+  }
+
+  registerStudent(student: IStudent): void {
+    if (student !== null && this.activity !== null) {
+      this.studentActivityService.subscribestudent(student.id!, this.activity.id!, this.materialForm.get(['comment'])!.value).subscribe();
+      this.router.navigate(['activity']);
+    }
+  }
+
   previousState(): void {
     window.history.back();
   }
@@ -60,6 +104,11 @@ export class ActivityUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.activityService.create(activity));
     }
+  }
+
+  trackId(index: number, item: IStudent): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
   }
 
   private createFromForm(): IActivity {

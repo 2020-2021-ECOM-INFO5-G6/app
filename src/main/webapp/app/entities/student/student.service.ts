@@ -44,4 +44,8 @@ export class StudentService {
   download(): Observable<EntityContentResponseType> {
     return this.http.get(`${this.resourceUrl}/$content`, { observe: 'response', responseType: 'text' });
   }
+
+  getvalid(activityId: number): Observable<EntityArrayResponseType> {
+    return this.http.get<IStudent[]>(`${this.resourceUrl}/valid/${activityId}`, { observe: 'response' });
+  }
 }

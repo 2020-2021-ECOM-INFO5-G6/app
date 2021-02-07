@@ -16,6 +16,7 @@
       "detail": {
         "title": "Combinaison étudiant-activité"
       },
+      "commentToInstructor": "Commentaire au moniteur",
       "commentToIntructor": "Commentaire au moniteur",
       "commentByInstructor": "Commentaire par le moniteur",
       "student": "Etudiant",

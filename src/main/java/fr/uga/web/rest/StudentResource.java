@@ -1,8 +1,10 @@
 package fr.uga.web.rest;
 
 import fr.uga.domain.Student;
+import fr.uga.domain.Activity;
 import fr.uga.domain.Cursus;
 import fr.uga.domain.User;
+import fr.uga.repository.ActivityRepository;
 import fr.uga.repository.SemesterInscriptionRepository;
 import fr.uga.repository.StudentActivityRepository;
 import fr.uga.repository.StudentRepository;
@@ -20,9 +22,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.Iterator;
 
 /**
@@ -44,9 +48,15 @@ public class StudentResource {
     
     private final SemesterInscriptionRepository semesterInscriptionRepository;
     
-    public StudentResource(StudentRepository studentRepository, SemesterInscriptionRepository semesterInscriptionRepository) {
+    private final StudentActivityRepository studentActivityRepository;
+    
+    private final ActivityRepository activityRepository;
+    
+    public StudentResource(StudentRepository studentRepository, SemesterInscriptionRepository semesterInscriptionRepository, StudentActivityRepository studentActivityRepository, ActivityRepository activityRepository) {
         this.studentRepository = studentRepository;
         this.semesterInscriptionRepository = semesterInscriptionRepository;
+        this.studentActivityRepository = studentActivityRepository;
+        this.activityRepository = activityRepository;
     }
 
     /**
@@ -201,5 +211,45 @@ public class StudentResource {
         }
 
         return ResponseUtil.wrapOrNotFound(data);
+    }
+    
+    @GetMapping("/students/valid/{activityId}")
+    public List<Student> getValidStudents(@PathVariable Long activityId) {
+        log.debug("REST request to get valid Students who are not yet subscribed to this Activity{}");
+        List<Student> students = studentRepository.findAll();
+        
+        Optional<Activity> opt = activityRepository.findById(activityId);
+        if (opt.isEmpty()) {
+        	throw new BadRequestAlertException("No activity with this Id", ENTITY_NAME, "notfound");
+        }
+        Activity activity = opt.get();
+        
+        LocalDate startDate;
+    	LocalDate date = LocalDate.of(2021, 12, 18);
+    	if (activity.getDate().compareTo(date) < 0) {
+    		startDate = LocalDate.of(2021, 9, 3);
+    	} else {
+    		startDate = LocalDate.of(2022, 1, 6);
+    	}
+        
+        List<Student> validStudents = students.stream()
+        		.filter(student -> isValid(student, activity, startDate))
+        		.collect(Collectors.toList());
+        		
+        return validStudents;
+    }
+    
+    private boolean isValid(Student student, Activity activity, LocalDate startDate) {
+    	log.debug("student to compare: {}", student);
+    	log.debug("activity to compare: {}", activity);
+    	boolean hasPaid = semesterInscriptionRepository.findAll().stream()
+    			.filter(sem -> Objects.nonNull(sem.getStudent()) && Objects.nonNull(sem.getSemester()) && Objects.nonNull(sem.getSemester().getStartDate()))
+    			.filter(sem -> sem.getStudent().getId().equals(student.getId()))
+    			.filter(sem -> sem.getSemester().getStartDate().equals(startDate))
+    			.anyMatch(sem -> sem.isPaid());
+    	boolean isAlreadySubscribed = studentActivityRepository.findAll().stream()
+    			.filter(stA -> Objects.nonNull(stA.getStudent()) && Objects.nonNull(stA.getActivity()))
+    			.anyMatch(stA -> stA.getActivity().getId().equals(activity.getId()) && stA.getStudent().getId().equals(student.getId()));
+    	return hasPaid && !isAlreadySubscribed;
     }
 }
