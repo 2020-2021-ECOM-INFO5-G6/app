@@ -29,7 +29,7 @@
       "lake": "Lac requis",
       "capacity": "Capacité requise"
     },
-    "allInstructors": "Tous les instructeurs :",
-    "selectedInstructors": "Instructeurs séléctionnés:"
+    "allInstructors": "Instructeurs non séléctionnés :",
+    "selectedInstructors": "Instructeurs séléctionnés :"
   }
 }
