@@ -1,3 +1,21 @@
 <div class="footer">
-    <p jhiTranslate="footer">This is your footer</p>
+    <h2 jhiTranslate="footer.contact" id="foot">Contact us</h2>
+        <table class="contact">
+            <caption>FooterTable</caption>
+            <tr>
+                <th scope="col"><img src="../../../content/images/mail.png" width="50" height="50" alt="logoMail"></th>
+                <th scope="col"><img src="../../../content/images/location.png" width="50" height="50" alt="logoLocation"></th>
+                <th scope="col"><img src="../../../content/images/facebook.png" width="50" height="50" alt="logoFacebook"></th>
+                <th scope="col"><img src="../../../content/images/instagram.png" width="50" height="50" alt="logoInstagram"></th>
+            </tr>
+            <tr>
+                <td><strong>info@u-wind.fr</strong></td>
+                <td><a href="https://goo.gl/maps/stHCZRgmETP42ys87" target="_blank" rel="noopener noreferrer" jhiTranslate="footer.link.U-Wind" class="link">U-Wind location</a></td>
+                <td><a href="https://www.facebook.com/groups/32881424354/" jhiTranslate="footer.link.facebook" class="link">Facebook Group</a></td>
+                <td><a href="https://www.instagram.com/uwind_grenoble/" jhiTranslate="footer.link.instagram" class="link">Instagram Page</a></td>
+            </tr>
+        </table>
+    <br/>
+    <a routerLink="gdpr" class="link" jhiTranslate="footer.gdpr">En savoir plus sur la gestion de vos données et vos droits</a>
+    <p jhiTranslate="footer.translate">© Tous droits réservés u-wind.fr</p>
 </div>

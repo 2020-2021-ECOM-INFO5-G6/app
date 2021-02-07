@@ -28,13 +28,6 @@
       "noMonitoredActivities": "No monitored activities",
       "noActivities": "No activities"
     },
-    "contact": "Contact us",
-    "link": {
-      "U-Wind": "Space of U-Wind",
-      "facebook": "Facebook group",
-      "instagram": "Instagram page"
-    },
-    "translate": "© All rights reserved by u-wind.fr",
     "activities": {
       "name": "Name",
       "date": "Date",
