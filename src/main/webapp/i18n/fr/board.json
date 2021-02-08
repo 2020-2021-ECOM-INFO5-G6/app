@@ -2,21 +2,21 @@
   "ecomApp": {
     "board": {
       "home": {
-        "title": "Planches",
-        "createLabel": "Créer une nouvelle planche",
-        "createOrEditLabel": "Créer ou éditer une planche",
-        "notFound": "Aucune planche trouvée"
+        "title": "Flotteurs",
+        "createLabel": "Créer un nouveau flotteur",
+        "createOrEditLabel": "Créer ou éditer un flotteur",
+        "notFound": "Aucun flotteur trouvé"
       },
-      "created": "Une nouvelle planche a été créée avec l'identifiant {{ param }}",
-      "updated": "La planche avec l'identifiant {{ param }} a été mise à jour",
-      "deleted": "La planche avec l'identifiant {{ param }} a été supprimée",
+      "created": "Un nouveau flotteur a été créé avec l'identifiant {{ param }}",
+      "updated": "Le flotteur avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le flotteur avec l'identifiant {{ param }} a été supprimé",
       "delete": {
-        "question": "Etes-vous certain de vouloir supprimer la planche {{ id }} ?"
+        "question": "Etes-vous certain de vouloir supprimer le flotteur {{ id }} ?"
       },
       "detail": {
-        "title": "Planche"
+        "title": "Flotteur"
       },
-      "boardId": "Id planche",
+      "boardId": "Id flotteur",
       "name": "Nom",
       "volume": "Volume",
       "level": "Niveau",
