@@ -29,7 +29,7 @@
       "lake": "Lake required",
       "capacity": "Capacity required"
     },
-    "allInstructors": "All instructors:",
+    "allInstructors": "Not selected instructors:",
     "selectedInstructors": "Selected instructors:"
   }
 }

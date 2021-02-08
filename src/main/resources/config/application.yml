@@ -141,7 +141,7 @@ jhipster:
   #     allow-credentials: true
   #     max-age: 1800
   mail:
-    from: ecom@localhost
+    from: ecompolytech@gmail.com
   swagger:
     default-include-pattern: /api/.*
     title: ecom API
