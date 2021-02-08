@@ -13,12 +13,17 @@ import { StudentActivityService } from 'app/entities/student-activity/student-ac
 import { StudentService } from 'app/entities/student/student.service';
 import { IStudent } from 'app/shared/model/student.model';
 import { AccountService } from 'app/core/auth/account.service';
+import { Account } from 'app/core/user/account.model';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
   selector: 'jhi-activity-update',
   templateUrl: './activity-update.component.html',
 })
 export class ActivityUpdateComponent implements OnInit {
+  account: Account | null = null;
+  instructor: IInstructor | null = null;
+
   isSaving = false;
   dateDp: any;
 
@@ -52,10 +57,12 @@ export class ActivityUpdateComponent implements OnInit {
     private studentActivityService: StudentActivityService,
     private router: Router,
     protected instructorService: InstructorService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
+    // Load activity
     this.activatedRoute.data.subscribe(({ activity }) => {
       if (activity.id !== null && activity.id !== undefined) {
         this.studentService.getvalid(activity.id).subscribe(students => {
@@ -66,6 +73,45 @@ export class ActivityUpdateComponent implements OnInit {
       this.loadInstructors();
       this.updateForm(activity);
     });
+
+    // In the case of update, check if the instructor have this activity in his editableactivity list
+    if (this.editForm.get('id')!.value) {
+      // if is update page
+      this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => {
+        this.getLinkedEntity(account); // get instructor and check permission
+      });
+    }
+  }
+
+  getLinkedEntity(account: Account | null): void {
+    this.account = account;
+    if (this.isAuthenticated() && this.accountService.hasAnyAuthority('ROLE_INSTRUCTOR')) {
+      this.getCurrentInstructorAsynchronously();
+    }
+  }
+
+  getCurrentInstructorAsynchronously(): void {
+    // get instructor and check permission
+    if (this.account != null) {
+      this.userService.find(this.account.login).subscribe(user => {
+        this.instructorService.findbyuser(user.id).subscribe(instructor => {
+          // set this.instructor
+          this.instructor = instructor.body;
+          // check if the instructor have the current activty in his editable activities list
+          this.instructorHaveActivity();
+        });
+      });
+    }
+  }
+
+  instructorHaveActivity(): void {
+    let haveActivity = false; // flag
+
+    if (this.instructor !== null)
+      if (this.instructor.editableActivities !== undefined)
+        for (const a of this.instructor.editableActivities) if (a.id === this.editForm.get('id')?.value) haveActivity = true; // instructor have the current activity in his list
+
+    if (!haveActivity) this.router.navigate(['/homeInstructor']);
   }
 
   isAuthenticated(): boolean {
