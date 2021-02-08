@@ -91,7 +91,7 @@
                             <p *ngIf="student.semesterInscriptions && student.semesterInscriptions.length == 0 || !student.semesterInscriptions" style="color:#bfbfbf" jhiTranslate="homeStudent.alert.noSemesterInscriptions">No semester inscriptions</p>
                         </tr>
 
-                        <hr>
+                        <hr [hidden]= "isSubscribed1 && isSubscribed2">
 
                         <tr>
                             <button *ngIf="isLoaded1 && isLoaded2" class="btn btn-primary" [hidden]= "isSubscribed1 && isSubscribed2" jhiTranslate="homeStudent.button.goToSemesterInscription"  routerLink="/studentSemesterInscription">Go to the semester inscription page</button>
@@ -130,11 +130,11 @@
                             </table>
                         </div>
 
-                        <hr>
+                        <!-- <hr>
 
                         <tr>
                             <button class="btn btn-primary" jhiTranslate="homeStudent.button.goToActivities" routerLink="/activities">Go to the activities page</button>
-                        </tr>
+                        </tr> -->
                     </div>
                 </div>
             </tbody>
